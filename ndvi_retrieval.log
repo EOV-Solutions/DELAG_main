@@ -1,0 +1,831 @@
+2025-07-08 11:57:10,883 - INFO - Created temporary ROI file at: /tmp/tmppn6u2u2d/sample_roi.json
+2025-07-08 11:57:10,883 - INFO - Successfully loaded ROI geometry from /tmp/tmppn6u2u2d/sample_roi.json
+2025-07-08 11:57:10,884 - INFO - --- Starting S2 retrieval process for ROI 'sample_roi' from 2023-05-01 to 2023-05-08 ---
+2025-07-08 11:57:12,338 - INFO - Fetching Sentinel-2 collection for dates 2023-05-01 to 2023-05-08
+2025-07-08 11:57:12,882 - INFO - Calculating 8-day S2 band composites from 2023-05-01 to 2023-05-08
+2025-07-08 11:57:13,615 - INFO - Generated 1 8-day composites (including placeholders).
+2025-07-08 11:57:14,155 - INFO - Found 1 valid 8-day S2 composites for download (after removing empty placeholders).
+2025-07-08 11:57:15,579 - INFO - Created output folder for downloads: s2_data_output/sample_roi/sample_S2_8days
+2025-07-08 11:58:15,191 - INFO - Successfully created multi-band GeoTIFF for 2023-05-01 to s2_data_output/sample_roi/sample_S2_8days/S2_8days_2023-05-01.tif
+2025-07-08 11:58:15,199 - INFO - --- S2 retrieval process finished for ROI 'sample_roi'. ---
+2025-07-08 11:58:15,200 - INFO - Cleaned up temporary ROI directory: /tmp/tmppn6u2u2d
+2025-07-08 11:58:15,200 - INFO - Example run finished.
+2025-07-08 13:52:18,813 - INFO - Loaded grid GeoJSON from: Grid_50K_MatchedDates.geojson containing 604 features.
+2025-07-08 13:52:18,813 - INFO - Processing feature 1/604
+2025-07-08 13:52:18,818 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 111 specific dates ---
+2025-07-08 13:52:19,482 - INFO - Fetching Sentinel-2 collection for dates 2018-01-05 to 2018-01-13
+2025-07-08 13:52:20,144 - INFO - Fetching Sentinel-2 collection for dates 2018-02-22 to 2018-03-02
+2025-07-08 13:52:20,764 - INFO - Fetching Sentinel-2 collection for dates 2019-01-08 to 2019-01-16
+2025-07-08 13:52:21,405 - INFO - Fetching Sentinel-2 collection for dates 2019-01-24 to 2019-02-01
+2025-07-08 13:52:22,037 - INFO - Fetching Sentinel-2 collection for dates 2019-02-09 to 2019-02-17
+2025-07-08 13:52:23,417 - INFO - Fetching Sentinel-2 collection for dates 2019-02-25 to 2019-03-05
+2025-07-08 13:52:24,909 - INFO - Fetching Sentinel-2 collection for dates 2019-03-29 to 2019-04-06
+2025-07-08 13:52:26,448 - INFO - Fetching Sentinel-2 collection for dates 2019-04-14 to 2019-04-22
+2025-07-08 13:52:27,079 - INFO - Fetching Sentinel-2 collection for dates 2019-04-30 to 2019-05-08
+2025-07-08 13:52:27,755 - INFO - Fetching Sentinel-2 collection for dates 2019-05-16 to 2019-05-24
+2025-07-08 13:52:28,335 - INFO - Fetching Sentinel-2 collection for dates 2019-06-17 to 2019-06-25
+2025-07-08 13:52:29,724 - INFO - Fetching Sentinel-2 collection for dates 2019-07-03 to 2019-07-11
+2025-07-08 13:52:30,370 - INFO - Fetching Sentinel-2 collection for dates 2019-07-19 to 2019-07-27
+2025-07-08 13:52:32,594 - INFO - Fetching Sentinel-2 collection for dates 2019-08-04 to 2019-08-12
+2025-07-08 13:52:34,007 - INFO - Fetching Sentinel-2 collection for dates 2019-09-05 to 2019-09-13
+2025-07-08 13:52:34,589 - INFO - Fetching Sentinel-2 collection for dates 2019-09-21 to 2019-09-29
+2025-07-08 13:52:35,193 - INFO - Fetching Sentinel-2 collection for dates 2019-10-07 to 2019-10-15
+2025-07-08 13:52:35,740 - INFO - Fetching Sentinel-2 collection for dates 2019-10-23 to 2019-10-31
+2025-07-08 13:52:36,541 - INFO - Fetching Sentinel-2 collection for dates 2019-12-10 to 2019-12-18
+2025-07-08 13:52:38,016 - INFO - Fetching Sentinel-2 collection for dates 2019-12-26 to 2020-01-03
+2025-07-08 13:52:38,761 - INFO - Fetching Sentinel-2 collection for dates 2020-01-11 to 2020-01-19
+2025-07-08 13:52:39,433 - INFO - Fetching Sentinel-2 collection for dates 2020-02-12 to 2020-02-20
+2025-07-08 13:52:40,894 - INFO - Fetching Sentinel-2 collection for dates 2020-02-28 to 2020-03-07
+2025-07-08 13:52:42,327 - INFO - Fetching Sentinel-2 collection for dates 2020-03-15 to 2020-03-23
+2025-07-08 13:52:42,961 - INFO - Fetching Sentinel-2 collection for dates 2020-03-31 to 2020-04-08
+2025-07-08 13:52:43,495 - INFO - Fetching Sentinel-2 collection for dates 2020-05-02 to 2020-05-10
+2025-07-08 13:52:44,046 - INFO - Fetching Sentinel-2 collection for dates 2020-05-18 to 2020-05-26
+2025-07-08 13:52:45,429 - INFO - Fetching Sentinel-2 collection for dates 2020-06-03 to 2020-06-11
+2025-07-08 13:52:45,934 - INFO - Fetching Sentinel-2 collection for dates 2020-06-19 to 2020-06-27
+2025-07-08 13:52:46,635 - INFO - Fetching Sentinel-2 collection for dates 2020-07-21 to 2020-07-29
+2025-07-08 13:52:47,265 - INFO - Fetching Sentinel-2 collection for dates 2020-08-06 to 2020-08-14
+2025-07-08 13:52:49,346 - INFO - Fetching Sentinel-2 collection for dates 2020-08-22 to 2020-08-30
+2025-07-08 13:52:49,788 - INFO - Fetching Sentinel-2 collection for dates 2020-09-07 to 2020-09-15
+2025-07-08 13:52:51,090 - INFO - Fetching Sentinel-2 collection for dates 2020-10-09 to 2020-10-17
+2025-07-08 13:52:52,525 - INFO - Fetching Sentinel-2 collection for dates 2020-10-25 to 2020-11-02
+2025-07-08 13:52:53,031 - INFO - Fetching Sentinel-2 collection for dates 2020-12-28 to 2021-01-05
+2025-07-08 13:52:53,594 - INFO - Fetching Sentinel-2 collection for dates 2021-01-13 to 2021-01-21
+2025-07-08 13:52:54,112 - INFO - Fetching Sentinel-2 collection for dates 2021-01-29 to 2021-02-06
+2025-07-08 13:52:55,524 - INFO - Fetching Sentinel-2 collection for dates 2021-02-14 to 2021-02-22
+2025-07-08 13:52:56,078 - INFO - Fetching Sentinel-2 collection for dates 2021-03-18 to 2021-03-26
+2025-07-08 13:52:56,597 - INFO - Fetching Sentinel-2 collection for dates 2021-04-03 to 2021-04-11
+2025-07-08 13:52:57,922 - INFO - Fetching Sentinel-2 collection for dates 2021-04-19 to 2021-04-27
+2025-07-08 13:52:58,422 - INFO - Fetching Sentinel-2 collection for dates 2021-05-05 to 2021-05-13
+2025-07-08 13:52:58,934 - INFO - Fetching Sentinel-2 collection for dates 2021-06-06 to 2021-06-14
+2025-07-08 13:52:59,435 - INFO - Fetching Sentinel-2 collection for dates 2021-06-22 to 2021-06-30
+2025-07-08 13:53:00,791 - INFO - Fetching Sentinel-2 collection for dates 2021-07-08 to 2021-07-16
+2025-07-08 13:53:01,278 - INFO - Fetching Sentinel-2 collection for dates 2021-07-24 to 2021-08-01
+2025-07-08 13:53:01,914 - INFO - Fetching Sentinel-2 collection for dates 2021-08-25 to 2021-09-02
+2025-07-08 13:53:03,276 - INFO - Fetching Sentinel-2 collection for dates 2021-09-10 to 2021-09-18
+2025-07-08 13:53:04,619 - INFO - Fetching Sentinel-2 collection for dates 2021-09-26 to 2021-10-04
+2025-07-08 13:53:05,445 - INFO - Fetching Sentinel-2 collection for dates 2021-11-13 to 2021-11-21
+2025-07-08 13:53:05,939 - INFO - Fetching Sentinel-2 collection for dates 2021-11-29 to 2021-12-07
+2025-07-08 13:53:06,421 - INFO - Fetching Sentinel-2 collection for dates 2021-12-31 to 2022-01-08
+2025-07-08 13:53:07,859 - INFO - Fetching Sentinel-2 collection for dates 2022-02-01 to 2022-02-09
+2025-07-08 13:53:09,213 - INFO - Fetching Sentinel-2 collection for dates 2022-03-05 to 2022-03-13
+2025-07-08 13:53:09,763 - INFO - Fetching Sentinel-2 collection for dates 2022-03-21 to 2022-03-29
+2025-07-08 13:55:33,640 - INFO - Loaded grid GeoJSON from: Grid_50K_MatchedDates.geojson containing 604 features.
+2025-07-08 13:55:33,640 - INFO - Processing feature 1/604
+2025-07-08 13:55:33,641 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 13:55:34,212 - INFO - Fetching Sentinel-2 collection for dates 2018-01-07 to 2018-01-11
+2025-07-08 13:55:34,760 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 13:55:35,905 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 13:55:36,473 - INFO - Created output folder for downloads: s2_data_output/D-49-49-A/D-49-49-A_S2_8days
+2025-07-08 13:55:40,954 - CRITICAL - An error occurred during the example run: Total request size (279023616 bytes) must be less than or equal to 50331648 bytes.
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 408, in _execute_cloud_call
+    return call.execute(num_retries=num_retries)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json returned "Total request size (279023616 bytes) must be less than or equal to 50331648 bytes.". Details: "Total request size (279023616 bytes) must be less than or equal to 50331648 bytes.">
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/ndvi_retrieval.py", line 322, in <module>
+    main_s2_retrieval(target_composite_dates, roi_geometry, roi_name, big_folder)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/ndvi_retrieval.py", line 263, in main_s2_retrieval
+    download_s2_bands(valid_s2_composites, big_folder, roi, 'S2_8days_', roi_name, f'{roi_name.split("_")[0]}_S2_8days')
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/ndvi_retrieval.py", line 139, in download_s2_bands
+    download_url = image_to_download.getDownloadURL(params)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/image.py", line 510, in getDownloadURL
+    return data.makeDownloadUrl(data.getDownloadId(request))
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 1380, in getDownloadId
+    result = _execute_cloud_call(
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 410, in _execute_cloud_call
+    raise _translate_cloud_exception(e)  # pylint: disable=raise-missing-from
+ee.ee_exception.EEException: Total request size (279023616 bytes) must be less than or equal to 50331648 bytes.
+2025-07-08 13:55:40,958 - INFO - Example run finished.
+2025-07-08 14:01:49,811 - INFO - Loaded grid GeoJSON from: Grid_50K_MatchedDates.geojson containing 604 features.
+2025-07-08 14:01:49,811 - INFO - Processing feature 1/604
+2025-07-08 14:01:49,812 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 14:01:51,192 - INFO - Fetching Sentinel-2 collection for dates 2018-01-07 to 2018-01-11
+2025-07-08 14:01:51,768 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 14:01:52,227 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 14:01:54,938 - INFO - Starting per-band download for 2018-01-09 (attempt 1/3)...
+2025-07-08 14:02:43,006 - INFO - All bands for 2018-01-09 downloaded. Merging into single GeoTIFF...
+2025-07-08 14:02:43,013 - INFO - GDAL signalled an error: err_no=4, msg="`/tmp/tmpajxwlbqd/B4.tif' not recognized as being in a supported file format."
+2025-07-08 14:02:43,014 - ERROR - Unhandled error during download or processing for 2018-01-09 (attempt 1/3): '/tmp/tmpajxwlbqd/B4.tif' not recognized as being in a supported file format.
+Traceback (most recent call last):
+  File "rasterio/_base.pyx", line 310, in rasterio._base.DatasetBase.__init__
+  File "rasterio/_base.pyx", line 221, in rasterio._base.open_dataset
+  File "rasterio/_err.pyx", line 359, in rasterio._err.exc_wrap_pointer
+rasterio._err.CPLE_OpenFailedError: '/tmp/tmpajxwlbqd/B4.tif' not recognized as being in a supported file format.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/ndvi_retrieval.py", line 169, in download_s2_bands
+    with rasterio.open(downloaded_band_paths[0]) as src0:
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/rasterio/env.py", line 463, in wrapper
+    return f(*args, **kwds)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/rasterio/__init__.py", line 356, in open
+    dataset = DatasetReader(path, driver=driver, sharing=sharing, **kwargs)
+  File "rasterio/_base.pyx", line 312, in rasterio._base.DatasetBase.__init__
+rasterio.errors.RasterioIOError: '/tmp/tmpajxwlbqd/B4.tif' not recognized as being in a supported file format.
+2025-07-08 14:02:43,019 - INFO - Retrying download for 2018-01-09...
+2025-07-08 14:02:48,024 - INFO - Starting per-band download for 2018-01-09 (attempt 2/3)...
+2025-07-08 14:03:38,038 - INFO - All bands for 2018-01-09 downloaded. Merging into single GeoTIFF...
+2025-07-08 14:03:38,040 - INFO - GDAL signalled an error: err_no=4, msg="`/tmp/tmplieo1ssz/B4.tif' not recognized as being in a supported file format."
+2025-07-08 14:03:38,040 - ERROR - Unhandled error during download or processing for 2018-01-09 (attempt 2/3): '/tmp/tmplieo1ssz/B4.tif' not recognized as being in a supported file format.
+Traceback (most recent call last):
+  File "rasterio/_base.pyx", line 310, in rasterio._base.DatasetBase.__init__
+  File "rasterio/_base.pyx", line 221, in rasterio._base.open_dataset
+  File "rasterio/_err.pyx", line 359, in rasterio._err.exc_wrap_pointer
+rasterio._err.CPLE_OpenFailedError: '/tmp/tmplieo1ssz/B4.tif' not recognized as being in a supported file format.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/ndvi_retrieval.py", line 169, in download_s2_bands
+    with rasterio.open(downloaded_band_paths[0]) as src0:
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/rasterio/env.py", line 463, in wrapper
+    return f(*args, **kwds)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/rasterio/__init__.py", line 356, in open
+    dataset = DatasetReader(path, driver=driver, sharing=sharing, **kwargs)
+  File "rasterio/_base.pyx", line 312, in rasterio._base.DatasetBase.__init__
+rasterio.errors.RasterioIOError: '/tmp/tmplieo1ssz/B4.tif' not recognized as being in a supported file format.
+2025-07-08 14:03:38,044 - INFO - Retrying download for 2018-01-09...
+2025-07-08 14:03:48,055 - INFO - Starting per-band download for 2018-01-09 (attempt 3/3)...
+2025-07-08 14:04:36,528 - INFO - All bands for 2018-01-09 downloaded. Merging into single GeoTIFF...
+2025-07-08 14:04:36,529 - INFO - GDAL signalled an error: err_no=4, msg="`/tmp/tmpk07fnc5b/B4.tif' not recognized as being in a supported file format."
+2025-07-08 14:04:36,529 - ERROR - Unhandled error during download or processing for 2018-01-09 (attempt 3/3): '/tmp/tmpk07fnc5b/B4.tif' not recognized as being in a supported file format.
+Traceback (most recent call last):
+  File "rasterio/_base.pyx", line 310, in rasterio._base.DatasetBase.__init__
+  File "rasterio/_base.pyx", line 221, in rasterio._base.open_dataset
+  File "rasterio/_err.pyx", line 359, in rasterio._err.exc_wrap_pointer
+rasterio._err.CPLE_OpenFailedError: '/tmp/tmpk07fnc5b/B4.tif' not recognized as being in a supported file format.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/ndvi_retrieval.py", line 169, in download_s2_bands
+    logging.warning(f"GEE Error Payload: {error_payload}")
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/rasterio/env.py", line 463, in wrapper
+    return f(*args, **kwds)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/rasterio/__init__.py", line 356, in open
+    dataset = DatasetReader(path, driver=driver, sharing=sharing, **kwargs)
+  File "rasterio/_base.pyx", line 312, in rasterio._base.DatasetBase.__init__
+rasterio.errors.RasterioIOError: '/tmp/tmpk07fnc5b/B4.tif' not recognized as being in a supported file format.
+2025-07-08 14:04:36,534 - ERROR - Failed to download and process S2 bands for 2018-01-09 after 3 attempts.
+2025-07-08 14:04:36,535 - INFO - --- S2 retrieval process finished for ROI 'D-49-49-A'. ---
+2025-07-08 14:04:36,536 - INFO - Example run finished.
+2025-07-08 14:05:50,192 - INFO - Loaded grid GeoJSON from: Grid_50K_MatchedDates.geojson containing 604 features.
+2025-07-08 14:05:50,192 - INFO - Processing feature 1/604
+2025-07-08 14:05:50,193 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 14:05:52,324 - INFO - Fetching Sentinel-2 collection for dates 2018-01-07 to 2018-01-11
+2025-07-08 14:05:53,861 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 14:05:54,351 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 14:05:57,349 - INFO - Starting per-band download for 2018-01-09 (attempt 1/3)...
+2025-07-08 14:06:08,209 - WARNING - Download failed for band B4 of 2018-01-09 (Status: 200). Expected image, got 'application/zip'.
+2025-07-08 14:06:08,936 - WARNING - GEE Response Content (first 500 chars): PK
+    � �Z p��N N    download.B4.tifMM *         �      �       @      ��                       �       �(       B       C       D       �E       S       ��      `��      �                      � �) �r �B ս 
+� �z �� �q �X �� �& 	� Da o� �� � �I >� �{ �Z �c &U � �� �w JW ;z :� +#  ހ?1�^n�                @Z��CeW<        �1�^n�        @+���a                                            
+2025-07-08 14:06:08,937 - INFO - Retrying download for 2018-01-09...
+2025-07-08 14:06:13,941 - INFO - Starting per-band download for 2018-01-09 (attempt 2/3)...
+2025-07-08 14:06:27,298 - WARNING - Download failed for band B4 of 2018-01-09 (Status: 200). Expected image, got 'application/zip'.
+2025-07-08 14:06:27,896 - WARNING - GEE Response Content (first 500 chars): PK
+    � �Z p��N N    download.B4.tifMM *         �      �       @      ��                       �       �(       B       C       D       �E       S       ��      `��      �                      � �) �r �B ս 
+� �z �� �q �X �� �& 	� Da o� �� � �I >� �{ �Z �c &U � �� �w JW ;z :� +#  ހ?1�^n�                @Z��CeW<        �1�^n�        @+���a                                            
+2025-07-08 14:06:27,896 - INFO - Retrying download for 2018-01-09...
+2025-07-08 14:06:37,907 - INFO - Starting per-band download for 2018-01-09 (attempt 3/3)...
+2025-07-08 14:06:49,738 - WARNING - Download failed for band B4 of 2018-01-09 (Status: 200). Expected image, got 'application/zip'.
+2025-07-08 14:06:50,341 - WARNING - GEE Response Content (first 500 chars): PK
+    � �Z p��N N    download.B4.tifMM *         �      �       @      ��                       �       �(       B       C       D       �E       S       ��      `��      �                      � �) �r �B ս 
+� �z �� �q �X �� �& 	� Da o� �� � �I >� �{ �Z �c &U � �� �w JW ;z :� +#  ހ?1�^n�                @Z��CeW<        �1�^n�        @+���a                                            
+2025-07-08 14:06:50,342 - ERROR - Failed to download and process S2 bands for 2018-01-09 after 3 attempts.
+2025-07-08 14:06:50,342 - INFO - --- S2 retrieval process finished for ROI 'D-49-49-A'. ---
+2025-07-08 14:06:50,343 - INFO - Example run finished.
+2025-07-08 14:08:20,945 - INFO - Loaded grid GeoJSON from: Grid_50K_MatchedDates.geojson containing 604 features.
+2025-07-08 14:08:20,945 - INFO - Processing feature 1/604
+2025-07-08 14:08:20,946 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 14:08:23,056 - INFO - Fetching Sentinel-2 collection for dates 2018-01-09 to 2018-01-09
+2025-07-08 14:08:24,289 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 14:08:24,773 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 14:08:30,626 - INFO - Starting per-band download for 2018-01-09 (attempt 1/3)...
+2025-07-08 14:08:43,493 - INFO - Received ZIP file for band B4, unpacking...
+2025-07-08 14:08:56,273 - INFO - Received ZIP file for band B3, unpacking...
+2025-07-08 14:09:08,354 - INFO - Received ZIP file for band B2, unpacking...
+2025-07-08 14:09:19,135 - INFO - Received ZIP file for band B8, unpacking...
+2025-07-08 14:09:19,148 - INFO - All bands for 2018-01-09 downloaded. Merging into single GeoTIFF...
+2025-07-08 14:09:21,337 - INFO - Successfully created multi-band GeoTIFF for 2018-01-09 at s2_data_output/D-49-49-A/D-49-49-A_S2_8days/S2_8days_2018-01-09.tif
+2025-07-08 14:09:21,351 - INFO - --- S2 retrieval process finished for ROI 'D-49-49-A'. ---
+2025-07-08 14:09:21,352 - INFO - Example run finished.
+2025-07-08 14:18:11,292 - INFO - Loaded grid GeoJSON from: Grid_50K_MatchedDates.geojson containing 604 features.
+2025-07-08 14:18:11,292 - INFO - Processing feature 1/604
+2025-07-08 14:18:11,293 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 14:18:11,841 - INFO - Fetching Sentinel-2 collection for dates 2018-01-09 to 2018-01-09
+2025-07-08 14:18:13,058 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 14:18:13,788 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 14:18:15,929 - INFO - Skipping download for 2018-01-09, file already exists: s2_data_output/D-49-49-A/D-49-49-A_S2_8days/S2_8days_2018-01-09.tif
+2025-07-08 14:18:15,929 - INFO - --- S2 retrieval process finished for ROI 'D-49-49-A'. ---
+2025-07-08 14:18:15,930 - INFO - Example run finished.
+2025-07-08 14:41:51,796 - INFO - Earth Engine initialized successfully.
+2025-07-08 14:41:51,797 - INFO - Searching for feature with PhienHieu 'D-49-49-A' in Grid_50K_MatchedDates.geojson...
+2025-07-08 14:41:51,847 - INFO - Feature 'D-49-49-A' found.
+2025-07-08 14:41:51,849 - INFO - ==================================================
+2025-07-08 14:41:51,849 - INFO - Starting LST data retrieval for ROI 'D-49-49-A'...
+2025-07-08 14:41:51,850 - INFO - LST retrieval period: 2018-01-09 to 2025-06-21
+2025-07-08 15:05:59,543 - INFO - Earth Engine initialized successfully.
+2025-07-08 15:05:59,543 - INFO - Searching for feature with PhienHieu 'D-49-49-A' in Grid_50K_MatchedDates.geojson...
+2025-07-08 15:05:59,592 - INFO - Feature 'D-49-49-A' found.
+2025-07-08 15:05:59,593 - INFO - ==================================================
+2025-07-08 15:05:59,593 - INFO - Starting LST data retrieval for ROI 'D-49-49-A'...
+2025-07-08 15:05:59,593 - INFO - LST retrieval period (TEST MODE): 2018-01-09 to 2018-01-09
+2025-07-08 15:06:00,050 - CRITICAL - An error occurred during LST retrieval for 'D-49-49-A': Collection.reduceColumns: Empty date ranges not supported for the current operation.
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 408, in _execute_cloud_call
+    return call.execute(num_retries=num_retries)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json returned "Collection.reduceColumns: Empty date ranges not supported for the current operation.". Details: "Collection.reduceColumns: Empty date ranges not supported for the current operation.">
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/data_retrieval_orchestrator.py", line 114, in main
+    lst_retrive(start_date_lst, end_date_lst, roi_geometry_ee, roi_name, args.output_folder)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/lst_retrieval.py", line 30, in lst_retrive
+    imageCount = LandsatColl.size().getInfo()
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/computedobject.py", line 107, in getInfo
+    return data.computeValue(self)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 1128, in computeValue
+    return _execute_cloud_call(
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 410, in _execute_cloud_call
+    raise _translate_cloud_exception(e)  # pylint: disable=raise-missing-from
+ee.ee_exception.EEException: Collection.reduceColumns: Empty date ranges not supported for the current operation.
+2025-07-08 15:06:00,051 - INFO - ==================================================
+2025-07-08 15:06:00,052 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-49-A'...
+2025-07-08 15:06:00,052 - INFO - Requesting S2 composites for 1 specific date (TEST MODE).
+2025-07-08 15:06:00,052 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 15:06:00,759 - INFO - Fetching Sentinel-2 collection for dates 2018-01-09 to 2018-01-09
+2025-07-08 15:06:01,215 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 15:06:01,733 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 15:06:02,333 - INFO - Created output folder for downloads: retrieved_data/D-49-49-A/D-49-49-A_S2_8days
+2025-07-08 15:06:05,028 - INFO - Starting per-band download for 2018-01-09 (attempt 1/3)...
+2025-07-08 15:06:16,977 - INFO - Received ZIP file for band B4, unpacking...
+2025-07-08 15:06:32,207 - INFO - Received ZIP file for band B3, unpacking...
+2025-07-08 15:06:44,792 - INFO - Received ZIP file for band B2, unpacking...
+2025-07-08 15:06:56,627 - INFO - Received ZIP file for band B8, unpacking...
+2025-07-08 15:06:56,640 - INFO - All bands for 2018-01-09 downloaded. Merging into single GeoTIFF...
+2025-07-08 15:06:58,837 - INFO - Successfully created multi-band GeoTIFF for 2018-01-09 at retrieved_data/D-49-49-A/D-49-49-A_S2_8days/S2_8days_2018-01-09.tif
+2025-07-08 15:06:58,841 - INFO - --- S2 retrieval process finished for ROI 'D-49-49-A'. ---
+2025-07-08 15:06:58,842 - INFO - Sentinel-2 data retrieval finished for ROI 'D-49-49-A'.
+2025-07-08 15:06:58,842 - INFO - ==================================================
+2025-07-08 15:06:58,842 - INFO - Data retrieval orchestration finished.
+2025-07-08 15:09:39,633 - INFO - Earth Engine initialized successfully.
+2025-07-08 15:09:39,633 - INFO - Searching for feature with PhienHieu 'D-49-49-A' in Grid_50K_MatchedDates.geojson...
+2025-07-08 15:09:39,676 - INFO - Feature 'D-49-49-A' found.
+2025-07-08 15:09:39,677 - INFO - ==================================================
+2025-07-08 15:09:39,677 - INFO - Starting LST data retrieval for ROI 'D-49-49-A'...
+2025-07-08 15:09:39,677 - INFO - LST retrieval period (TEST MODE): 2018-01-09 to 2018-01-25
+2025-07-08 15:09:43,695 - INFO - LST data retrieval finished for ROI 'D-49-49-A'.
+2025-07-08 15:09:43,696 - INFO - ==================================================
+2025-07-08 15:09:43,696 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-49-A'...
+2025-07-08 15:09:43,696 - INFO - Requesting S2 composites for 1 specific date (TEST MODE).
+2025-07-08 15:09:43,696 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 15:09:44,229 - INFO - Fetching Sentinel-2 collection for dates 2018-01-09 to 2018-01-09
+2025-07-08 15:09:44,786 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 15:09:45,311 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 15:09:48,291 - INFO - Skipping download for 2018-01-09, file already exists: retrieved_data/D-49-49-A/D-49-49-A_S2_8days/S2_8days_2018-01-09.tif
+2025-07-08 15:09:48,292 - INFO - --- S2 retrieval process finished for ROI 'D-49-49-A'. ---
+2025-07-08 15:09:48,292 - INFO - Sentinel-2 data retrieval finished for ROI 'D-49-49-A'.
+2025-07-08 15:09:48,292 - INFO - ==================================================
+2025-07-08 15:09:48,292 - INFO - Data retrieval orchestration finished.
+2025-07-08 15:10:20,934 - INFO - Earth Engine initialized successfully.
+2025-07-08 15:10:20,935 - INFO - Searching for feature with PhienHieu 'D-49-49-A' in Grid_50K_MatchedDates.geojson...
+2025-07-08 15:10:20,977 - INFO - Feature 'D-49-49-A' found.
+2025-07-08 15:10:20,978 - INFO - ==================================================
+2025-07-08 15:10:20,978 - INFO - Starting LST data retrieval for ROI 'D-49-49-A'...
+2025-07-08 15:10:20,979 - INFO - LST retrieval period (TEST MODE): 2018-01-09 to 2018-01-25
+2025-07-08 15:10:28,106 - INFO - LST data retrieval finished for ROI 'D-49-49-A'.
+2025-07-08 15:10:28,106 - INFO - ==================================================
+2025-07-08 15:10:28,106 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-49-A'...
+2025-07-08 15:10:28,106 - INFO - Requesting S2 composites for 1 specific date (TEST MODE).
+2025-07-08 15:10:28,107 - INFO - --- Starting S2 retrieval process for ROI 'D-49-49-A' for 1 specific dates ---
+2025-07-08 15:10:28,635 - INFO - Fetching Sentinel-2 collection for dates 2018-01-09 to 2018-01-09
+2025-07-08 15:10:29,127 - INFO - Initial Sentinel-2 collection size (before cloud masking): 2
+2025-07-08 15:10:29,764 - INFO - Found 1 valid 8-day S2 composites for ROI 'D-49-49-A' for download.
+2025-07-08 15:10:30,244 - INFO - Created output folder for downloads: retrieved_data/D-49-49-A/D-49-49-A_S2_8days
+2025-07-08 15:10:32,716 - INFO - Starting per-band download for 2018-01-09 (attempt 1/3)...
+2025-07-08 15:10:46,463 - INFO - Received ZIP file for band B4, unpacking...
+2025-07-08 15:11:01,355 - INFO - Received ZIP file for band B3, unpacking...
+2025-07-08 15:11:15,303 - INFO - Received ZIP file for band B2, unpacking...
+2025-07-08 15:11:23,338 - INFO - Received ZIP file for band B8, unpacking...
+2025-07-08 15:11:23,351 - INFO - All bands for 2018-01-09 downloaded. Merging into single GeoTIFF...
+2025-07-08 15:11:25,543 - INFO - Successfully created multi-band GeoTIFF for 2018-01-09 at retrieved_data/D-49-49-A/D-49-49-A_S2_8days/S2_8days_2018-01-09.tif
+2025-07-08 15:11:25,549 - INFO - --- S2 retrieval process finished for ROI 'D-49-49-A'. ---
+2025-07-08 15:11:25,549 - INFO - Sentinel-2 data retrieval finished for ROI 'D-49-49-A'.
+2025-07-08 15:11:25,549 - INFO - ==================================================
+2025-07-08 15:11:25,549 - INFO - Data retrieval orchestration finished.
+2025-07-08 15:20:57,654 - INFO - Skipping S2 download for 2018-01-09: file already exists.
+2025-07-08 15:27:06,065 - INFO - Skipping S2 download for 2018-01-09: file already exists.
+2025-07-08 15:28:05,770 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-07-08 15:28:58,893 - INFO - Successfully downloaded S2 image for 2019-01-12.
+2025-07-08 15:30:07,149 - INFO - Successfully downloaded S2 image for 2019-01-28.
+2025-07-08 15:30:53,426 - INFO - Successfully downloaded S2 image for 2019-02-13.
+2025-07-08 15:31:44,658 - INFO - Successfully downloaded S2 image for 2019-03-01.
+2025-07-08 15:32:36,610 - INFO - Successfully downloaded S2 image for 2019-04-02.
+2025-07-08 15:33:11,171 - INFO - Successfully downloaded S2 image for 2019-04-18.
+2025-07-08 15:34:05,054 - INFO - Successfully downloaded S2 image for 2019-05-04.
+2025-07-08 15:35:08,350 - INFO - Successfully downloaded S2 image for 2019-05-20.
+2025-07-08 15:39:38,752 - INFO - Successfully downloaded S2 image for 2018-01-09.
+2025-07-08 15:40:35,316 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-07-08 15:41:27,108 - INFO - Successfully downloaded S2 image for 2019-01-12.
+2025-07-08 15:42:33,345 - INFO - Successfully downloaded S2 image for 2019-01-28.
+2025-07-08 15:43:18,817 - INFO - Successfully downloaded S2 image for 2019-02-13.
+2025-07-08 15:44:05,782 - INFO - Successfully downloaded S2 image for 2019-03-01.
+2025-07-08 15:44:59,622 - INFO - Successfully downloaded S2 image for 2019-04-02.
+2025-07-08 15:47:37,050 - CRITICAL - An error occurred during Sentinel-2 retrieval for 'D-49-49-A': Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 408, in _execute_cloud_call
+    return call.execute(num_retries=num_retries)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json returned "Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^". Details: "Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^">
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/data_retrieval_orchestrator.py", line 133, in main
+    main_s2_retrieval(target_composite_dates_s2, roi_geometry_ee, roi_name, args.output_folder)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/s2_retrieval.py", line 277, in main_s2_retrieval
+    valid_composites_count = valid_s2_composites.size().getInfo()
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/computedobject.py", line 107, in getInfo
+    return data.computeValue(self)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 1128, in computeValue
+    return _execute_cloud_call(
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 410, in _execute_cloud_call
+    raise _translate_cloud_exception(e)  # pylint: disable=raise-missing-from
+ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^
+2025-07-08 15:58:48,144 - CRITICAL - An error occurred during Sentinel-2 retrieval for 'D-49-49-A': Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 408, in _execute_cloud_call
+    return call.execute(num_retries=num_retries)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json returned "Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^". Details: "Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^">
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/data_retrieval_orchestrator.py", line 133, in main
+    main_s2_retrieval(target_composite_dates_s2, roi_geometry_ee, roi_name, args.output_folder)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/s2_retrieval.py", line 278, in main_s2_retrieval
+    valid_composites_count = valid_s2_composites.size().getInfo()
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/computedobject.py", line 107, in getInfo
+    return data.computeValue(self)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 1128, in computeValue
+    return _execute_cloud_call(
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 410, in _execute_cloud_call
+    raise _translate_cloud_exception(e)  # pylint: disable=raise-missing-from
+ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^
+2025-07-08 16:06:29,270 - CRITICAL - An error occurred during Sentinel-2 retrieval for 'D-49-49-A': Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 408, in _execute_cloud_call
+    return call.execute(num_retries=num_retries)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json returned "Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^". Details: "Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^">
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/data_retrieval_orchestrator.py", line 133, in main
+    main_s2_retrieval(target_composite_dates_s2, roi_geometry_ee, roi_name, args.output_folder)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/s2_retrieval.py", line 278, in main_s2_retrieval
+    valid_composites_count = valid_s2_composites.size().getInfo()
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/computedobject.py", line 107, in getInfo
+    return data.computeValue(self)
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 1128, in computeValue
+    return _execute_cloud_call(
+  File "/mnt/hdd12tb/code/nhatvm/DELAG_main/.venv/lib/python3.10/site-packages/ee/data.py", line 410, in _execute_cloud_call
+    raise _translate_cloud_exception(e)  # pylint: disable=raise-missing-from
+ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
+: {"constantValue": NaN}}}}, "22": {"fun
+                    ^
+2025-07-08 16:11:13,076 - INFO - Successfully downloaded S2 image for 2018-01-09.
+2025-07-08 16:12:09,483 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-07-08 16:14:59,979 - INFO - Successfully downloaded S2 image for 2018-01-09.
+2025-07-08 16:15:50,190 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-07-08 16:16:49,435 - INFO - Successfully downloaded S2 image for 2019-01-12.
+2025-07-08 16:17:47,949 - INFO - Successfully downloaded S2 image for 2019-01-28.
+2025-07-08 16:41:40,656 - INFO - Skipping S2 download for 2018-01-09: file already exists.
+2025-07-08 16:41:43,320 - INFO - Skipping S2 download for 2018-02-26: file already exists.
+2025-07-08 16:41:46,176 - INFO - Skipping S2 download for 2019-01-12: file already exists.
+2025-07-08 16:41:48,989 - INFO - Skipping S2 download for 2019-01-28: file already exists.
+2025-07-08 16:42:32,871 - INFO - Successfully downloaded S2 image for 2019-02-13.
+2025-07-08 16:43:26,988 - INFO - Successfully downloaded S2 image for 2019-03-01.
+2025-07-08 16:44:16,304 - INFO - Successfully downloaded S2 image for 2019-04-02.
+2025-07-08 16:44:45,982 - INFO - Successfully downloaded S2 image for 2019-04-18.
+2025-07-08 16:45:43,968 - INFO - Successfully downloaded S2 image for 2019-05-04.
+2025-07-08 16:46:18,677 - INFO - Successfully downloaded S2 image for 2019-05-20.
+2025-07-08 17:40:49,205 - CRITICAL - Grid file not found at: Grid_50K_MatchedDates.geojson
+2025-07-08 17:51:03,676 - INFO - Skipping S2 download for 2018-01-09: file already exists.
+2025-07-08 17:51:10,787 - INFO - Skipping S2 download for 2018-02-26: file already exists.
+2025-07-08 17:51:16,969 - INFO - Skipping S2 download for 2019-01-12: file already exists.
+2025-07-08 17:51:23,376 - INFO - Skipping S2 download for 2019-01-28: file already exists.
+2025-07-08 17:51:29,155 - INFO - Skipping S2 download for 2019-02-13: file already exists.
+2025-07-08 17:51:36,320 - INFO - Skipping S2 download for 2019-03-01: file already exists.
+2025-07-08 17:51:41,407 - INFO - Skipping S2 download for 2019-04-02: file already exists.
+2025-07-08 17:51:47,752 - INFO - Skipping S2 download for 2019-04-18: file already exists.
+2025-07-08 17:51:53,466 - INFO - Skipping S2 download for 2019-05-04: file already exists.
+2025-07-08 17:51:58,814 - INFO - Skipping S2 download for 2019-05-20: file already exists.
+2025-07-08 17:53:03,405 - INFO - Successfully downloaded S2 image for 2021-09-30.
+2025-07-08 17:53:47,356 - INFO - Successfully downloaded S2 image for 2021-10-31.
+2025-07-08 17:54:44,589 - INFO - Successfully downloaded S2 image for 2021-12-03.
+2025-07-09 09:08:08,113 - CRITICAL - Grid file not found at: data_retrival_module/Grid_50K_MatchedDates.geojson
+2025-07-09 09:08:36,723 - INFO - ==================================================
+2025-07-09 09:08:36,723 - INFO - Starting LST data retrieval for ROI 'D-49-49-A'...
+2025-07-09 09:08:36,723 - INFO - LST retrieval period: 2015-01-01 to 2025-01-01
+2025-07-09 10:08:07,945 - INFO - ==================================================
+2025-07-09 10:08:07,945 - INFO - Starting LST data retrieval for ROI 'D-49-49-A'...
+2025-07-09 10:08:07,945 - INFO - LST retrieval period: 2015-01-01 to 2025-01-01
+2025-07-09 11:19:41,843 - INFO - LST data retrieval finished for ROI 'D-49-49-A'.
+2025-07-09 11:19:41,843 - INFO - ==================================================
+2025-07-09 11:19:41,843 - INFO - Starting ERA5 data retrieval for ROI 'D-49-49-A'...
+2025-07-09 11:31:09,973 - INFO - ERA5 data retrieval finished for ROI 'D-49-49-A'.
+2025-07-09 11:31:09,973 - INFO - ==================================================
+2025-07-09 11:31:09,973 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-49-A'...
+2025-07-09 11:31:09,983 - INFO - Requesting S2 composites for 281 dates based on LST files.
+2025-07-09 11:32:12,619 - INFO - Skipping S2 download for 2018-01-09: file already exists.
+2025-07-09 11:32:54,418 - INFO - Skipping S2 download for 2018-02-26: file already exists.
+2025-07-09 11:33:25,187 - INFO - Skipping S2 download for 2019-01-12: file already exists.
+2025-07-09 11:34:03,662 - INFO - Skipping S2 download for 2019-01-28: file already exists.
+2025-07-09 11:34:35,458 - INFO - Skipping S2 download for 2019-02-13: file already exists.
+2025-07-09 11:35:09,983 - INFO - Skipping S2 download for 2019-03-01: file already exists.
+2025-07-09 11:35:42,386 - INFO - Skipping S2 download for 2019-04-02: file already exists.
+2025-07-09 11:36:17,145 - INFO - Skipping S2 download for 2019-04-18: file already exists.
+2025-07-09 11:36:49,373 - INFO - Skipping S2 download for 2019-05-04: file already exists.
+2025-07-09 11:37:23,103 - INFO - Skipping S2 download for 2019-05-20: file already exists.
+2025-07-09 11:39:28,593 - INFO - Successfully downloaded S2 image for 2019-06-21.
+2025-07-09 11:40:51,409 - INFO - Successfully downloaded S2 image for 2019-07-07.
+2025-07-09 11:42:40,730 - INFO - Successfully downloaded S2 image for 2019-07-23.
+2025-07-09 11:43:56,892 - INFO - Successfully downloaded S2 image for 2019-09-09.
+2025-07-09 11:45:53,364 - INFO - Successfully downloaded S2 image for 2019-09-25.
+2025-07-09 11:48:04,410 - INFO - Successfully downloaded S2 image for 2019-10-11.
+2025-07-09 11:50:15,505 - INFO - Successfully downloaded S2 image for 2019-10-27.
+2025-07-09 11:51:48,139 - INFO - Successfully downloaded S2 image for 2019-11-28.
+2025-07-09 11:53:28,536 - INFO - Successfully downloaded S2 image for 2019-12-14.
+2025-07-09 11:55:38,167 - INFO - Successfully downloaded S2 image for 2019-12-30.
+2025-07-09 11:57:53,549 - INFO - Successfully downloaded S2 image for 2020-01-15.
+2025-07-09 12:00:06,455 - INFO - Successfully downloaded S2 image for 2020-02-16.
+2025-07-09 12:02:38,831 - INFO - Successfully downloaded S2 image for 2020-03-03.
+2025-07-09 12:05:06,745 - INFO - Successfully downloaded S2 image for 2020-03-19.
+2025-07-09 12:07:08,788 - INFO - Successfully downloaded S2 image for 2020-04-04.
+2025-07-09 12:11:24,145 - INFO - Successfully downloaded S2 image for 2020-05-06.
+2025-07-09 12:13:06,044 - INFO - Successfully downloaded S2 image for 2020-05-22.
+2025-07-09 12:15:04,236 - INFO - Successfully downloaded S2 image for 2020-06-07.
+2025-07-09 12:16:58,755 - INFO - Successfully downloaded S2 image for 2020-06-23.
+2025-07-09 12:19:05,024 - INFO - Successfully downloaded S2 image for 2020-07-25.
+2025-07-09 12:20:34,140 - INFO - Successfully downloaded S2 image for 2020-08-10.
+2025-07-10 08:47:38,772 - INFO - ==================================================
+2025-07-10 08:47:38,772 - INFO - Starting LST data retrieval for ROI 'D-49-25-A'...
+2025-07-10 08:47:38,772 - INFO - LST retrieval period: 2015-01-01 to 2025-01-01
+2025-07-10 09:25:38,994 - WARNING - Sleeping 0.34 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 503
+2025-07-10 09:42:16,491 - INFO - LST data retrieval finished for ROI 'D-49-25-A'.
+2025-07-10 09:42:16,491 - INFO - ==================================================
+2025-07-10 09:42:16,491 - INFO - Starting ERA5 data retrieval for ROI 'D-49-25-A'...
+2025-07-10 09:54:28,838 - INFO - ERA5 data retrieval finished for ROI 'D-49-25-A'.
+2025-07-10 09:54:28,838 - INFO - ==================================================
+2025-07-10 09:54:28,838 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-25-A'...
+2025-07-10 09:54:28,847 - INFO - Requesting S2 composites for 276 dates based on LST files.
+2025-07-10 09:56:35,494 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-07-10 09:58:28,979 - INFO - Successfully downloaded S2 image for 2019-01-12.
+2025-07-10 10:00:14,021 - INFO - Successfully downloaded S2 image for 2019-01-28.
+2025-07-10 10:02:06,111 - INFO - Successfully downloaded S2 image for 2019-02-13.
+2025-07-10 10:04:42,705 - INFO - Successfully downloaded S2 image for 2019-03-01.
+2025-07-10 10:06:32,093 - INFO - Successfully downloaded S2 image for 2019-04-02.
+2025-07-10 10:08:35,825 - INFO - Successfully downloaded S2 image for 2019-04-18.
+2025-07-10 10:10:43,044 - INFO - Successfully downloaded S2 image for 2019-05-04.
+2025-07-10 10:12:51,571 - INFO - Successfully downloaded S2 image for 2019-05-20.
+2025-07-10 10:14:53,725 - INFO - Successfully downloaded S2 image for 2019-06-21.
+2025-07-10 10:16:29,137 - INFO - Successfully downloaded S2 image for 2019-07-07.
+2025-07-10 10:18:24,879 - INFO - Successfully downloaded S2 image for 2019-07-23.
+2025-07-10 10:20:27,100 - INFO - Successfully downloaded S2 image for 2019-08-08.
+2025-07-10 10:22:34,296 - INFO - Successfully downloaded S2 image for 2019-09-09.
+2025-07-10 10:24:21,125 - INFO - Successfully downloaded S2 image for 2019-09-25.
+2025-07-10 10:26:06,226 - INFO - Successfully downloaded S2 image for 2019-10-11.
+2025-07-10 10:28:11,366 - INFO - Successfully downloaded S2 image for 2019-10-27.
+2025-07-10 10:29:47,721 - INFO - Successfully downloaded S2 image for 2019-12-14.
+2025-07-10 10:32:00,063 - INFO - Successfully downloaded S2 image for 2019-12-30.
+2025-07-10 10:33:42,714 - INFO - Successfully downloaded S2 image for 2020-01-15.
+2025-07-10 10:35:20,213 - INFO - Successfully downloaded S2 image for 2020-02-16.
+2025-07-10 10:37:35,504 - INFO - Successfully downloaded S2 image for 2020-03-03.
+2025-07-10 10:39:26,286 - INFO - Successfully downloaded S2 image for 2020-03-19.
+2025-07-10 10:41:24,693 - INFO - Successfully downloaded S2 image for 2020-04-04.
+2025-07-10 10:43:30,966 - INFO - Successfully downloaded S2 image for 2020-05-06.
+2025-07-10 10:45:21,216 - INFO - Successfully downloaded S2 image for 2020-06-07.
+2025-07-10 10:47:26,686 - INFO - Successfully downloaded S2 image for 2020-06-23.
+2025-07-10 10:49:37,341 - INFO - Successfully downloaded S2 image for 2020-07-25.
+2025-07-10 10:51:21,683 - INFO - Successfully downloaded S2 image for 2020-08-10.
+2025-07-10 10:53:27,457 - INFO - Successfully downloaded S2 image for 2020-08-26.
+2025-07-10 10:55:32,804 - INFO - Successfully downloaded S2 image for 2020-09-11.
+2025-07-10 10:57:05,413 - INFO - Successfully downloaded S2 image for 2020-10-29.
+2025-07-10 10:58:33,777 - INFO - Successfully downloaded S2 image for 2021-01-01.
+2025-07-10 11:00:13,408 - INFO - Successfully downloaded S2 image for 2021-01-17.
+2025-07-10 11:01:51,714 - INFO - Successfully downloaded S2 image for 2021-02-02.
+2025-07-10 11:04:24,355 - INFO - Successfully downloaded S2 image for 2021-02-18.
+2025-07-10 11:06:06,490 - INFO - Successfully downloaded S2 image for 2021-03-22.
+2025-07-10 11:08:21,335 - INFO - Successfully downloaded S2 image for 2021-04-07.
+2025-07-10 11:10:02,444 - INFO - Successfully downloaded S2 image for 2021-04-23.
+2025-07-10 11:12:16,903 - INFO - Successfully downloaded S2 image for 2021-05-09.
+2025-07-10 11:14:28,007 - INFO - Successfully downloaded S2 image for 2021-06-26.
+2025-07-10 11:16:25,066 - INFO - Successfully downloaded S2 image for 2021-07-12.
+2025-07-10 11:18:16,336 - INFO - Successfully downloaded S2 image for 2021-07-28.
+2025-07-10 11:19:49,186 - INFO - Successfully downloaded S2 image for 2021-08-29.
+2025-07-10 11:21:35,833 - INFO - Successfully downloaded S2 image for 2021-09-14.
+2025-07-10 11:23:36,966 - INFO - Successfully downloaded S2 image for 2021-09-30.
+2025-07-10 11:25:00,141 - INFO - Successfully downloaded S2 image for 2021-10-31.
+2025-07-10 11:26:44,043 - INFO - Successfully downloaded S2 image for 2021-11-17.
+2025-07-10 11:28:13,177 - INFO - Successfully downloaded S2 image for 2022-01-04.
+2025-07-10 11:30:23,740 - INFO - Successfully downloaded S2 image for 2022-01-28.
+2025-07-10 11:32:34,123 - INFO - Successfully downloaded S2 image for 2022-02-05.
+2025-07-10 11:34:37,070 - INFO - Successfully downloaded S2 image for 2022-02-13.
+2025-07-10 11:36:54,263 - INFO - Successfully downloaded S2 image for 2022-03-09.
+2025-07-10 11:39:00,069 - INFO - Successfully downloaded S2 image for 2022-03-25.
+2025-07-10 11:40:37,565 - INFO - Successfully downloaded S2 image for 2022-04-02.
+2025-07-10 11:42:38,032 - INFO - Successfully downloaded S2 image for 2022-04-18.
+2025-07-10 11:44:27,557 - INFO - Successfully downloaded S2 image for 2022-04-26.
+2025-07-10 11:46:11,549 - INFO - Successfully downloaded S2 image for 2022-05-12.
+2025-07-10 11:48:11,743 - INFO - Successfully downloaded S2 image for 2022-05-28.
+2025-07-10 11:50:26,437 - INFO - Successfully downloaded S2 image for 2022-06-05.
+2025-07-10 11:52:33,675 - INFO - Successfully downloaded S2 image for 2022-06-21.
+2025-07-10 11:54:11,074 - INFO - Successfully downloaded S2 image for 2022-07-15.
+2025-07-10 11:55:43,535 - INFO - Successfully downloaded S2 image for 2022-07-31.
+2025-07-10 11:57:30,705 - INFO - Successfully downloaded S2 image for 2022-08-16.
+2025-07-10 11:59:35,637 - INFO - Successfully downloaded S2 image for 2022-09-01.
+2025-07-10 12:01:24,179 - INFO - Successfully downloaded S2 image for 2022-09-09.
+2025-07-10 12:02:58,293 - INFO - Successfully downloaded S2 image for 2022-10-19.
+2025-07-10 12:04:56,175 - INFO - Successfully downloaded S2 image for 2022-11-04.
+2025-07-10 12:06:58,366 - INFO - Successfully downloaded S2 image for 2022-11-28.
+2025-07-10 12:08:54,972 - INFO - Successfully downloaded S2 image for 2022-12-22.
+2025-07-10 12:12:49,999 - INFO - Successfully downloaded S2 image for 2022-12-30.
+2025-07-10 12:15:25,873 - INFO - Successfully downloaded S2 image for 2023-01-31.
+2025-07-10 12:17:52,255 - INFO - Successfully downloaded S2 image for 2023-02-08.
+2025-07-10 12:19:37,143 - INFO - Successfully downloaded S2 image for 2023-02-16.
+2025-07-10 12:21:24,756 - INFO - Successfully downloaded S2 image for 2023-03-04.
+2025-07-10 12:23:12,008 - INFO - Successfully downloaded S2 image for 2023-03-12.
+2025-07-10 12:25:37,062 - INFO - Successfully downloaded S2 image for 2023-03-20.
+2025-07-10 12:27:50,877 - INFO - Successfully downloaded S2 image for 2023-03-28.
+2025-07-10 12:29:34,358 - INFO - Successfully downloaded S2 image for 2023-04-13.
+2025-07-10 12:32:27,447 - INFO - Successfully downloaded S2 image for 2023-04-21.
+2025-07-10 12:34:15,742 - INFO - Successfully downloaded S2 image for 2023-04-29.
+2025-07-10 12:36:25,675 - INFO - Successfully downloaded S2 image for 2023-05-07.
+2025-07-10 12:38:24,129 - INFO - Successfully downloaded S2 image for 2023-05-23.
+2025-07-10 12:40:09,903 - INFO - Successfully downloaded S2 image for 2023-05-31.
+2025-07-10 12:42:08,434 - INFO - Successfully downloaded S2 image for 2023-06-16.
+2025-07-10 12:43:43,967 - INFO - Successfully downloaded S2 image for 2023-07-02.
+2025-07-10 12:47:43,038 - INFO - Successfully downloaded S2 image for 2023-07-10.
+2025-07-10 12:49:16,413 - INFO - Successfully downloaded S2 image for 2023-07-26.
+2025-07-10 12:50:51,527 - INFO - Successfully downloaded S2 image for 2023-08-11.
+2025-07-10 12:52:44,971 - INFO - Successfully downloaded S2 image for 2023-08-19.
+2025-07-10 12:54:12,581 - INFO - Successfully downloaded S2 image for 2023-08-27.
+2025-07-10 12:56:03,511 - INFO - Successfully downloaded S2 image for 2023-09-04.
+2025-07-10 12:57:52,777 - INFO - Successfully downloaded S2 image for 2023-09-20.
+2025-07-10 12:59:23,247 - INFO - Successfully downloaded S2 image for 2023-09-28.
+2025-07-10 13:01:24,481 - INFO - Successfully downloaded S2 image for 2023-10-06.
+2025-07-10 13:02:50,382 - INFO - Successfully downloaded S2 image for 2023-10-14.
+2025-07-10 13:04:37,793 - INFO - Successfully downloaded S2 image for 2023-11-07.
+2025-07-10 13:06:25,501 - INFO - Successfully downloaded S2 image for 2023-12-17.
+2025-07-10 13:07:55,896 - INFO - Successfully downloaded S2 image for 2023-12-25.
+2025-07-10 13:09:27,107 - INFO - Successfully downloaded S2 image for 2024-01-02.
+2025-07-10 13:11:30,555 - INFO - Successfully downloaded S2 image for 2024-01-18.
+2025-07-10 13:13:07,059 - INFO - Successfully downloaded S2 image for 2024-01-26.
+2025-07-10 13:15:25,450 - INFO - Successfully downloaded S2 image for 2024-02-03.
+2025-07-10 13:16:56,269 - INFO - Successfully downloaded S2 image for 2024-02-11.
+2025-07-10 13:18:21,361 - INFO - Successfully downloaded S2 image for 2024-02-27.
+2025-07-10 13:20:31,539 - INFO - Successfully downloaded S2 image for 2024-03-06.
+2025-07-10 13:22:12,086 - INFO - Successfully downloaded S2 image for 2024-03-14.
+2025-07-10 13:24:10,753 - INFO - Successfully downloaded S2 image for 2024-03-22.
+2025-07-10 13:26:39,826 - INFO - Successfully downloaded S2 image for 2024-04-07.
+2025-07-10 13:29:13,428 - INFO - Successfully downloaded S2 image for 2024-04-15.
+2025-07-10 13:31:33,743 - INFO - Successfully downloaded S2 image for 2024-04-23.
+2025-07-10 13:33:46,368 - INFO - Successfully downloaded S2 image for 2024-05-01.
+2025-07-10 13:35:31,137 - INFO - Successfully downloaded S2 image for 2024-05-17.
+2025-07-10 13:37:26,089 - INFO - Successfully downloaded S2 image for 2024-05-25.
+2025-07-10 13:38:50,268 - INFO - Successfully downloaded S2 image for 2024-06-26.
+2025-07-10 13:40:24,431 - INFO - Successfully downloaded S2 image for 2024-07-04.
+2025-07-10 13:42:36,706 - INFO - Successfully downloaded S2 image for 2024-07-12.
+2025-07-10 13:44:19,715 - INFO - Successfully downloaded S2 image for 2024-08-05.
+2025-07-10 13:46:55,777 - INFO - Successfully downloaded S2 image for 2024-08-13.
+2025-07-10 13:49:35,010 - INFO - Successfully downloaded S2 image for 2024-08-21.
+2025-07-10 13:51:37,453 - INFO - Successfully downloaded S2 image for 2024-08-29.
+2025-07-10 13:55:20,474 - INFO - Successfully downloaded S2 image for 2024-09-14.
+2025-07-10 13:57:30,584 - INFO - Successfully downloaded S2 image for 2024-09-30.
+2025-07-10 14:01:36,713 - INFO - Successfully downloaded S2 image for 2024-10-24.
+2025-07-10 14:03:07,607 - INFO - Successfully downloaded S2 image for 2024-11-09.
+2025-07-10 14:05:04,906 - INFO - Successfully downloaded S2 image for 2024-11-17.
+2025-07-10 14:06:55,289 - INFO - Successfully downloaded S2 image for 2024-12-03.
+2025-07-10 14:08:35,749 - INFO - Successfully downloaded S2 image for 2024-12-19.
+2025-07-10 14:08:35,753 - INFO - Sentinel-2 data retrieval finished for ROI 'D-49-25-A'.
+2025-07-10 14:08:35,753 - INFO - ==================================================
+2025-07-10 14:08:35,753 - INFO - Data retrieval orchestration finished. Total time: 5:20:57.832212
+2025-07-14 13:55:21,524 - INFO - ==================================================
+2025-07-14 13:55:21,524 - INFO - Starting LST data retrieval for ROI 'D-49-25-A'...
+2025-07-14 13:55:21,524 - INFO - LST retrieval period: 2023-01-01 to 2023-12-31
+2025-07-14 13:59:39,300 - INFO - LST data retrieval finished for ROI 'D-49-25-A'.
+2025-07-14 13:59:39,301 - INFO - ==================================================
+2025-07-14 13:59:39,301 - INFO - Starting ERA5 data retrieval for ROI 'D-49-25-A'...
+2025-07-14 13:59:39,303 - INFO - Dynamically determined L9 pivot date: 2023-01-15
+2025-07-14 13:59:39,304 - INFO - Generated 45 target dates for ERA5 retrieval.
+2025-07-14 14:01:53,520 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-07-14 14:01:53,521 - INFO - Final check complete. No missing ERA5 files found.
+2025-07-14 14:01:53,521 - INFO - ERA5 data retrieval finished for ROI 'D-49-25-A'.
+2025-07-14 14:01:53,521 - INFO - ==================================================
+2025-07-14 14:01:53,521 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-25-A'...
+2025-07-14 14:01:53,523 - INFO - Requesting S2 composites for 42 dates based on LST files.
+2025-07-14 14:03:00,244 - INFO - Successfully downloaded S2 image for 2023-01-31.
+2025-07-14 14:03:58,841 - INFO - Successfully downloaded S2 image for 2023-02-08.
+2025-07-14 14:04:20,431 - INFO - Successfully downloaded S2 image for 2023-02-16.
+2025-07-14 14:04:52,849 - INFO - Successfully downloaded S2 image for 2023-03-04.
+2025-07-14 14:05:15,531 - INFO - Successfully downloaded S2 image for 2023-03-12.
+2025-07-14 14:06:17,157 - INFO - Successfully downloaded S2 image for 2023-03-20.
+2025-07-14 14:06:55,553 - INFO - Successfully downloaded S2 image for 2023-03-28.
+2025-07-14 14:07:29,763 - INFO - Successfully downloaded S2 image for 2023-04-13.
+2025-07-14 14:08:30,909 - INFO - Successfully downloaded S2 image for 2023-04-21.
+2025-07-14 14:09:06,640 - INFO - Successfully downloaded S2 image for 2023-04-29.
+2025-07-14 14:10:01,386 - INFO - Successfully downloaded S2 image for 2023-05-07.
+2025-07-14 14:10:57,052 - INFO - Successfully downloaded S2 image for 2023-05-23.
+2025-07-14 14:11:49,228 - INFO - Successfully downloaded S2 image for 2023-05-31.
+2025-07-14 14:12:45,689 - INFO - Successfully downloaded S2 image for 2023-06-16.
+2025-07-14 14:13:24,333 - INFO - Successfully downloaded S2 image for 2023-07-02.
+2025-07-14 14:14:12,185 - INFO - Successfully downloaded S2 image for 2023-07-10.
+2025-07-14 14:14:39,794 - INFO - Successfully downloaded S2 image for 2023-07-26.
+2025-07-14 14:15:01,961 - INFO - Successfully downloaded S2 image for 2023-08-11.
+2025-07-14 14:15:57,795 - INFO - Successfully downloaded S2 image for 2023-08-19.
+2025-07-14 14:16:20,531 - INFO - Successfully downloaded S2 image for 2023-08-27.
+2025-07-14 14:16:49,785 - INFO - Successfully downloaded S2 image for 2023-09-04.
+2025-07-14 14:17:29,112 - INFO - Successfully downloaded S2 image for 2023-09-20.
+2025-07-14 14:17:59,220 - INFO - Successfully downloaded S2 image for 2023-09-28.
+2025-07-14 14:18:33,213 - INFO - Successfully downloaded S2 image for 2023-10-06.
+2025-07-14 14:18:58,316 - INFO - ==================================================
+2025-07-14 14:18:58,316 - INFO - Starting LST data retrieval for ROI 'D-49-25-A'...
+2025-07-14 14:18:58,316 - INFO - LST retrieval period: 2023-01-01 to 2023-12-31
+2025-07-14 14:23:26,873 - INFO - LST data retrieval finished for ROI 'D-49-25-A'.
+2025-07-14 14:23:26,873 - INFO - ==================================================
+2025-07-14 14:23:26,874 - INFO - Starting ERA5 data retrieval for ROI 'D-49-25-A'...
+2025-07-14 14:23:26,876 - INFO - Dynamically determined L8 pivot date: 2023-01-23
+2025-07-14 14:23:26,877 - INFO - Dynamically determined L9 pivot date: 2023-01-15
+2025-07-14 14:23:26,877 - INFO - Generated 44 target dates for ERA5 retrieval.
+2025-07-14 14:25:34,287 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-07-14 14:25:34,288 - INFO - Final check complete. No missing ERA5 files found.
+2025-07-14 14:25:34,288 - INFO - ERA5 data retrieval finished for ROI 'D-49-25-A'.
+2025-07-14 14:25:34,288 - INFO - ==================================================
+2025-07-14 14:25:34,288 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-25-A'...
+2025-07-14 14:25:34,290 - INFO - Requesting S2 composites for 41 dates based on LST files.
+2025-07-14 14:26:43,050 - INFO - Successfully downloaded S2 image for 2023-01-31.
+2025-07-14 14:27:30,696 - INFO - ==================================================
+2025-07-14 14:27:30,696 - INFO - Starting LST data retrieval for ROI 'D-49-25-A'...
+2025-07-14 14:27:30,696 - INFO - LST retrieval period: 2023-01-01 to 2023-12-31
+2025-07-14 14:29:53,416 - WARNING - Sleeping 1.95 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json, after 500
+2025-07-14 14:32:33,194 - INFO - LST data retrieval finished for ROI 'D-49-25-A'.
+2025-07-14 14:32:33,194 - INFO - ==================================================
+2025-07-14 14:32:33,194 - INFO - Starting ERA5 data retrieval for ROI 'D-49-25-A'...
+2025-07-14 14:32:33,197 - INFO - Dynamically determined L8 pivot date: 2023-01-23
+2025-07-14 14:32:33,197 - INFO - Dynamically determined L9 pivot date: 2023-01-15
+2025-07-14 14:32:33,198 - INFO - Generated 45 target dates for ERA5 retrieval.
+2025-07-14 14:34:43,908 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-07-14 14:34:43,909 - INFO - Final check complete. No missing ERA5 files found.
+2025-07-14 14:34:43,909 - INFO - ERA5 data retrieval finished for ROI 'D-49-25-A'.
+2025-07-14 14:34:43,909 - INFO - ==================================================
+2025-07-14 14:34:43,909 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-25-A'...
+2025-07-14 14:34:43,910 - INFO - Requesting S2 composites for 41 dates based on LST files.
+2025-07-14 14:36:12,906 - INFO - Successfully downloaded S2 image for 2023-01-31.
+2025-07-14 14:37:22,923 - INFO - Successfully downloaded S2 image for 2023-02-08.
+2025-07-14 14:37:49,610 - INFO - Successfully downloaded S2 image for 2023-02-16.
+2025-07-14 14:38:21,508 - INFO - Successfully downloaded S2 image for 2023-03-04.
+2025-07-14 14:38:46,880 - INFO - Successfully downloaded S2 image for 2023-03-12.
+2025-07-14 14:40:00,458 - INFO - Successfully downloaded S2 image for 2023-03-20.
+2025-07-14 14:40:40,554 - INFO - Successfully downloaded S2 image for 2023-03-28.
+2025-07-14 14:41:15,205 - INFO - Successfully downloaded S2 image for 2023-04-13.
+2025-07-14 14:42:13,801 - INFO - Successfully downloaded S2 image for 2023-04-21.
+2025-07-14 14:42:48,298 - INFO - Successfully downloaded S2 image for 2023-04-29.
+2025-07-14 14:43:38,660 - INFO - Successfully downloaded S2 image for 2023-05-07.
+2025-07-14 14:44:35,271 - INFO - Successfully downloaded S2 image for 2023-05-23.
+2025-07-14 14:45:20,219 - INFO - Successfully downloaded S2 image for 2023-05-31.
+2025-07-14 14:46:11,205 - INFO - Successfully downloaded S2 image for 2023-06-16.
+2025-07-14 14:46:45,622 - INFO - Successfully downloaded S2 image for 2023-07-02.
+2025-07-14 14:47:26,595 - INFO - Successfully downloaded S2 image for 2023-07-10.
+2025-07-14 14:47:53,473 - INFO - Successfully downloaded S2 image for 2023-07-26.
+2025-07-14 14:48:13,817 - INFO - Successfully downloaded S2 image for 2023-08-11.
+2025-07-14 14:49:09,719 - INFO - Successfully downloaded S2 image for 2023-08-19.
+2025-07-14 14:49:34,901 - INFO - Successfully downloaded S2 image for 2023-08-27.
+2025-07-14 14:50:01,196 - INFO - Successfully downloaded S2 image for 2023-09-04.
+2025-07-14 14:50:36,791 - INFO - Successfully downloaded S2 image for 2023-09-20.
+2025-07-14 14:50:59,832 - INFO - Successfully downloaded S2 image for 2023-09-28.
+2025-07-14 14:51:19,464 - INFO - Successfully downloaded S2 image for 2023-10-14.
+2025-07-14 14:52:16,794 - INFO - Successfully downloaded S2 image for 2023-11-07.
+2025-07-14 14:52:51,332 - INFO - Successfully downloaded S2 image for 2023-12-17.
+2025-07-14 14:53:20,971 - INFO - Successfully downloaded S2 image for 2023-12-25.
+2025-07-14 14:53:20,973 - INFO - Sentinel-2 data retrieval finished for ROI 'D-49-25-A'.
+2025-07-14 14:53:20,973 - INFO - ==================================================
+2025-07-14 14:53:20,973 - INFO - Data retrieval orchestration finished. Total time: 0:25:51.337292
+2025-07-15 09:50:11,088 - INFO - ==================================================
+2025-07-15 09:50:11,088 - INFO - Starting LST data retrieval for ROI 'D-49-13-A'...
+2025-07-15 09:50:11,088 - INFO - LST retrieval period: 2017-01-01 to 2025-01-01
+2025-07-15 12:21:24,674 - INFO - LST data retrieval finished for ROI 'D-49-13-A'.
+2025-07-15 12:21:24,674 - INFO - ==================================================
+2025-07-15 12:21:24,674 - INFO - Starting ERA5 data retrieval for ROI 'D-49-13-A'...
+2025-07-15 12:21:24,682 - INFO - Dynamically determined L8 pivot date: 2017-01-06
+2025-07-15 12:21:24,682 - INFO - Dynamically determined L9 pivot date: 2021-10-31
+2025-07-15 12:21:24,683 - INFO - Generated 255 target dates for ERA5 retrieval.
+2025-07-15 12:33:55,940 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-07-15 12:33:55,947 - WARNING - Found 230 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-07-15 12:45:14,241 - INFO - ERA5 data retrieval finished for ROI 'D-49-13-A'.
+2025-07-15 12:45:14,241 - INFO - ==================================================
+2025-07-15 12:45:14,241 - INFO - Starting Sentinel-2 data retrieval for ROI 'D-49-13-A'...
+2025-07-15 12:45:14,264 - INFO - Requesting S2 composites for 463 dates based on LST files.
+2025-07-15 12:48:08,306 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-07-15 12:50:05,619 - INFO - Successfully downloaded S2 image for 2018-12-18.
+2025-07-15 12:52:46,637 - INFO - Successfully downloaded S2 image for 2019-01-12.
+2025-07-15 12:54:53,923 - INFO - Successfully downloaded S2 image for 2019-01-19.
+2025-07-15 12:57:17,594 - INFO - Successfully downloaded S2 image for 2019-01-28.
+2025-07-15 13:00:05,258 - INFO - Successfully downloaded S2 image for 2019-02-04.
+2025-07-15 13:02:40,750 - INFO - Successfully downloaded S2 image for 2019-02-13.
+2025-07-15 13:05:47,285 - INFO - Successfully downloaded S2 image for 2019-03-01.
+2025-07-15 13:08:47,518 - INFO - Successfully downloaded S2 image for 2019-03-08.
+2025-07-15 13:11:08,831 - INFO - Successfully downloaded S2 image for 2019-03-24.
+2025-07-15 13:13:37,269 - INFO - Successfully downloaded S2 image for 2019-04-02.
+2025-07-15 13:16:52,507 - INFO - Successfully downloaded S2 image for 2019-04-09.
+2025-07-15 13:19:47,494 - INFO - Successfully downloaded S2 image for 2019-04-18.
+2025-07-15 13:23:05,572 - INFO - Successfully downloaded S2 image for 2019-04-25.
+2025-07-15 13:25:28,174 - INFO - Successfully downloaded S2 image for 2019-05-04.
+2025-07-15 13:28:35,352 - INFO - Successfully downloaded S2 image for 2019-05-20.
+2025-07-15 13:31:45,749 - INFO - Successfully downloaded S2 image for 2019-05-27.
+2025-07-15 13:34:44,939 - INFO - Successfully downloaded S2 image for 2019-06-12.
+2025-07-15 13:37:51,422 - INFO - Successfully downloaded S2 image for 2019-06-21.
+2025-07-15 13:40:53,971 - INFO - Successfully downloaded S2 image for 2019-06-28.
+2025-07-15 13:43:10,631 - INFO - Successfully downloaded S2 image for 2019-07-07.
+2025-07-15 13:46:22,317 - INFO - Successfully downloaded S2 image for 2019-07-14.
+2025-07-15 13:49:11,326 - INFO - Successfully downloaded S2 image for 2019-07-23.
+2025-07-15 13:51:42,812 - INFO - Successfully downloaded S2 image for 2019-08-08.
+2025-07-15 13:54:13,063 - INFO - Successfully downloaded S2 image for 2019-08-31.
+2025-07-15 13:56:51,881 - INFO - Successfully downloaded S2 image for 2019-09-09.
+2025-07-15 13:59:54,167 - INFO - Successfully downloaded S2 image for 2019-09-16.
+2025-07-15 14:02:18,784 - INFO - Successfully downloaded S2 image for 2019-09-25.
+2025-07-15 14:04:55,097 - INFO - Successfully downloaded S2 image for 2019-10-02.
+2025-07-15 14:07:32,860 - INFO - Successfully downloaded S2 image for 2019-10-11.
+2025-07-15 14:09:51,882 - INFO - Successfully downloaded S2 image for 2019-10-27.
+2025-07-15 14:12:21,246 - INFO - Successfully downloaded S2 image for 2019-11-19.
+2025-07-15 14:14:45,405 - INFO - Successfully downloaded S2 image for 2019-12-05.
+2025-07-15 14:17:18,587 - INFO - Successfully downloaded S2 image for 2019-12-14.
+2025-07-15 14:19:51,064 - INFO - Successfully downloaded S2 image for 2019-12-30.
+2025-07-15 14:22:21,077 - INFO - Successfully downloaded S2 image for 2020-01-15.
+2025-07-15 14:25:20,214 - INFO - Successfully downloaded S2 image for 2020-01-22.
+2025-07-15 14:28:15,801 - INFO - Successfully downloaded S2 image for 2020-02-07.
+2025-07-15 14:30:33,263 - INFO - Successfully downloaded S2 image for 2020-02-16.
+2025-07-15 14:33:28,467 - INFO - Successfully downloaded S2 image for 2020-02-23.
+2025-07-15 14:36:33,493 - INFO - Successfully downloaded S2 image for 2020-03-03.
+2025-07-15 14:39:21,556 - INFO - Successfully downloaded S2 image for 2020-03-10.
+2025-07-15 14:41:24,377 - INFO - Successfully downloaded S2 image for 2020-03-19.
+2025-07-15 14:44:24,345 - INFO - Successfully downloaded S2 image for 2020-04-04.
+2025-07-15 14:46:44,780 - INFO - Successfully downloaded S2 image for 2020-04-11.
+2025-07-15 14:48:51,491 - INFO - Successfully downloaded S2 image for 2020-04-27.
+2025-07-15 14:51:56,437 - INFO - Successfully downloaded S2 image for 2020-05-06.
+2025-07-15 14:54:30,136 - INFO - Successfully downloaded S2 image for 2020-05-13.
+2025-07-15 14:56:43,145 - INFO - Successfully downloaded S2 image for 2020-05-29.
+2025-07-15 14:59:47,226 - INFO - Successfully downloaded S2 image for 2020-06-07.
+2025-07-15 15:02:43,963 - INFO - Successfully downloaded S2 image for 2020-06-23.
+2025-07-15 15:06:15,635 - INFO - Successfully downloaded S2 image for 2020-07-16.
+2025-07-15 15:09:21,708 - INFO - Successfully downloaded S2 image for 2020-07-25.
+2025-07-15 15:12:21,245 - INFO - Successfully downloaded S2 image for 2020-08-10.
+2025-07-15 15:15:59,760 - INFO - Successfully downloaded S2 image for 2020-08-17.
+2025-07-15 15:19:17,153 - INFO - Successfully downloaded S2 image for 2020-08-26.

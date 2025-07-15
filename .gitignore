@@ -1,0 +1,6 @@
+data/output/
+data/preprocessed_data/
+data/retrieved_data/
+data/split_data/
+.venv
+__pycache__

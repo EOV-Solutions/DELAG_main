@@ -1,0 +1,6 @@
+earthengine-api
+requests
+rasterio
+python-dotenv
+pandas
+numpy 
