@@ -1,3 +1,6 @@
+data/output/
+data/preprocessed_data/
+data/retrieved_data/
+data/split_data/
 .venv
-lst_module/__pycache__
-data
+__pycache__

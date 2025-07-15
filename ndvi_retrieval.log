@@ -829,3 +829,7 @@ ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
 2025-07-15 15:12:21,245 - INFO - Successfully downloaded S2 image for 2020-08-10.
 2025-07-15 15:15:59,760 - INFO - Successfully downloaded S2 image for 2020-08-17.
 2025-07-15 15:19:17,153 - INFO - Successfully downloaded S2 image for 2020-08-26.
+2025-07-15 15:22:31,644 - INFO - Successfully downloaded S2 image for 2020-09-11.
+2025-07-15 15:25:14,956 - INFO - Successfully downloaded S2 image for 2020-10-04.
+2025-07-15 15:28:08,727 - INFO - Successfully downloaded S2 image for 2020-10-29.
+2025-07-15 15:31:37,342 - INFO - Successfully downloaded S2 image for 2021-01-01.
