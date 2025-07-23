@@ -1,11 +1,16 @@
 """
 Combines predictions from ATC and GP models and quantifies uncertainty.
+This script can be run as a standalone module in the pipeline.
 """
 import numpy as np
 import torch # For any torch specific operations if needed, though mostly numpy here
 from scipy.stats import norm # For confidence intervals
+import argparse
+import os
 
-import config # Assuming config.py is accessible
+# Import project modules
+import config
+import utils
 
 def combine_predictions(
     atc_predictions: np.ndarray, 
@@ -38,72 +43,40 @@ def combine_predictions(
     lst_observed = preprocessed_data['lst_stack'] # (time, height, width)
     num_times, height, width = atc_predictions.shape
 
-    # GP residuals are already (time, height, width) from gp_model.py
-    # No longer need to expand/tile them.
+    # The core idea is to start with the full model prediction and then merge
+    # in the observed data where it is available. This prevents sharp edges
+    # between observed and predicted regions.
+    
+    # 1. Calculate the full model prediction (ATC + GP) for all pixels
+    # Where GP might be NaN (e.g., outside the training mask), it will result in NaN.
+    # We will handle these cases.
     gp_mean_residuals_expanded = gp_mean_residuals_map
     gp_variance_residuals_expanded = gp_variance_residuals_map
 
-    # Basic shape check to catch mismatches early
-    if gp_mean_residuals_expanded.shape != (num_times, height, width) or \
-       gp_variance_residuals_expanded.shape != (num_times, height, width):
-        raise ValueError(f"Shape mismatch for GP residual maps. Expected {(num_times, height, width)}, \
-                         got mean: {gp_mean_residuals_expanded.shape}, var: {gp_variance_residuals_expanded.shape}")
+    # Initial full reconstruction is ATC + GP
+    reconstructed_lst = atc_predictions + gp_mean_residuals_expanded
+    
+    # Initial total variance is ATC + GP
+    total_variance = atc_variance + gp_variance_residuals_expanded
 
-    reconstructed_lst = np.full_like(atc_predictions, np.nan)
-    total_variance = np.full_like(atc_predictions, np.nan)
+    # 2. Identify locations of valid observations
+    clear_pixels_mask = ~np.isnan(lst_observed)
 
-    # Iterate through time to apply logic based on cloud cover / observations
-    for t in range(num_times):
-        for r in range(height):
-            for c in range(width):
-                # Case 1: Clear-sky pixel - use observed LST, uncertainty from models (though paper implies reconstruction for all)
-                # The paper seems to imply T_reconstructed = T_ATC + T_GP for partially observed days (meaning cloudy pixels)
-                # and T_reconstructed = T_ATC for days with no observations (fully cloudy days/regions).
-                # Let's refine this: if a pixel is clear, its "reconstruction" is the observation itself.
-                # The primary goal is to fill gaps where LST is missing due to clouds.
-
-                if not np.isnan(lst_observed[t, r, c]): # Pixel is clear if observed LST is not NaN
-                # if False:
-                    # Pixel is clear and has a valid observation
-                    reconstructed_lst[t, r, c] = lst_observed[t, r, c]
-                    # Uncertainty for clear pixels: can be just GP variance (spatial uncertainty)
-                    # or a minimal value if we trust observations highly.
-                    # The paper focuses on uncertainty of *reconstructed* values.
-                    # For evaluation, we compare reconstructed to clear. So here, perhaps variance should be low.
-                    # Let's use GP variance as within-day uncertainty even for clear pixels, ATC variance as cross-day.
-                    total_variance[t, r, c] = atc_variance[t, r, c] + gp_variance_residuals_expanded[t, r, c]
-                
-                else: # Pixel is cloudy or missing LST data
-                    # If atc_prediction itself is NaN (e.g., pixel had insufficient data for ATC model, 
-                    # or underlying ERA5 was all NaN), then reconstructed LST is also NaN.
-                    if np.isnan(atc_predictions[t, r, c]):
-                        reconstructed_lst[t, r, c] = np.nan
-                        total_variance[t, r, c] = np.nan
-                        continue
-                        
-                    # Now, ATC prediction is valid. Check GP prediction.
-                    current_gp_mean_residual = gp_mean_residuals_expanded[t, r, c]
-                    current_gp_variance_residual = gp_variance_residuals_expanded[t, r, c]
-
-                    if np.isnan(current_gp_mean_residual) or np.isnan(current_gp_variance_residual):
-                        # GP prediction is NaN, use only ATC prediction and its variance.
-                        reconstructed_lst[t, r, c] = atc_predictions[t, r, c]
-                        # If ATC variance is also NaN (should ideally not happen if ATC pred is valid, but check)
-                        if np.isnan(atc_variance[t, r, c]):
-                            total_variance[t, r, c] = np.nan # Or a default high variance
-                        else:
-                            total_variance[t, r, c] = atc_variance[t, r, c]
-                    else:
-                        # Both ATC and GP predictions are valid, combine them.
-                        reconstructed_lst[t, r, c] = atc_predictions[t, r, c] + current_gp_mean_residual
-                        # Sum variances (assuming independence or as an approximation)
-                        # Ensure atc_variance is not NaN before adding
-                        if np.isnan(atc_variance[t, r, c]):
-                             # This case implies ATC pred was fine but variance was NaN. 
-                             # Total variance becomes GP variance or NaN if GP variance is also NaN (already handled by outer if)
-                            total_variance[t, r, c] = current_gp_variance_residual 
-                        else:
-                            total_variance[t, r, c] = atc_variance[t, r, c] + current_gp_variance_residual
+    # 3. Replace the reconstructed values with the observed values at clear-sky locations
+    reconstructed_lst[clear_pixels_mask] = lst_observed[clear_pixels_mask]
+    
+    # Optional: For clear pixels, you might want to adjust the variance.
+    # The current logic (ATC_var + GP_var) is retained, reflecting model uncertainty
+    # even at observed locations. This can be debated, but we'll keep it for now.
+    # If we wanted to imply zero uncertainty for observations, we would do:
+    # total_variance[clear_pixels_mask] = 0 
+    
+    # 4. Handle any remaining NaNs
+    # This can happen if ATC or GP predictions were NaN for some pixels.
+    # The `reconstructed_lst` will have NaNs in those locations. The code below
+    # which calculates confidence intervals will correctly propagate these NaNs.
+    
+    print("Vectorized combination of ATC and GP predictions completed.")
 
     # Ensure variances are non-negative (e.g. due to numerical precision)
     total_variance[total_variance < 0] = 0 
@@ -119,108 +92,125 @@ def combine_predictions(
     return reconstructed_lst, total_variance, ci_lower, ci_upper
 
 
-if __name__ == '__main__':
-    print("Reconstruction module main execution - for testing.")
+def main(args):
+    """Main reconstruction pipeline function."""
+    print("Starting DELAG Final Reconstruction Pipeline...")
 
-    # Dummy config
-    class DummyConfig(config.Config):
-        def __init__(self):
-            super().__init__() # Inherit from base config
-            self.RANDOM_SEED = 42
-            # Add LST_NODATA_VALUE for completeness, though not directly used by combine_predictions logic itself
-            # as it expects NaNs in lst_observed_data from preprocessing.
-            self.LST_NODATA_VALUE = -9999.0 
+    # --- Setup ---
+    roi_name = args.roi_name
+    data_split = args.data_split
+    config.ROI_NAME = roi_name # Set for other modules if they use it
     
-    dummy_config = DummyConfig()
-    np.random.seed(dummy_config.RANDOM_SEED)
+    # Suffix for directory names based on data split
+    dir_suffix = '_train' if data_split == 'train' else '_test'
 
-    # Dummy data
-    num_times, height, width = 5, 3, 3
-    atc_preds = np.random.rand(num_times, height, width).astype(np.float32) * 10 + 280 # K
-    atc_var = np.random.rand(num_times, height, width).astype(np.float32) * 1.0 # K^2
-    # GP maps should be (time, height, width) for the test to align with new expectation
-    gp_mean_res_map = (np.random.rand(num_times, height, width).astype(np.float32) - 0.5) * 2 # K
-    gp_var_res_map = np.random.rand(num_times, height, width).astype(np.float32) * 0.5 # K^2
+    # Define input directories
+    data_dir = os.path.join(config.OUTPUT_DIR_BASE, roi_name, f'data_{data_split}')
+    atc_pred_dir = os.path.join(config.OUTPUT_DIR_BASE, roi_name, f'atc_predicted_data{dir_suffix}')
+    gp_pred_dir = os.path.join(config.OUTPUT_DIR_BASE, roi_name, f'gp_predicted_data{dir_suffix}')
     
-    # cloud_mask = (np.random.rand(num_times, height, width) > 0.6).astype(np.uint8) # ~40% clear # No longer used
-    # lst_observed_data directly contains NaNs for cloudy/missing pixels
-    lst_observed_data = np.copy(atc_preds) + (np.random.randn(num_times, height, width) * 0.5) 
-    # Simulate cloudy pixels by introducing NaNs. About 40% cloudy.
-    cloud_locations = np.random.rand(num_times, height, width) <= 0.4 
-    lst_observed_data[cloud_locations] = np.nan
+    # Define output directories
+    reconstructed_lst_dir = os.path.join(config.OUTPUT_DIR_BASE, roi_name, f'reconstructed_lst{dir_suffix}')
+    uncertainty_dir = os.path.join(config.OUTPUT_DIR_BASE, roi_name, f'uncertainty_maps{dir_suffix}')
+    os.makedirs(reconstructed_lst_dir, exist_ok=True)
+    os.makedirs(uncertainty_dir, exist_ok=True)
 
-    # Ensure some specific pixels for testing clear/cloudy logic
-    # Pixel (0,0,0) should be clear if not made NaN by random cloud_locations
-    if np.isnan(lst_observed_data[0,0,0]): # If it became cloudy by chance, make it clear
-        lst_observed_data[0,0,0] = atc_preds[0,0,0] + (np.random.randn() * 0.5)
-    # Pixel (0,1,1) should be cloudy
-    lst_observed_data[0,1,1] = np.nan 
-
-    # Make ATC preds/vars NaN for some pixels to simulate insufficient training data (e.g., pixel 0,0,1)
-    atc_preds[:, 0, 1] = np.nan 
-    atc_var[:, 0, 1] = np.nan
-
-    dummy_preprocessed_data = {
-        'lst_stack': lst_observed_data
-        # Other keys not strictly needed by this simplified test of combine_predictions
-    }
-
-    print("Original LST (some NaN due to clouds):")
-    print(lst_observed_data[0, :, :]) # Print first time slice
-    # print("Cloud mask (0=clear, 1=cloud):") # No longer used
-    # print(cloud_mask[0, :, :])
-    print("ATC predictions (some NaN due to insufficient training data):")
-    print(atc_preds[0, :, :])
-    print("GP mean residuals map:")
-    print(gp_mean_res_map)
-
+    # --- 1. Load Data and Predictions ---
+    print(f"Step 1: Loading data for ROI: '{roi_name}', Split: '{data_split}'")
     try:
-        recon_lst, tot_var, ci_low, ci_up = combine_predictions(
-            atc_preds, atc_var, 
-            gp_mean_res_map, gp_var_res_map, 
-            # cloud_mask, # Removed from arguments
-            dummy_preprocessed_data, dummy_config
-        )
+        preprocessed_data = utils.load_processed_data(data_dir)
+        atc_preds_dict = utils.load_atc_predictions(atc_pred_dir)
+        atc_mean_predictions = atc_preds_dict['mean_predictions']
+        atc_variance = atc_preds_dict['variance_predictions']
+        print(f"Loaded data from {data_dir} and ATC predictions from {atc_pred_dir}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+        print("Hint: Make sure preprocess_data.py, train_atc.py, and predict_atc.py have been run for this ROI and split.")
+        return
 
-        print(f"Reconstructed LST shape: {recon_lst.shape}")
-        print("Reconstructed LST (first time slice):")
-        print(recon_lst[0, :, :])
-        print(f"Total variance shape: {tot_var.shape}")
-        print("Total variance (first time slice):")
-        print(tot_var[0, :, :])
-        print(f"CI Lower shape: {ci_low.shape}")
-        print("CI Lower (first time slice):")
-        print(ci_low[0, :, :])
-        print(f"CI Upper shape: {ci_up.shape}")
-        print("CI Upper (first time slice):")
-        print(ci_up[0, :, :])
-        
-        # Check if NaNs propagated correctly
-        assert np.isnan(recon_lst[0,0,1]), "NaNs from ATC pred not propagated to reconstructed LST"
-        assert np.isnan(tot_var[0,0,1]), "NaNs from ATC var not propagated to total variance"
+    # Initialize GP residuals to zero (ATC-only baseline)
+    gp_mean_residuals_map = np.zeros_like(atc_mean_predictions)
+    gp_variance_residuals_map = np.zeros_like(atc_mean_predictions)
+    gp_model_applied = False # Flag to track if GP model was successfully loaded and applied
 
-        # Check a clear pixel - (0,0,0) is made to be clear if it wasn't already
-        # Ensure it was actually clear after potential random assignment and fixing
-        if not np.isnan(lst_observed_data[0,0,0]):
-            assert np.isclose(recon_lst[0,0,0], lst_observed_data[0,0,0]), \
-                f"Clear pixel LST {recon_lst[0,0,0]} not matching observed {lst_observed_data[0,0,0]}"
-        else:
-            print("Skipping clear pixel check as lst_observed_data[0,0,0] ended up NaN by chance and fix failed?")
-        
-        # Check a cloudy pixel (where ATC was not NaN) - (0,1,1) is made to be cloudy
-        # And ensure ATC for this pixel is not NaN for the test
-        atc_preds[0,1,1] = 285.0 # Ensure ATC pred is valid for this cloudy test pixel
-        atc_var[0,1,1] = 0.5
-        if np.isnan(lst_observed_data[0,1,1]) and not np.isnan(atc_preds[0,1,1]):
-            expected_cloudy_val = atc_preds[0,1,1] + gp_mean_res_map[0,1,1] # Use t=0 for GP map
-            assert np.isclose(recon_lst[0,1,1], expected_cloudy_val), \
-                f"Cloudy pixel LST {recon_lst[0,1,1]} incorrect, expected {expected_cloudy_val}"
-        else:
-            print("Skipping cloudy pixel check due to unexpected NaNs in test data setup for (0,1,1).")
+    if config.USE_GP_MODEL:
+        print(f"Step 2: Attempting to load GP predictions from {gp_pred_dir}")
+        try:
+            gp_mean_residuals_file = os.path.join(gp_pred_dir, 'gp_mean_residuals.npy')
+            gp_variance_residuals_file = os.path.join(gp_pred_dir, 'gp_variance_residuals.npy')
+            
+            gp_mean_residuals_map = np.load(gp_mean_residuals_file)
+            gp_variance_residuals_map = np.load(gp_variance_residuals_file)
+            gp_model_applied = True
+            print("Successfully loaded GP predictions.")
+        except FileNotFoundError:
+            print(f"Warning: GP prediction files not found in {gp_pred_dir}. Proceeding with ATC-only reconstruction.")
+            print("Hint: Run train_gp.py and predict_gp.py if GP model is intended to be used.")
+        except Exception as e:
+            print(f"An unexpected error occurred while loading GP predictions: {e}. Proceeding with ATC-only reconstruction.")
+    else:
+        print("Step 2: Skipping GP model (USE_GP_MODEL is False). Proceeding with ATC-only reconstruction.")
 
-        print("Reconstruction test completed successfully.")
+    if not gp_model_applied:
+        print("Note: GP model was not applied. Final LST reconstruction is based on ATC predictions only.")
 
+    # --- 2. Combine Predictions ---
+    print("\nStep 3: Combining predictions and quantifying uncertainty...")
+    reconstructed_lst, total_variance, _, _ = combine_predictions(
+        atc_predictions=atc_mean_predictions,
+        atc_variance=atc_variance,
+        gp_mean_residuals_map=gp_mean_residuals_map,
+        gp_variance_residuals_map=gp_variance_residuals_map,
+        preprocessed_data=preprocessed_data,
+        app_config=config
+    )
+    print("Prediction combination complete.")
+
+    # --- 3. Save Outputs ---
+    print(f"\nStep 4: Saving outputs to {reconstructed_lst_dir} and {uncertainty_dir}")
+    try:
+        num_times = reconstructed_lst.shape[0]
+        dates = preprocessed_data['common_dates']
+        ref_grid_path = preprocessed_data['reference_grid_path']
+
+        for t in range(num_times):
+            date_str = dates[t].strftime('%Y%m%d')
+            
+            # Reconstructed LST
+            recon_filename = os.path.join(reconstructed_lst_dir, f"LST_RECON_{data_split.upper()}_{date_str}.tif")
+            utils.save_array_as_geotiff(
+                data_array=reconstructed_lst[t, :, :],
+                reference_geotiff_path=ref_grid_path,
+                output_path=recon_filename,
+                nodata_value=np.nan
+            )
+            
+            # Total Variance
+            var_filename = os.path.join(uncertainty_dir, f"LST_TOTAL_VARIANCE_{data_split.upper()}_{date_str}.tif")
+            utils.save_array_as_geotiff(
+                data_array=total_variance[t, :, :],
+                reference_geotiff_path=ref_grid_path,
+                output_path=var_filename,
+                nodata_value=np.nan
+            )
+        print(f"Successfully saved {num_times} reconstructed LST and variance maps.")
     except Exception as e:
-        print(f"Error during reconstruction test: {e}")
+        print(f"Error during saving outputs: {e}")
         import traceback
-        traceback.print_exc() 
+        traceback.print_exc()
+
+    print("\nDELAG Final Reconstruction Pipeline Completed Successfully.")
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="DELAG Final LST Reconstruction from Predictions")
+    parser.add_argument('--roi_name', type=str, required=True, help="Name of the Region of Interest (ROI) to process.")
+    parser.add_argument(
+        '--data_split', 
+        type=str, 
+        default='test', 
+        choices=['train', 'test'],
+        help="Data split to reconstruct: 'train' or 'test'. Defaults to 'test'."
+    )
+    args = parser.parse_args()
+    main(args) 

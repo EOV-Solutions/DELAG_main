@@ -833,3 +833,483 @@ ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
 2025-07-15 15:25:14,956 - INFO - Successfully downloaded S2 image for 2020-10-04.
 2025-07-15 15:28:08,727 - INFO - Successfully downloaded S2 image for 2020-10-29.
 2025-07-15 15:31:37,342 - INFO - Successfully downloaded S2 image for 2021-01-01.
+2025-07-15 15:34:10,846 - INFO - Successfully downloaded S2 image for 2021-01-08.
+2025-07-15 15:36:33,990 - INFO - Successfully downloaded S2 image for 2021-01-17.
+2025-07-15 15:39:05,350 - INFO - Successfully downloaded S2 image for 2021-01-24.
+2025-07-15 15:41:43,936 - INFO - Successfully downloaded S2 image for 2021-02-02.
+2025-07-15 15:45:06,220 - INFO - Successfully downloaded S2 image for 2021-02-18.
+2025-07-15 15:48:28,194 - INFO - Successfully downloaded S2 image for 2021-02-25.
+2025-07-15 15:51:22,372 - INFO - Successfully downloaded S2 image for 2021-03-13.
+2025-07-15 15:53:35,007 - INFO - Successfully downloaded S2 image for 2021-03-22.
+2025-07-15 15:56:30,702 - INFO - Successfully downloaded S2 image for 2021-03-29.
+2025-07-15 15:58:52,950 - INFO - Successfully downloaded S2 image for 2021-04-07.
+2025-07-15 16:02:35,301 - INFO - Successfully downloaded S2 image for 2021-04-14.
+2025-07-15 16:05:18,037 - INFO - Successfully downloaded S2 image for 2021-04-23.
+2025-07-15 16:08:53,503 - INFO - Successfully downloaded S2 image for 2021-05-09.
+2025-07-15 16:11:57,906 - INFO - Successfully downloaded S2 image for 2021-05-16.
+2025-07-15 16:15:05,334 - INFO - Successfully downloaded S2 image for 2021-06-01.
+2025-07-15 16:17:19,667 - INFO - Successfully downloaded S2 image for 2021-06-17.
+2025-07-15 16:21:05,539 - INFO - Successfully downloaded S2 image for 2021-06-26.
+2025-07-15 16:25:18,793 - INFO - Successfully downloaded S2 image for 2021-07-03.
+2025-07-15 16:28:31,429 - INFO - Successfully downloaded S2 image for 2021-07-12.
+2025-07-15 16:31:27,325 - INFO - Successfully downloaded S2 image for 2021-07-28.
+2025-07-15 16:33:55,259 - INFO - Successfully downloaded S2 image for 2021-08-04.
+2025-07-15 16:37:17,551 - INFO - Successfully downloaded S2 image for 2021-08-20.
+2025-07-15 16:39:39,449 - INFO - Successfully downloaded S2 image for 2021-08-29.
+2025-07-15 16:42:33,587 - INFO - Successfully downloaded S2 image for 2021-09-14.
+2025-07-15 16:45:21,055 - INFO - Successfully downloaded S2 image for 2021-09-30.
+2025-07-15 16:47:58,834 - INFO - Successfully downloaded S2 image for 2021-10-16.
+2025-07-15 16:50:27,755 - INFO - Successfully downloaded S2 image for 2021-10-31.
+2025-07-15 16:52:41,325 - INFO - Successfully downloaded S2 image for 2021-11-08.
+2025-07-15 16:55:06,026 - INFO - Successfully downloaded S2 image for 2021-11-17.
+2025-07-15 16:57:15,709 - INFO - Successfully downloaded S2 image for 2021-11-24.
+2025-07-15 16:59:20,391 - INFO - Successfully downloaded S2 image for 2021-12-03.
+2025-07-15 17:01:40,849 - INFO - Successfully downloaded S2 image for 2021-12-18.
+2025-07-15 17:04:08,239 - INFO - Successfully downloaded S2 image for 2022-01-03.
+2025-07-21 16:22:17,739 - INFO - ==================================================
+2025-07-21 16:22:17,739 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-07-21 16:22:17,739 - INFO - LST retrieval period: 2017-01-01 to 2025-01-01
+2025-07-21 16:23:16,860 - INFO - ==================================================
+2025-07-21 16:23:16,860 - INFO - Starting LST data retrieval for ROI 'C-49-1-D'...
+2025-07-21 16:23:16,860 - INFO - LST retrieval period: 2017-01-01 to 2025-01-01
+2025-07-21 16:23:36,579 - INFO - ==================================================
+2025-07-21 16:23:36,579 - INFO - Starting LST data retrieval for ROI 'C-48-56-A'...
+2025-07-21 16:23:36,579 - INFO - LST retrieval period: 2017-01-01 to 2025-01-01
+2025-07-21 16:50:25,440 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-07-21 16:50:25,440 - INFO - ==================================================
+2025-07-21 16:50:25,440 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-07-21 16:50:25,446 - INFO - Dynamically determined L8 pivot date: 2017-01-04
+2025-07-21 16:50:25,446 - INFO - Dynamically determined L9 pivot date: 2022-02-27
+2025-07-21 16:50:25,449 - INFO - Generated 248 target dates for ERA5 retrieval.
+2025-07-21 16:54:28,191 - WARNING - Sleeping 1.05 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 503
+2025-07-21 17:02:35,454 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-07-21 17:02:35,457 - INFO - Final check complete. No missing ERA5 files found.
+2025-07-21 17:02:35,457 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-07-21 17:02:35,457 - INFO - ==================================================
+2025-07-21 17:02:35,457 - INFO - Starting Sentinel-2 data retrieval for ROI 'F-48-93-B'...
+2025-07-21 17:02:35,463 - INFO - Requesting S2 composites for 170 dates based on LST files.
+2025-07-21 17:04:14,085 - INFO - Successfully downloaded S2 image for 2018-12-25.
+2025-07-21 17:05:13,971 - INFO - Successfully downloaded S2 image for 2019-03-31.
+2025-07-21 17:07:01,183 - INFO - Successfully downloaded S2 image for 2019-05-18.
+2025-07-21 17:08:40,162 - INFO - Successfully downloaded S2 image for 2019-06-19.
+2025-07-21 17:10:18,202 - INFO - Successfully downloaded S2 image for 2019-07-05.
+2025-07-21 17:11:44,139 - INFO - Successfully downloaded S2 image for 2019-08-06.
+2025-07-21 17:13:28,216 - INFO - Successfully downloaded S2 image for 2019-09-07.
+2025-07-21 17:15:11,260 - INFO - Successfully downloaded S2 image for 2019-09-23.
+2025-07-21 17:16:12,759 - INFO - Successfully downloaded S2 image for 2019-10-25.
+2025-07-21 17:16:28,349 - INFO - LST data retrieval finished for ROI 'C-49-1-D'.
+2025-07-21 17:16:28,349 - INFO - ==================================================
+2025-07-21 17:16:28,349 - INFO - Starting ERA5 data retrieval for ROI 'C-49-1-D'...
+2025-07-21 17:16:28,354 - INFO - Dynamically determined L8 pivot date: 2017-01-06
+2025-07-21 17:16:28,354 - INFO - Dynamically determined L9 pivot date: 2021-12-04
+2025-07-21 17:16:28,355 - INFO - Generated 254 target dates for ERA5 retrieval.
+2025-07-21 17:17:58,880 - INFO - Successfully downloaded S2 image for 2019-11-10.
+2025-07-21 17:19:34,621 - INFO - Successfully downloaded S2 image for 2019-12-12.
+2025-07-21 17:20:32,299 - INFO - Successfully downloaded S2 image for 2020-05-04.
+2025-07-21 17:21:47,896 - INFO - Successfully downloaded S2 image for 2020-05-20.
+2025-07-21 17:23:32,394 - INFO - Successfully downloaded S2 image for 2020-06-05.
+2025-07-21 17:26:00,077 - INFO - Successfully downloaded S2 image for 2020-06-21.
+2025-07-21 17:27:20,082 - INFO - Successfully downloaded S2 image for 2020-07-23.
+2025-07-21 17:28:55,975 - INFO - Successfully downloaded S2 image for 2020-08-08.
+2025-07-21 17:29:30,054 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-07-21 17:29:30,059 - WARNING - Found 132 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-07-21 17:30:15,987 - INFO - Successfully downloaded S2 image for 2020-08-24.
+2025-07-21 17:31:35,088 - INFO - Successfully downloaded S2 image for 2020-10-11.
+2025-07-21 17:33:22,104 - INFO - Successfully downloaded S2 image for 2020-10-27.
+2025-07-21 17:34:30,817 - INFO - Successfully downloaded S2 image for 2020-11-28.
+2025-07-21 17:35:32,513 - INFO - Successfully downloaded S2 image for 2020-12-14.
+2025-07-21 17:35:36,728 - INFO - ERA5 data retrieval finished for ROI 'C-49-1-D'.
+2025-07-21 17:35:36,728 - INFO - ==================================================
+2025-07-21 17:35:36,728 - INFO - Starting Sentinel-2 data retrieval for ROI 'C-49-1-D'...
+2025-07-21 17:35:36,737 - INFO - Requesting S2 composites for 281 dates based on LST files.
+2025-07-21 17:37:06,030 - INFO - Successfully downloaded S2 image for 2021-01-15.
+2025-07-21 17:38:26,202 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-07-21 17:39:07,921 - INFO - Successfully downloaded S2 image for 2021-02-16.
+2025-07-21 17:40:08,836 - INFO - Successfully downloaded S2 image for 2021-04-21.
+2025-07-21 17:40:30,099 - INFO - Successfully downloaded S2 image for 2019-01-12.
+2025-07-21 17:41:19,513 - INFO - Successfully downloaded S2 image for 2021-05-07.
+2025-07-21 17:42:29,630 - INFO - Successfully downloaded S2 image for 2021-05-23.
+2025-07-21 17:42:37,140 - INFO - Successfully downloaded S2 image for 2019-01-28.
+2025-07-21 17:43:44,835 - INFO - Successfully downloaded S2 image for 2021-07-10.
+2025-07-21 17:44:10,344 - INFO - Successfully downloaded S2 image for 2019-02-13.
+2025-07-21 17:45:15,872 - INFO - Successfully downloaded S2 image for 2021-07-26.
+2025-07-21 17:46:16,827 - INFO - Successfully downloaded S2 image for 2019-03-01.
+2025-07-21 17:46:18,494 - INFO - Successfully downloaded S2 image for 2021-08-11.
+2025-07-21 17:47:55,136 - INFO - Successfully downloaded S2 image for 2021-09-12.
+2025-07-21 17:48:17,079 - INFO - Successfully downloaded S2 image for 2019-04-02.
+2025-07-21 17:48:47,437 - INFO - Successfully downloaded S2 image for 2021-09-28.
+2025-07-21 17:50:13,377 - INFO - Successfully downloaded S2 image for 2021-11-15.
+2025-07-21 17:50:57,684 - INFO - Successfully downloaded S2 image for 2019-04-18.
+2025-07-21 17:51:59,938 - INFO - Successfully downloaded S2 image for 2021-12-01.
+2025-07-21 17:52:52,141 - INFO - Successfully downloaded S2 image for 2019-05-04.
+2025-07-21 17:53:06,109 - INFO - Successfully downloaded S2 image for 2021-12-17.
+2025-07-21 17:54:05,337 - INFO - Successfully downloaded S2 image for 2022-01-18.
+2025-07-21 17:54:51,226 - INFO - Successfully downloaded S2 image for 2019-05-20.
+2025-07-21 17:55:03,741 - INFO - Successfully downloaded S2 image for 2022-02-27.
+2025-07-21 17:56:02,232 - INFO - Successfully downloaded S2 image for 2022-03-31.
+2025-07-21 17:56:23,058 - INFO - Successfully downloaded S2 image for 2019-06-21.
+2025-07-21 17:59:16,064 - INFO - Successfully downloaded S2 image for 2022-04-08.
+2025-07-21 18:01:01,462 - INFO - Successfully downloaded S2 image for 2019-07-07.
+2025-07-21 18:02:31,912 - INFO - Successfully downloaded S2 image for 2022-05-02.
+2025-07-21 18:03:44,091 - INFO - Successfully downloaded S2 image for 2019-07-23.
+2025-07-21 18:03:48,470 - INFO - Successfully downloaded S2 image for 2022-05-18.
+2025-07-21 18:05:38,642 - INFO - Successfully downloaded S2 image for 2022-06-03.
+2025-07-21 18:05:45,596 - INFO - Successfully downloaded S2 image for 2019-09-09.
+2025-07-21 18:07:11,687 - INFO - Successfully downloaded S2 image for 2022-06-11.
+2025-07-21 18:07:44,681 - INFO - Successfully downloaded S2 image for 2019-09-25.
+2025-07-21 18:08:41,963 - INFO - Successfully downloaded S2 image for 2022-06-19.
+2025-07-21 18:09:53,350 - INFO - Successfully downloaded S2 image for 2019-10-11.
+2025-07-21 18:10:14,780 - INFO - Successfully downloaded S2 image for 2022-06-27.
+2025-07-21 18:11:24,547 - INFO - Successfully downloaded S2 image for 2022-07-13.
+2025-07-21 18:12:01,785 - INFO - Successfully downloaded S2 image for 2019-10-27.
+2025-07-21 18:12:35,484 - INFO - Successfully downloaded S2 image for 2022-07-21.
+2025-07-21 18:13:42,462 - INFO - Successfully downloaded S2 image for 2019-11-28.
+2025-07-21 18:13:55,363 - INFO - Successfully downloaded S2 image for 2022-07-29.
+2025-07-21 18:15:12,654 - INFO - Successfully downloaded S2 image for 2022-08-22.
+2025-07-21 18:15:51,662 - INFO - Successfully downloaded S2 image for 2019-12-14.
+2025-07-21 18:16:34,084 - INFO - Successfully downloaded S2 image for 2022-08-30.
+2025-07-21 18:18:00,583 - INFO - Successfully downloaded S2 image for 2019-12-30.
+2025-07-21 18:18:07,614 - INFO - Successfully downloaded S2 image for 2022-09-07.
+2025-07-21 18:19:42,711 - INFO - Successfully downloaded S2 image for 2022-09-15.
+2025-07-21 18:20:05,011 - INFO - Successfully downloaded S2 image for 2020-01-15.
+2025-07-21 18:21:22,796 - INFO - Successfully downloaded S2 image for 2022-10-17.
+2025-07-21 18:22:03,217 - INFO - Successfully downloaded S2 image for 2020-02-16.
+2025-07-21 18:23:02,699 - INFO - Successfully downloaded S2 image for 2022-11-02.
+2025-07-21 18:24:15,293 - INFO - Successfully downloaded S2 image for 2020-03-03.
+2025-07-21 18:24:24,266 - INFO - Successfully downloaded S2 image for 2022-11-18.
+2025-07-21 18:26:06,813 - INFO - Successfully downloaded S2 image for 2022-12-20.
+2025-07-21 18:26:30,292 - INFO - Successfully downloaded S2 image for 2020-03-19.
+2025-07-21 18:27:12,204 - INFO - Successfully downloaded S2 image for 2022-12-28.
+2025-07-21 18:28:12,900 - INFO - Successfully downloaded S2 image for 2023-01-13.
+2025-07-21 18:28:48,303 - INFO - Successfully downloaded S2 image for 2020-04-04.
+2025-07-21 18:29:16,912 - INFO - Successfully downloaded S2 image for 2023-01-21.
+2025-07-21 18:30:14,976 - INFO - Successfully downloaded S2 image for 2020-04-29.
+2025-07-21 18:30:52,916 - INFO - Successfully downloaded S2 image for 2023-01-29.
+2025-07-21 18:32:08,355 - INFO - Successfully downloaded S2 image for 2020-05-06.
+2025-07-21 18:32:34,106 - INFO - Successfully downloaded S2 image for 2023-03-10.
+2025-07-21 18:33:28,938 - INFO - Successfully downloaded S2 image for 2023-03-18.
+2025-07-21 18:33:57,440 - INFO - Successfully downloaded S2 image for 2020-06-07.
+2025-07-21 18:35:07,932 - INFO - Successfully downloaded S2 image for 2023-04-03.
+2025-07-21 18:36:01,685 - INFO - Successfully downloaded S2 image for 2020-06-23.
+2025-07-21 18:36:13,350 - INFO - Successfully downloaded S2 image for 2023-04-19.
+2025-07-21 18:37:54,146 - INFO - Successfully downloaded S2 image for 2023-05-05.
+2025-07-21 18:38:01,080 - INFO - Successfully downloaded S2 image for 2020-07-25.
+2025-07-21 18:39:16,767 - INFO - Successfully downloaded S2 image for 2023-05-21.
+2025-07-21 18:39:36,173 - INFO - Successfully downloaded S2 image for 2020-08-10.
+2025-07-21 18:41:03,210 - INFO - Successfully downloaded S2 image for 2023-05-29.
+2025-07-21 18:42:01,879 - INFO - Successfully downloaded S2 image for 2020-08-26.
+2025-07-21 18:42:29,787 - INFO - Successfully downloaded S2 image for 2023-06-06.
+2025-07-21 18:43:42,780 - INFO - Successfully downloaded S2 image for 2023-06-30.
+2025-07-21 18:43:47,185 - INFO - Successfully downloaded S2 image for 2020-09-11.
+2025-07-21 18:45:09,730 - INFO - Successfully downloaded S2 image for 2020-10-29.
+2025-07-21 18:45:21,465 - INFO - Successfully downloaded S2 image for 2023-07-08.
+2025-07-21 18:46:35,784 - INFO - Successfully downloaded S2 image for 2021-01-01.
+2025-07-21 18:46:45,147 - INFO - Successfully downloaded S2 image for 2023-07-16.
+2025-07-21 18:48:15,510 - INFO - Successfully downloaded S2 image for 2023-07-24.
+2025-07-21 18:48:46,000 - INFO - Successfully downloaded S2 image for 2021-01-17.
+2025-07-21 18:49:21,549 - INFO - Successfully downloaded S2 image for 2023-08-17.
+2025-07-21 18:50:51,166 - INFO - Successfully downloaded S2 image for 2021-02-02.
+2025-07-21 18:51:08,991 - INFO - Successfully downloaded S2 image for 2023-09-02.
+2025-07-21 18:52:50,285 - INFO - Successfully downloaded S2 image for 2023-10-04.
+2025-07-21 18:53:05,804 - INFO - Successfully downloaded S2 image for 2021-02-18.
+2025-07-21 18:54:05,087 - INFO - Successfully downloaded S2 image for 2023-10-28.
+2025-07-21 18:54:56,646 - INFO - Successfully downloaded S2 image for 2021-03-22.
+2025-07-21 18:55:12,910 - INFO - Successfully downloaded S2 image for 2023-11-05.
+2025-07-21 18:56:59,634 - INFO - Successfully downloaded S2 image for 2023-11-21.
+2025-07-21 18:57:07,088 - INFO - Successfully downloaded S2 image for 2021-04-07.
+2025-07-21 18:58:02,920 - INFO - Successfully downloaded S2 image for 2023-11-29.
+2025-07-21 18:59:08,305 - INFO - Successfully downloaded S2 image for 2021-04-16.
+2025-07-21 18:59:12,187 - INFO - Successfully downloaded S2 image for 2023-12-15.
+2025-07-21 19:00:16,893 - INFO - Successfully downloaded S2 image for 2023-12-31.
+2025-07-21 19:01:13,905 - INFO - Successfully downloaded S2 image for 2021-04-23.
+2025-07-21 19:01:19,917 - INFO - Successfully downloaded S2 image for 2024-01-16.
+2025-07-21 19:02:11,761 - INFO - Successfully downloaded S2 image for 2024-04-05.
+2025-07-21 19:03:06,407 - INFO - Successfully downloaded S2 image for 2021-05-02.
+2025-07-21 19:03:10,170 - INFO - Successfully downloaded S2 image for 2024-04-21.
+2025-07-21 19:04:40,742 - INFO - Successfully downloaded S2 image for 2021-05-18.
+2025-07-21 19:04:43,025 - INFO - Successfully downloaded S2 image for 2024-04-29.
+2025-07-21 19:05:41,418 - INFO - Successfully downloaded S2 image for 2024-05-15.
+2025-07-21 19:06:34,501 - INFO - Successfully downloaded S2 image for 2021-06-03.
+2025-07-21 19:06:49,154 - INFO - Successfully downloaded S2 image for 2024-05-23.
+2025-07-21 19:07:56,682 - INFO - Successfully downloaded S2 image for 2021-06-10.
+2025-07-21 19:08:31,177 - INFO - Successfully downloaded S2 image for 2024-06-16.
+2025-07-21 19:09:33,553 - INFO - Successfully downloaded S2 image for 2021-06-26.
+2025-07-21 19:10:18,720 - INFO - Successfully downloaded S2 image for 2024-07-10.
+2025-07-21 19:11:24,572 - INFO - Successfully downloaded S2 image for 2021-07-28.
+2025-07-21 19:11:39,311 - INFO - Successfully downloaded S2 image for 2024-08-27.
+2025-07-21 19:13:15,186 - INFO - Successfully downloaded S2 image for 2024-09-04.
+2025-07-21 19:13:20,580 - INFO - Successfully downloaded S2 image for 2021-09-30.
+2025-07-21 19:14:13,583 - INFO - Successfully downloaded S2 image for 2024-09-20.
+2025-07-21 19:14:55,558 - INFO - Successfully downloaded S2 image for 2021-10-16.
+2025-07-21 19:15:38,277 - INFO - Successfully downloaded S2 image for 2024-09-28.
+2025-07-21 19:17:06,245 - INFO - Successfully downloaded S2 image for 2021-12-03.
+2025-07-21 19:17:25,354 - INFO - Successfully downloaded S2 image for 2024-10-06.
+2025-07-21 19:19:02,309 - INFO - Successfully downloaded S2 image for 2024-10-14.
+2025-07-21 19:19:31,776 - INFO - Successfully downloaded S2 image for 2021-12-04.
+2025-07-21 19:20:48,304 - INFO - Successfully downloaded S2 image for 2024-10-30.
+2025-07-21 19:21:10,399 - INFO - Successfully downloaded S2 image for 2021-12-27.
+2025-07-21 19:22:44,497 - WARNING - Request error for 2022-01-04 (attempt 1/3): 503 Server Error: Service Unavailable for url: https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails/93c0884b7b2afe521b4d7dee2ef07beb-296ea16035766dd52eb054809441c2c2:getPixels.
+2025-07-21 19:23:23,269 - INFO - Successfully downloaded S2 image for 2024-11-07.
+2025-07-21 19:24:15,181 - INFO - Successfully downloaded S2 image for 2022-01-04.
+2025-07-21 19:25:01,967 - INFO - Successfully downloaded S2 image for 2024-11-15.
+2025-07-21 19:26:30,147 - INFO - Successfully downloaded S2 image for 2022-01-12.
+2025-07-21 19:26:35,455 - INFO - Successfully downloaded S2 image for 2024-12-01.
+2025-07-21 19:29:34,763 - INFO - Successfully downloaded S2 image for 2022-01-28.
+2025-07-21 19:29:44,771 - INFO - Successfully downloaded S2 image for 2024-12-17.
+2025-07-21 19:29:44,774 - INFO - Sentinel-2 data retrieval finished for ROI 'F-48-93-B'.
+2025-07-21 19:29:44,774 - INFO - ==================================================
+2025-07-21 19:29:44,774 - INFO - Data retrieval orchestration finished. Total time: 3:07:28.799387
+2025-07-21 19:32:24,577 - INFO - Successfully downloaded S2 image for 2022-02-13.
+2025-07-21 19:35:00,799 - INFO - Successfully downloaded S2 image for 2022-02-21.
+2025-07-21 19:38:38,475 - INFO - Successfully downloaded S2 image for 2022-03-09.
+2025-07-21 19:40:43,033 - INFO - Successfully downloaded S2 image for 2022-03-25.
+2025-07-21 19:42:36,019 - INFO - Successfully downloaded S2 image for 2022-04-02.
+2025-07-21 19:44:30,741 - INFO - Successfully downloaded S2 image for 2022-04-11.
+2025-07-21 19:46:40,450 - INFO - Successfully downloaded S2 image for 2022-04-18.
+2025-07-21 19:49:01,033 - INFO - Successfully downloaded S2 image for 2022-04-19.
+2025-07-21 19:51:03,786 - INFO - Successfully downloaded S2 image for 2022-04-26.
+2025-07-21 19:52:58,997 - INFO - Successfully downloaded S2 image for 2022-04-27.
+2025-07-21 19:54:54,162 - INFO - Successfully downloaded S2 image for 2022-05-04.
+2025-07-21 19:56:42,254 - INFO - Successfully downloaded S2 image for 2022-05-12.
+2025-07-21 19:58:19,836 - INFO - Successfully downloaded S2 image for 2022-05-13.
+2025-07-21 20:00:14,163 - INFO - Successfully downloaded S2 image for 2022-05-28.
+2025-07-21 20:01:52,928 - INFO - Successfully downloaded S2 image for 2022-05-29.
+2025-07-21 20:02:01,744 - WARNING - Sleeping 1.13 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 503
+2025-07-21 20:03:55,338 - INFO - Successfully downloaded S2 image for 2022-06-05.
+2025-07-21 20:06:03,563 - INFO - Successfully downloaded S2 image for 2022-06-13.
+2025-07-21 20:07:48,590 - INFO - Successfully downloaded S2 image for 2022-06-21.
+2025-07-21 20:09:50,076 - INFO - Successfully downloaded S2 image for 2022-06-22.
+2025-07-21 20:11:49,481 - INFO - Successfully downloaded S2 image for 2022-07-07.
+2025-07-21 20:13:32,249 - INFO - Successfully downloaded S2 image for 2022-07-15.
+2025-07-21 20:15:04,665 - INFO - Successfully downloaded S2 image for 2022-07-23.
+2025-07-21 20:16:29,996 - INFO - Successfully downloaded S2 image for 2022-08-09.
+2025-07-21 20:18:34,127 - INFO - Successfully downloaded S2 image for 2022-09-01.
+2025-07-21 20:20:16,311 - INFO - Successfully downloaded S2 image for 2022-09-09.
+2025-07-21 20:21:59,426 - INFO - Successfully downloaded S2 image for 2022-09-10.
+2025-07-21 20:23:40,362 - INFO - Successfully downloaded S2 image for 2022-09-25.
+2025-07-21 20:25:26,902 - INFO - Successfully downloaded S2 image for 2022-09-26.
+2025-07-21 20:26:55,335 - INFO - Successfully downloaded S2 image for 2022-10-19.
+2025-07-21 20:28:24,744 - INFO - Successfully downloaded S2 image for 2022-10-20.
+2025-07-21 20:29:49,358 - INFO - Successfully downloaded S2 image for 2022-11-04.
+2025-07-21 20:31:42,363 - INFO - Successfully downloaded S2 image for 2022-11-28.
+2025-07-21 20:34:04,760 - INFO - Successfully downloaded S2 image for 2022-12-22.
+2025-07-21 20:36:10,363 - INFO - Successfully downloaded S2 image for 2022-12-30.
+2025-07-21 20:37:35,415 - INFO - Successfully downloaded S2 image for 2023-01-23.
+2025-07-21 20:39:16,525 - INFO - Successfully downloaded S2 image for 2023-01-31.
+2025-07-21 20:41:28,826 - INFO - Successfully downloaded S2 image for 2023-02-08.
+2025-07-21 20:43:31,570 - INFO - Successfully downloaded S2 image for 2023-02-16.
+2025-07-21 20:46:30,088 - INFO - Successfully downloaded S2 image for 2023-02-17.
+2025-07-21 20:48:56,806 - INFO - Successfully downloaded S2 image for 2023-03-04.
+2025-07-21 20:50:53,119 - INFO - Successfully downloaded S2 image for 2023-03-12.
+2025-07-21 20:53:18,505 - INFO - Successfully downloaded S2 image for 2023-03-20.
+2025-07-21 20:55:12,713 - INFO - Successfully downloaded S2 image for 2023-04-13.
+2025-07-21 20:57:12,932 - INFO - Successfully downloaded S2 image for 2023-04-21.
+2025-07-21 20:59:10,814 - INFO - Successfully downloaded S2 image for 2023-04-29.
+2025-07-21 21:00:40,077 - INFO - Successfully downloaded S2 image for 2023-05-07.
+2025-07-21 21:02:37,064 - INFO - Successfully downloaded S2 image for 2023-05-16.
+2025-07-21 21:04:56,541 - INFO - Successfully downloaded S2 image for 2023-05-23.
+2025-07-21 21:06:31,778 - INFO - Successfully downloaded S2 image for 2023-05-31.
+2025-07-21 21:08:19,868 - INFO - Successfully downloaded S2 image for 2023-06-01.
+2025-07-21 21:09:57,844 - INFO - Successfully downloaded S2 image for 2023-06-16.
+2025-07-21 21:11:39,351 - INFO - Successfully downloaded S2 image for 2023-06-17.
+2025-07-21 21:13:04,036 - INFO - Successfully downloaded S2 image for 2023-07-02.
+2025-07-21 21:14:32,666 - INFO - Successfully downloaded S2 image for 2023-07-03.
+2025-07-21 21:16:28,480 - INFO - Successfully downloaded S2 image for 2023-07-10.
+2025-07-21 21:17:55,824 - INFO - Successfully downloaded S2 image for 2023-07-26.
+2025-07-21 21:19:27,125 - INFO - Successfully downloaded S2 image for 2023-08-11.
+2025-07-21 21:21:05,408 - INFO - Successfully downloaded S2 image for 2023-08-19.
+2025-07-21 21:23:15,012 - INFO - Successfully downloaded S2 image for 2023-08-27.
+2025-07-21 21:24:41,978 - INFO - Successfully downloaded S2 image for 2023-09-04.
+2025-07-21 21:26:14,543 - INFO - Successfully downloaded S2 image for 2023-09-05.
+2025-07-21 21:28:00,850 - INFO - Successfully downloaded S2 image for 2023-09-20.
+2025-07-21 21:30:37,214 - INFO - Successfully downloaded S2 image for 2023-09-28.
+2025-07-21 21:32:27,482 - INFO - Successfully downloaded S2 image for 2023-10-06.
+2025-07-21 21:34:29,003 - INFO - Successfully downloaded S2 image for 2023-10-14.
+2025-07-21 21:36:38,818 - INFO - Successfully downloaded S2 image for 2023-10-23.
+2025-07-21 21:37:54,601 - INFO - Successfully downloaded S2 image for 2023-10-30.
+2025-07-21 21:39:30,334 - INFO - Successfully downloaded S2 image for 2023-12-09.
+2025-07-21 21:41:42,425 - INFO - Successfully downloaded S2 image for 2023-12-17.
+2025-07-21 21:43:21,364 - INFO - Successfully downloaded S2 image for 2023-12-18.
+2025-07-21 21:44:56,936 - INFO - Successfully downloaded S2 image for 2023-12-25.
+2025-07-21 21:47:03,767 - INFO - Successfully downloaded S2 image for 2024-01-02.
+2025-07-21 21:49:20,380 - INFO - Successfully downloaded S2 image for 2024-01-18.
+2025-07-21 21:51:46,956 - INFO - Successfully downloaded S2 image for 2024-01-26.
+2025-07-21 21:53:42,272 - INFO - Successfully downloaded S2 image for 2024-02-03.
+2025-07-21 21:55:58,944 - INFO - Successfully downloaded S2 image for 2024-02-11.
+2025-07-21 21:57:54,530 - INFO - Successfully downloaded S2 image for 2024-02-12.
+2025-07-21 21:59:50,830 - INFO - Successfully downloaded S2 image for 2024-02-20.
+2025-07-21 22:01:52,100 - INFO - Successfully downloaded S2 image for 2024-02-27.
+2025-07-21 22:04:05,815 - INFO - Successfully downloaded S2 image for 2024-02-28.
+2025-07-21 22:06:25,377 - INFO - Successfully downloaded S2 image for 2024-03-06.
+2025-07-21 22:08:21,429 - INFO - Successfully downloaded S2 image for 2024-03-07.
+2025-07-21 22:10:17,559 - INFO - Successfully downloaded S2 image for 2024-03-14.
+2025-07-21 22:12:33,545 - INFO - Successfully downloaded S2 image for 2024-03-22.
+2025-07-21 22:14:37,217 - INFO - Successfully downloaded S2 image for 2024-03-31.
+2025-07-21 22:17:23,601 - INFO - Successfully downloaded S2 image for 2024-04-07.
+2025-07-21 22:19:41,418 - INFO - Successfully downloaded S2 image for 2024-04-08.
+2025-07-21 22:21:47,779 - INFO - Successfully downloaded S2 image for 2024-04-15.
+2025-07-21 22:23:37,378 - WARNING - Sleeping 1.32 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json, after 503
+2025-07-21 22:24:05,083 - INFO - Successfully downloaded S2 image for 2024-04-16.
+2025-07-21 22:26:05,548 - INFO - Successfully downloaded S2 image for 2024-04-23.
+2025-07-21 22:28:20,747 - INFO - Successfully downloaded S2 image for 2024-05-01.
+2025-07-21 22:30:09,399 - INFO - Successfully downloaded S2 image for 2024-05-10.
+2025-07-21 22:31:51,227 - INFO - Successfully downloaded S2 image for 2024-05-17.
+2025-07-21 22:33:28,722 - INFO - Successfully downloaded S2 image for 2024-06-10.
+2025-07-21 22:35:07,434 - INFO - Successfully downloaded S2 image for 2024-06-26.
+2025-07-21 22:37:25,698 - INFO - Successfully downloaded S2 image for 2024-07-04.
+2025-07-21 22:39:31,325 - INFO - Successfully downloaded S2 image for 2024-07-05.
+2025-07-21 22:41:37,497 - INFO - Successfully downloaded S2 image for 2024-07-12.
+2025-07-21 22:43:31,540 - INFO - Successfully downloaded S2 image for 2024-07-29.
+2025-07-21 22:45:42,077 - INFO - Successfully downloaded S2 image for 2024-08-05.
+2025-07-21 22:47:44,483 - INFO - Successfully downloaded S2 image for 2024-08-13.
+2025-07-21 22:49:43,399 - INFO - Successfully downloaded S2 image for 2024-08-21.
+2025-07-21 22:51:30,508 - INFO - Successfully downloaded S2 image for 2024-08-29.
+2025-07-21 22:53:23,982 - INFO - Successfully downloaded S2 image for 2024-09-14.
+2025-07-21 22:55:14,926 - INFO - Successfully downloaded S2 image for 2024-09-15.
+2025-07-21 22:57:22,670 - INFO - Successfully downloaded S2 image for 2024-09-30.
+2025-07-21 22:58:54,712 - INFO - Successfully downloaded S2 image for 2024-10-08.
+2025-07-21 23:00:55,572 - INFO - Successfully downloaded S2 image for 2024-11-01.
+2025-07-21 23:03:15,752 - INFO - Successfully downloaded S2 image for 2024-11-17.
+2025-07-21 23:04:48,812 - INFO - Successfully downloaded S2 image for 2024-11-26.
+2025-07-21 23:06:39,724 - INFO - Successfully downloaded S2 image for 2024-12-19.
+2025-07-21 23:06:39,730 - INFO - Sentinel-2 data retrieval finished for ROI 'C-49-1-D'.
+2025-07-21 23:06:39,730 - INFO - ==================================================
+2025-07-21 23:06:39,730 - INFO - Data retrieval orchestration finished. Total time: 6:43:24.793855
+2025-07-22 08:58:56,648 - INFO - ==================================================
+2025-07-22 08:58:56,649 - INFO - Starting LST data retrieval for ROI 'C-48-56-A'...
+2025-07-22 08:58:56,649 - INFO - LST retrieval period: 2017-01-01 to 2025-01-01
+2025-07-22 09:40:27,003 - INFO - LST data retrieval finished for ROI 'C-48-56-A'.
+2025-07-22 09:40:27,003 - INFO - ==================================================
+2025-07-22 09:40:27,004 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-07-22 09:40:27,011 - INFO - Dynamically determined L8 pivot date: 2017-01-13
+2025-07-22 09:40:27,011 - INFO - Dynamically determined L9 pivot date: 2021-10-31
+2025-07-22 09:40:27,014 - INFO - Generated 255 target dates for ERA5 retrieval.
+2025-07-22 09:51:17,169 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-07-22 09:51:17,173 - WARNING - Found 2 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-07-22 09:51:21,850 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-07-22 09:51:21,850 - INFO - ==================================================
+2025-07-22 09:51:21,850 - INFO - Starting Sentinel-2 data retrieval for ROI 'C-48-56-A'...
+2025-07-22 09:51:21,857 - INFO - Requesting S2 composites for 236 dates based on LST files.
+2025-07-22 09:52:56,502 - INFO - Successfully downloaded S2 image for 2018-12-18.
+2025-07-22 09:53:58,967 - INFO - Successfully downloaded S2 image for 2019-02-04.
+2025-07-22 09:55:28,604 - INFO - Successfully downloaded S2 image for 2019-02-20.
+2025-07-22 09:56:53,432 - INFO - Successfully downloaded S2 image for 2019-03-24.
+2025-07-22 09:57:56,804 - INFO - Successfully downloaded S2 image for 2019-04-25.
+2025-07-22 09:59:40,963 - INFO - Successfully downloaded S2 image for 2019-05-11.
+2025-07-22 10:01:28,791 - INFO - Successfully downloaded S2 image for 2019-05-27.
+2025-07-22 10:03:26,338 - INFO - Successfully downloaded S2 image for 2019-07-14.
+2025-07-22 10:04:42,240 - INFO - Successfully downloaded S2 image for 2019-07-30.
+2025-07-22 10:06:20,538 - INFO - Successfully downloaded S2 image for 2019-08-15.
+2025-07-22 10:08:07,167 - INFO - Successfully downloaded S2 image for 2019-10-02.
+2025-07-22 10:09:42,889 - INFO - Successfully downloaded S2 image for 2019-10-18.
+2025-07-22 10:11:30,528 - INFO - Successfully downloaded S2 image for 2019-11-19.
+2025-07-22 10:13:40,349 - INFO - Successfully downloaded S2 image for 2020-01-06.
+2025-07-22 10:15:22,996 - INFO - Successfully downloaded S2 image for 2020-01-22.
+2025-07-22 10:17:26,690 - INFO - Successfully downloaded S2 image for 2020-02-07.
+2025-07-22 10:18:52,557 - INFO - Successfully downloaded S2 image for 2020-03-26.
+2025-07-22 10:20:15,925 - INFO - Successfully downloaded S2 image for 2020-04-11.
+2025-07-22 10:21:58,976 - INFO - Successfully downloaded S2 image for 2020-04-27.
+2025-07-22 10:23:38,949 - INFO - Successfully downloaded S2 image for 2020-05-29.
+2025-07-22 10:25:10,639 - INFO - Successfully downloaded S2 image for 2020-07-16.
+2025-07-22 10:26:28,181 - INFO - Successfully downloaded S2 image for 2020-08-17.
+2025-07-22 10:28:06,078 - INFO - Successfully downloaded S2 image for 2020-11-21.
+2025-07-22 10:29:59,695 - INFO - Successfully downloaded S2 image for 2020-12-07.
+2025-07-22 10:31:54,385 - INFO - Successfully downloaded S2 image for 2020-12-23.
+2025-07-22 10:33:17,030 - INFO - Successfully downloaded S2 image for 2021-01-24.
+2025-07-22 10:35:22,991 - INFO - Successfully downloaded S2 image for 2021-02-09.
+2025-07-22 10:36:43,871 - INFO - Successfully downloaded S2 image for 2021-02-25.
+2025-07-22 10:38:36,000 - INFO - Successfully downloaded S2 image for 2021-03-13.
+2025-07-22 10:39:50,686 - INFO - Successfully downloaded S2 image for 2021-04-14.
+2025-07-22 10:41:23,761 - INFO - Successfully downloaded S2 image for 2021-04-30.
+2025-07-22 10:43:18,352 - INFO - Successfully downloaded S2 image for 2021-05-16.
+2025-07-22 10:44:57,758 - INFO - Successfully downloaded S2 image for 2021-06-01.
+2025-07-22 10:46:19,343 - INFO - Successfully downloaded S2 image for 2021-07-03.
+2025-07-22 10:47:24,840 - INFO - Successfully downloaded S2 image for 2021-08-04.
+2025-07-22 10:49:21,435 - INFO - Successfully downloaded S2 image for 2021-08-20.
+2025-07-22 10:50:38,105 - INFO - Successfully downloaded S2 image for 2021-09-21.
+2025-07-22 10:52:11,484 - INFO - Successfully downloaded S2 image for 2021-10-23.
+2025-07-22 10:53:36,164 - INFO - Successfully downloaded S2 image for 2021-10-31.
+2025-07-22 10:54:51,394 - INFO - Successfully downloaded S2 image for 2021-11-05.
+2025-07-22 10:56:08,564 - INFO - Successfully downloaded S2 image for 2021-11-08.
+2025-07-22 10:57:28,121 - INFO - Successfully downloaded S2 image for 2021-12-18.
+2025-07-22 10:59:01,802 - INFO - Successfully downloaded S2 image for 2021-12-26.
+2025-07-22 11:00:40,500 - INFO - Successfully downloaded S2 image for 2022-01-11.
+2025-07-22 11:02:48,902 - INFO - Successfully downloaded S2 image for 2022-01-19.
+2025-07-22 11:04:14,581 - INFO - Successfully downloaded S2 image for 2022-01-27.
+2025-07-22 11:06:01,014 - INFO - Successfully downloaded S2 image for 2022-02-04.
+2025-07-22 11:07:38,112 - INFO - Successfully downloaded S2 image for 2022-02-20.
+2025-07-22 11:09:32,818 - INFO - Successfully downloaded S2 image for 2022-02-28.
+2025-07-22 11:11:00,220 - INFO - Successfully downloaded S2 image for 2022-03-08.
+2025-07-22 11:12:28,654 - INFO - Successfully downloaded S2 image for 2022-04-01.
+2025-07-22 11:14:12,916 - INFO - Successfully downloaded S2 image for 2022-04-09.
+2025-07-22 11:15:17,710 - INFO - Successfully downloaded S2 image for 2022-04-17.
+2025-07-22 11:16:59,262 - INFO - Successfully downloaded S2 image for 2022-04-25.
+2025-07-22 11:18:19,783 - INFO - Successfully downloaded S2 image for 2022-05-11.
+2025-07-22 11:19:28,492 - INFO - Successfully downloaded S2 image for 2022-05-19.
+2025-07-22 11:21:25,616 - INFO - Successfully downloaded S2 image for 2022-05-27.
+2025-07-22 11:22:51,334 - INFO - Successfully downloaded S2 image for 2022-06-04.
+2025-07-22 11:24:25,784 - INFO - Successfully downloaded S2 image for 2022-06-20.
+2025-07-22 11:26:06,793 - INFO - Successfully downloaded S2 image for 2022-06-28.
+2025-07-22 11:27:33,232 - INFO - Successfully downloaded S2 image for 2022-07-06.
+2025-07-22 11:28:41,836 - INFO - Successfully downloaded S2 image for 2022-07-14.
+2025-07-22 11:30:21,625 - INFO - Successfully downloaded S2 image for 2022-07-30.
+2025-07-22 11:32:12,702 - INFO - Successfully downloaded S2 image for 2022-08-15.
+2025-07-22 11:33:51,816 - INFO - Successfully downloaded S2 image for 2022-09-16.
+2025-07-22 11:35:07,139 - INFO - Successfully downloaded S2 image for 2022-10-18.
+2025-07-22 11:36:24,715 - INFO - Successfully downloaded S2 image for 2022-11-27.
+2025-07-22 11:37:54,763 - INFO - Successfully downloaded S2 image for 2022-12-05.
+2025-07-22 11:39:14,064 - INFO - Successfully downloaded S2 image for 2022-12-13.
+2025-07-22 11:40:53,105 - INFO - Successfully downloaded S2 image for 2022-12-21.
+2025-07-22 11:42:47,663 - INFO - Successfully downloaded S2 image for 2023-01-14.
+2025-07-22 11:44:41,085 - INFO - Successfully downloaded S2 image for 2023-02-23.
+2025-07-22 11:45:49,995 - INFO - Successfully downloaded S2 image for 2023-03-03.
+2025-07-22 11:47:11,931 - INFO - Successfully downloaded S2 image for 2023-03-11.
+2025-07-22 11:48:58,720 - INFO - Successfully downloaded S2 image for 2023-03-27.
+2025-07-22 11:50:49,274 - INFO - Successfully downloaded S2 image for 2023-04-04.
+2025-07-22 11:51:58,593 - INFO - Successfully downloaded S2 image for 2023-04-12.
+2025-07-22 11:53:18,889 - INFO - Successfully downloaded S2 image for 2023-04-20.
+2025-07-22 11:54:38,318 - INFO - Successfully downloaded S2 image for 2023-05-06.
+2025-07-22 11:56:12,705 - INFO - Successfully downloaded S2 image for 2023-05-14.
+2025-07-22 11:57:32,472 - INFO - Successfully downloaded S2 image for 2023-05-30.
+2025-07-22 11:58:40,960 - INFO - Successfully downloaded S2 image for 2023-06-15.
+2025-07-22 12:00:26,894 - INFO - Successfully downloaded S2 image for 2023-06-23.
+2025-07-22 12:02:04,709 - INFO - Successfully downloaded S2 image for 2023-07-01.
+2025-07-22 12:03:48,372 - INFO - Successfully downloaded S2 image for 2023-07-09.
+2025-07-22 12:05:35,514 - INFO - Successfully downloaded S2 image for 2023-08-10.
+2025-07-22 12:07:24,603 - INFO - Successfully downloaded S2 image for 2023-08-18.
+2025-07-22 12:09:10,091 - INFO - Successfully downloaded S2 image for 2023-09-19.
+2025-07-22 12:10:51,897 - INFO - Successfully downloaded S2 image for 2023-10-13.
+2025-07-22 12:12:21,874 - INFO - Successfully downloaded S2 image for 2023-10-21.
+2025-07-22 12:13:56,618 - INFO - Successfully downloaded S2 image for 2023-10-29.
+2025-07-22 12:15:31,829 - INFO - Successfully downloaded S2 image for 2023-11-06.
+2025-07-22 12:16:44,948 - INFO - Successfully downloaded S2 image for 2023-11-22.
+2025-07-22 12:18:11,861 - INFO - Successfully downloaded S2 image for 2023-11-30.
+2025-07-22 12:19:31,237 - INFO - Successfully downloaded S2 image for 2023-12-08.
+2025-07-22 12:21:16,119 - INFO - Successfully downloaded S2 image for 2023-12-16.
+2025-07-22 12:22:46,334 - INFO - Successfully downloaded S2 image for 2024-01-01.
+2025-07-22 12:24:02,740 - INFO - Successfully downloaded S2 image for 2024-01-09.
+2025-07-22 12:25:25,745 - INFO - Successfully downloaded S2 image for 2024-01-17.
+2025-07-22 12:27:25,861 - INFO - Successfully downloaded S2 image for 2024-01-25.
+2025-07-22 12:28:51,367 - INFO - Successfully downloaded S2 image for 2024-02-10.
+2025-07-22 12:30:27,350 - INFO - Successfully downloaded S2 image for 2024-02-18.
+2025-07-22 12:32:10,741 - INFO - Successfully downloaded S2 image for 2024-02-26.
+2025-07-22 12:33:55,473 - INFO - Successfully downloaded S2 image for 2024-03-05.
+2025-07-22 12:35:40,824 - INFO - Successfully downloaded S2 image for 2024-03-21.
+2025-07-22 12:37:13,224 - INFO - Successfully downloaded S2 image for 2024-03-29.
+2025-07-22 12:38:49,867 - INFO - Successfully downloaded S2 image for 2024-04-06.
+2025-07-22 12:40:00,425 - INFO - Successfully downloaded S2 image for 2024-04-14.
+2025-07-22 12:42:05,567 - INFO - Successfully downloaded S2 image for 2024-04-30.
+2025-07-22 12:43:11,974 - INFO - Successfully downloaded S2 image for 2024-05-08.
+2025-07-22 12:44:27,403 - INFO - Successfully downloaded S2 image for 2024-05-16.
+2025-07-22 12:46:07,632 - INFO - Successfully downloaded S2 image for 2024-05-24.
+2025-07-22 12:47:45,526 - INFO - Successfully downloaded S2 image for 2024-06-17.
+2025-07-22 12:48:53,910 - INFO - Successfully downloaded S2 image for 2024-08-04.
+2025-07-22 12:50:08,745 - INFO - Successfully downloaded S2 image for 2024-08-12.
+2025-07-22 12:51:34,157 - INFO - Successfully downloaded S2 image for 2024-08-28.
+2025-07-22 12:53:01,821 - INFO - Successfully downloaded S2 image for 2024-10-15.
+2025-07-22 12:54:42,915 - INFO - Successfully downloaded S2 image for 2024-10-31.
+2025-07-22 12:56:06,472 - INFO - Successfully downloaded S2 image for 2024-11-16.
+2025-07-22 12:57:10,634 - INFO - Successfully downloaded S2 image for 2024-12-02.
+2025-07-22 12:57:10,639 - INFO - Sentinel-2 data retrieval finished for ROI 'C-48-56-A'.
+2025-07-22 12:57:10,639 - INFO - ==================================================
+2025-07-22 12:57:10,639 - INFO - Data retrieval orchestration finished. Total time: 3:58:15.842264

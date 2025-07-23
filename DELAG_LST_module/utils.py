@@ -566,8 +566,9 @@ def visualize_daily_stacks_comparison(
         iter_min_val = np.nanmin(iter_all_values)
         iter_max_val = np.nanmax(iter_all_values)
 
-        if not np.isfinite(iter_min_val) or not np.isfinite(iter_max_val):
-            iter_min_val, iter_max_val = 273, 313 # Default fallback
+        if not np.isfinite(iter_min_val) or iter_min_val <= 270 or not np.isfinite(iter_max_val) or iter_max_val >= 320:
+            iter_min_val, iter_max_val = 270, 3201
+            # Default fallback
         # --- End of dynamic vmin/vmax calculation ---
 
         # Row 0: Observed LST

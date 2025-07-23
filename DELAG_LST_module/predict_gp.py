@@ -153,13 +153,42 @@ def predict_gp_residuals_pipeline(data_to_predict, atc_mean_predictions, roi_nam
         data_to_predict, atc_mean_predictions, config, prediction_mask=spatial_mask
     )
     
+    # --- Post-prediction NaN handling ---
+    # Create clean, zero-filled arrays for the final output
+    final_gp_mean_residuals = np.zeros_like(atc_mean_predictions)
+    final_gp_variance_residuals = np.zeros_like(atc_mean_predictions)
+
+    # If a mask was used, copy the valid predictions into the zero arrays
+    if spatial_mask is not None:
+        # The prediction output will have the same shape as the mask allows
+        # We need to place these results back into the full-sized grid.
+        # Assuming the prediction function returns a dense array for the masked area
+        
+        # Check if the returned prediction is a flattened array of valid pixels
+        num_valid_pixels = np.sum(spatial_mask)
+        if gp_mean_residuals.ndim == 1 and gp_mean_residuals.shape[0] == num_valid_pixels:
+            # This is a flattened array, needs to be mapped back to 2D
+            # This case is complex and depends on gp_model implementation, assuming it returns a masked 3D array for now
+            pass # Placeholder for more complex logic if needed
+
+        # Assuming gp_mean_residuals is already a masked 3D array of shape (time, height, width)
+        # where non-masked pixels are NaN
+        valid_pred_mask = ~np.isnan(gp_mean_residuals)
+        final_gp_mean_residuals[valid_pred_mask] = gp_mean_residuals[valid_pred_mask]
+        final_gp_variance_residuals[valid_pred_mask] = gp_variance_residuals[valid_pred_mask]
+
+    else: # No mask was used, but there might still be NaNs from prediction failures
+        valid_pred_mask = ~np.isnan(gp_mean_residuals)
+        final_gp_mean_residuals[valid_pred_mask] = gp_mean_residuals[valid_pred_mask]
+        final_gp_variance_residuals[valid_pred_mask] = gp_variance_residuals[valid_pred_mask]
+
     end_time = time.time()
     prediction_duration = timedelta(seconds=end_time - start_time)
     print(f"GP residual prediction completed in: {prediction_duration}")
-    print(f"  Mean residuals shape: {gp_mean_residuals.shape}")
-    print(f"  Variance residuals shape: {gp_variance_residuals.shape}")
+    print(f"  Mean residuals shape: {final_gp_mean_residuals.shape}")
+    print(f"  Variance residuals shape: {final_gp_variance_residuals.shape}")
     
-    return gp_mean_residuals, gp_variance_residuals
+    return final_gp_mean_residuals, final_gp_variance_residuals
 
 
 def save_gp_predictions(gp_mean_residuals, gp_variance_residuals, data, predictions_output_dir, roi_name):

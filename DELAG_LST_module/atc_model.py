@@ -7,9 +7,10 @@ import torch.optim as optim
 import numpy as np
 from tqdm import tqdm
 import os
-from joblib import Parallel, delayed # Added for parallelization
-import config # Assuming your config.py is in the same directory or accessible
-import utils # Added for the new plotting function
+import tempfile  # Added for temporary snapshot storage on disk
+from joblib import Parallel, delayed  # Added for parallelization
+import config  # Assuming your config.py is in the same directory or accessible
+import utils  # Added for the new plotting function
 
 
 class EnhancedATCModel(nn.Module):
@@ -289,15 +290,24 @@ def train_atc_model_pixelwise(
 
 # MODIFIED for returning structured interval losses
 def _train_pixel_atc_worker(
-    r: int, c: int,
+    r: int,
+    c: int,
     pixel_lst_all_times_slice: np.ndarray,
     pixel_era5_all_times_slice: np.ndarray,
     doy_stack_all_days_numpy: np.ndarray,
-    app_config: 'config',
-    num_times_for_output: int 
-) -> tuple[int, int, list[dict], dict[str, list[float]]]: # Return dict of loss lists
+    app_config: "config",
+    num_times_for_output: int,
+    temp_snapshot_dir: str,
+) -> tuple[int, int, str, dict[str, list[float]]]:
     """
-    Worker function to train ATC for a single pixel, return snapshots and interval losses.
+    Worker function to train ATC for a single pixel.
+
+    To reduce RAM usage, the trained snapshot parameters are written to a temporary
+    ``.npz`` file on disk (one per pixel). The path to this file is returned so
+    the parent process can later merge all snapshots into the final stacks
+    without ever holding the full collection in memory.
+    Returns:
+        tuple: (row, col, path_to_snapshot_file, interval_loss_dict)
     """
     worker_device_str = app_config.ATC_DEVICE
     if app_config.ATC_DEVICE.lower() == "cuda" and getattr(app_config, 'ATC_N_JOBS', -1) != 1:
@@ -316,7 +326,7 @@ def _train_pixel_atc_worker(
     }
 
     if np.isnan(pixel_era5_all_times_slice).all():
-        return r, c, [], default_interval_losses # Return empty snapshots and default losses
+        return r, c, "", default_interval_losses # Return empty snapshots and default losses
 
     clear_sky_indices = np.where(~np.isnan(pixel_lst_all_times_slice))[0]
     pixel_lst_clear = pixel_lst_all_times_slice[clear_sky_indices]
@@ -330,7 +340,7 @@ def _train_pixel_atc_worker(
     pixel_doy_clear_valid = pixel_doy_clear[valid_data_mask]
     pixel_era5_clear_valid = pixel_era5_clear[valid_data_mask]
 
-    model_snapshots = []
+    model_snapshots: list[dict] = []
     pixel_interval_losses_final = {k: v[:] for k, v in default_interval_losses.items()} # Deep copy
 
     if len(pixel_lst_clear_valid) >= app_config.MIN_CLEAR_OBS_ATC:
@@ -347,27 +357,50 @@ def _train_pixel_atc_worker(
             # Use interval_losses_from_train regardless of whether model was trained
             pixel_interval_losses_final = interval_losses_from_train 
     
-    # Ensure snapshots list is padded if needed (as before)
-    if not model_snapshots or len(model_snapshots) < app_config.ATC_ENSEMBLE_SNAPSHOTS:
-        default_initial_C = np.nanmean(pixel_lst_clear_valid) if len(pixel_lst_clear_valid) > 0 else 290.0
-        default_initial_A = np.nanstd(pixel_lst_clear_valid) if len(pixel_lst_clear_valid) > 1 else 10.0
-        default_initial_C = float(default_initial_C) if np.isfinite(default_initial_C) else 290.0
-        default_initial_A = float(default_initial_A) if np.isfinite(default_initial_A) and default_initial_A > 1e-6 else 10.0
-        default_params_for_snapshot = {
-            'C': torch.tensor(default_initial_C), 'A': torch.tensor(default_initial_A),
-            'phi': torch.tensor(180.0), 'b': torch.tensor(0.5),
-            'A_2': torch.tensor(default_initial_A / 5.0), 'phi_2': torch.tensor(90.0) # Add new defaults
-        }
-        num_needed_snapshots = app_config.ATC_ENSEMBLE_SNAPSHOTS
-        while len(model_snapshots) < num_needed_snapshots:
-            model_snapshots.append({k: v.clone().cpu() for k,v in default_params_for_snapshot.items()})
+    # ------------------------------
+    # Persist snapshots to disk to limit RAM usage
+    # ------------------------------
+    num_snaps_expected = app_config.ATC_ENSEMBLE_SNAPSHOTS
+    C_arr   = np.full(num_snaps_expected, np.nan, dtype=np.float32)
+    A_arr   = np.full(num_snaps_expected, np.nan, dtype=np.float32)
+    phi_arr = np.full(num_snaps_expected, np.nan, dtype=np.float32)
+    A2_arr  = np.full(num_snaps_expected, np.nan, dtype=np.float32)
+    phi2_arr= np.full(num_snaps_expected, np.nan, dtype=np.float32)
+    b_arr   = np.full(num_snaps_expected, np.nan, dtype=np.float32)
 
-    return r, c, model_snapshots, pixel_interval_losses_final
+    for idx, state_dict in enumerate(model_snapshots):
+        if idx >= num_snaps_expected:
+            break
+        # Extract floats regardless of tensor/float type
+        C_arr[idx]    = float(state_dict.get("C", np.nan)) if not torch.is_tensor(state_dict.get("C", None)) else state_dict["C"].item()
+        A_arr[idx]    = float(state_dict.get("A", np.nan)) if not torch.is_tensor(state_dict.get("A", None)) else state_dict["A"].item()
+        phi_arr[idx]  = float(state_dict.get("phi", np.nan)) if not torch.is_tensor(state_dict.get("phi", None)) else state_dict["phi"].item()
+        A2_arr[idx]   = float(state_dict.get("A_2", np.nan)) if not torch.is_tensor(state_dict.get("A_2", None)) else state_dict["A_2"].item()
+        phi2_arr[idx] = float(state_dict.get("phi_2", np.nan)) if not torch.is_tensor(state_dict.get("phi_2", None)) else state_dict["phi_2"].item()
+        b_arr[idx]    = float(state_dict.get("b", np.nan)) if not torch.is_tensor(state_dict.get("b", None)) else state_dict["b"].item()
+
+    pixel_snapshot_path = os.path.join(temp_snapshot_dir, f"pixel_{r}_{c}.npz")
+    try:
+        np.savez_compressed(
+            pixel_snapshot_path,
+            C=C_arr,
+            A=A_arr,
+            phi=phi_arr,
+            A_2=A2_arr,
+            phi_2=phi2_arr,
+            b=b_arr,
+        )
+    except Exception as e:
+        print(f"Error saving snapshot for pixel ({r},{c}) to {pixel_snapshot_path}: {e}")
+        # Fallback: still return empty path so downstream knows something went wrong
+        pixel_snapshot_path = ""
+
+    return r, c, pixel_snapshot_path, pixel_interval_losses_final
 
 # MODIFIED to collect and return dict of loss maps
 def train_and_collect_all_atc_snapshots(
     preprocessed_data: dict, app_config: 'config'
-) -> tuple[dict[tuple[int, int], list[dict]], dict[str, np.ndarray]]: # Return dict of loss maps
+) -> tuple[dict[tuple[int, int], str], dict[str, np.ndarray]]:
     """
     Trains ATC models for all pixels, collects snapshots, and interval loss maps.
     Returns:
@@ -410,6 +443,10 @@ def train_and_collect_all_atc_snapshots(
     num_pixels_to_train = np.sum(training_pixel_mask)
     # print(f"Preparing arguments for parallel ATC model training (snapshot & loss collection) for {num_pixels_to_train} selected pixels...")
 
+    # Create a temporary directory for per-pixel snapshot files
+    temp_snapshot_dir = tempfile.mkdtemp(prefix="atc_pixel_snapshots_")
+    print(f"Per-pixel snapshots will be written to temporary directory: {temp_snapshot_dir}")
+
     tasks_args_list = []
     for r_iter in range(height):
         for c_iter in range(width):
@@ -420,7 +457,8 @@ def train_and_collect_all_atc_snapshots(
                      era5_stack[:, r_iter, c_iter].copy(),  # ERA5 is now 2D: (time, spatial)
                      doy_stack_numpy.copy(),
                      app_config,
-                     num_times_obs
+                     num_times_obs,
+                     temp_snapshot_dir
                     )
                 )
 
@@ -434,7 +472,7 @@ def train_and_collect_all_atc_snapshots(
     )
     # print(f"Parallel ATC snapshot & loss collection finished. Processed {len(results)} pixel tasks.")
 
-    all_pixel_snapshots = {}
+    all_pixel_snapshots: dict[tuple[int, int], str] = {}
     
     # Prepare structure for interval loss maps (train and val)
     loss_logging_interval = getattr(app_config, 'ATC_LOSS_LOGGING_INTERVAL', 100)
@@ -445,8 +483,8 @@ def train_and_collect_all_atc_snapshots(
     }
 
     print("Collecting snapshots and interval losses from parallel ATC training...")
-    for r_res, c_res, snapshots_for_pixel, interval_losses_dict in tqdm(results, desc="Organizing Results"):
-        all_pixel_snapshots[(r_res, c_res)] = snapshots_for_pixel
+    for r_res, c_res, snapshot_path_for_pixel, interval_losses_dict in tqdm(results, desc="Organizing Results"):
+        all_pixel_snapshots[(r_res, c_res)] = snapshot_path_for_pixel
         
         # Unpack the dictionary of losses and populate the respective maps
         train_losses = interval_losses_dict.get('train', [])
@@ -465,7 +503,16 @@ def train_and_collect_all_atc_snapshots(
     print("Finished collecting all ATC model snapshots and interval losses.")
     return all_pixel_snapshots, interval_loss_maps
 
-def save_atc_snapshots(all_pixel_snapshots: dict, filepath: str, image_height: int, image_width: int, num_snapshots_expected: int):
+# -----------------------------------------------------------------
+#  SAVE SNAPSHOTS – accepts in-memory lists OR on-disk per-pixel files
+# -----------------------------------------------------------------
+def save_atc_snapshots(
+    all_pixel_snapshots: dict,
+    filepath: str,
+    image_height: int,
+    image_width: int,
+    num_snapshots_expected: int,
+):
     """
     Saves the collected ATC model parameter snapshots to a compressed NPZ file.
 
@@ -488,26 +535,67 @@ def save_atc_snapshots(all_pixel_snapshots: dict, filepath: str, image_height: i
 
     print(f"Structuring snapshots for saving. Expected snapshots per pixel: {num_snapshots_expected}")
     
-    for (r, c), snapshots_list in tqdm(all_pixel_snapshots.items(), desc="Processing pixels for saving"):
+    for (r, c), snapshot_entry in tqdm(all_pixel_snapshots.items(), desc="Processing pixels for saving"):
+        # ------------------------------------------------------------
+        # Case 1: snapshot_entry is a path to an on-disk npz file (new).
+        # Case 2: snapshot_entry is an in-memory list of state_dicts (legacy).
+        # ------------------------------------------------------------
+
+        if isinstance(snapshot_entry, str):
+            pixel_file_path = snapshot_entry
+            if not pixel_file_path or not os.path.exists(pixel_file_path):
+                print(f"Warning: Snapshot file for pixel ({r},{c}) not found. Filling with NaNs.")
+                continue
+
+            try:
+                with np.load(pixel_file_path) as pdata:
+                    C_arr   = pdata.get("C")
+                    A_arr   = pdata.get("A")
+                    phi_arr = pdata.get("phi")
+                    A2_arr  = pdata.get("A_2")
+                    phi2_arr = pdata.get("phi_2")
+                    b_arr   = pdata.get("b")
+
+                if C_arr is None:
+                    print(f"Warning: Snapshot file {pixel_file_path} missing parameters. Skipping.")
+                    continue
+
+                # Ensure correct length by padding/truncating
+                for idx in range(min(num_snapshots_expected, len(C_arr))):
+                    C_stack[idx, r, c]   = C_arr[idx]
+                    A_stack[idx, r, c]   = A_arr[idx]
+                    phi_stack[idx, r, c] = phi_arr[idx]
+                    A_2_stack[idx, r, c] = A2_arr[idx]
+                    phi_2_stack[idx, r, c] = phi2_arr[idx]
+                    b_stack[idx, r, c]   = b_arr[idx]
+
+            except Exception as e:
+                print(f"Error reading snapshot file {pixel_file_path}: {e}")
+
+            continue  # Done with on-disk path entry
+
+        # ------------------------------------------------------------
+        # Legacy path – snapshot_entry is list of state_dicts held in RAM
+        # ------------------------------------------------------------
+        snapshots_list = snapshot_entry
         if not snapshots_list:
             print(f"Warning: No snapshots found for pixel ({r},{c}). Will be NaNs in saved file.")
-            # NaNs are already the default from np.full
             continue
+
         if len(snapshots_list) != num_snapshots_expected:
-            print(f"Warning: Pixel ({r},{c}) has {len(snapshots_list)} snapshots, expected {num_snapshots_expected}.")
-            # Continue processing with what's available, np.full handles missing ones if list is shorter after all.
-            # The worker _train_pixel_atc_worker should ideally ensure num_snapshots_expected are returned.
+            print(
+                f"Warning: Pixel ({r},{c}) has {len(snapshots_list)} snapshots, expected {num_snapshots_expected}."
+            )
 
         for idx, state_dict in enumerate(snapshots_list):
-            if idx >= num_snapshots_expected: 
+            if idx >= num_snapshots_expected:
                 break
-            # Gracefully get parameters; MLP state_dicts won't have these specific keys.
-            C_stack[idx, r, c] = state_dict.get('C', np.nan) if torch.is_tensor(state_dict.get('C', np.nan)) else float(state_dict.get('C', np.nan))
-            A_stack[idx, r, c] = state_dict.get('A', np.nan) if torch.is_tensor(state_dict.get('A', np.nan)) else float(state_dict.get('A', np.nan))
-            phi_stack[idx, r, c] = state_dict.get('phi', np.nan) if torch.is_tensor(state_dict.get('phi', np.nan)) else float(state_dict.get('phi', np.nan))
-            A_2_stack[idx, r, c] = state_dict.get('A_2', np.nan) if torch.is_tensor(state_dict.get('A_2', np.nan)) else float(state_dict.get('A_2', np.nan))
-            phi_2_stack[idx, r, c] = state_dict.get('phi_2', np.nan) if torch.is_tensor(state_dict.get('phi_2', np.nan)) else float(state_dict.get('phi_2', np.nan))
-            b_stack[idx, r, c] = state_dict.get('b', np.nan) if torch.is_tensor(state_dict.get('b', np.nan)) else float(state_dict.get('b', np.nan))
+            C_stack[idx, r, c]   = float(state_dict.get("C", np.nan)) if not torch.is_tensor(state_dict.get("C", None)) else state_dict["C"].item()
+            A_stack[idx, r, c]   = float(state_dict.get("A", np.nan)) if not torch.is_tensor(state_dict.get("A", None)) else state_dict["A"].item()
+            phi_stack[idx, r, c] = float(state_dict.get("phi", np.nan)) if not torch.is_tensor(state_dict.get("phi", None)) else state_dict["phi"].item()
+            A_2_stack[idx, r, c] = float(state_dict.get("A_2", np.nan)) if not torch.is_tensor(state_dict.get("A_2", None)) else state_dict["A_2"].item()
+            phi_2_stack[idx, r, c] = float(state_dict.get("phi_2", np.nan)) if not torch.is_tensor(state_dict.get("phi_2", None)) else state_dict["phi_2"].item()
+            b_stack[idx, r, c]   = float(state_dict.get("b", np.nan)) if not torch.is_tensor(state_dict.get("b", None)) else state_dict["b"].item()
 
     print(f"Saving snapshot stacks to {filepath}...")
     np.savez_compressed(filepath, 
