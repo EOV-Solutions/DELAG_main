@@ -10,6 +10,7 @@ import logging
 import rasterio
 from dotenv import load_dotenv
 import numpy as np
+from datetime import datetime
 load_dotenv()
 
 # Configure logging
@@ -21,6 +22,28 @@ logging.basicConfig(
         logging.FileHandler('ndvi_retrieval.log')
     ]
 )
+
+def write_metadata_to_tiff(tif_path, timestamp_ms=None, acquisition_type=None):
+    """Writes timestamp metadata to a GeoTIFF file."""
+    if os.path.exists(tif_path):
+        try:
+            with rasterio.open(tif_path, 'r+') as dst:
+                tags = {}
+                if timestamp_ms:
+                    dt_object = datetime.fromtimestamp(timestamp_ms / 1000)
+                    datetime_str = dt_object.strftime('%Y:%m:%d %H:%M:%S')
+                    tags['DATETIME'] = datetime_str
+                    print(f"  > Wrote DATETIME: {datetime_str}")
+                
+                if acquisition_type:
+                    tags['ACQUISITION_TYPE'] = acquisition_type
+                    print(f"  > Wrote ACQUISITION_TYPE: {acquisition_type}")
+                
+                if tags:
+                    dst.update_tags(**tags)
+
+        except Exception as e:
+            print(f"Warning: Failed to write metadata to {tif_path}: {e}")
 
 # =============================================================================
 # FUNCTIONS
@@ -69,9 +92,10 @@ def get_sentinel_collection(start_date, end_date, roi):
     """
     # logging.info(f"Fetching Sentinel-2 collection for dates {start_date.format('YYYY-MM-dd').getInfo()} to {end_date.format('YYYY-MM-dd').getInfo()}")
     
-    # Advance dates by ±8 days to ensure full coverage for 8-day composites
-    s_date = start_date.advance(-2, 'day')
-    e_date = end_date.advance(2, 'day')
+    # Create a 9-day window (+/- 4 days) around the target date to find the best image.
+    # This increases the chance of finding a cloud-free image for the composite.
+    s_date = start_date.advance(-4, 'day')
+    e_date = end_date.advance(4, 'day')
     
     cs_plus = ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED')
     qa_band = 'cs'
@@ -120,6 +144,8 @@ def download_s2_bands(image_collection, big_folder, roi, file_prefix, roi_name, 
             continue
 
         date_str = ee.Date(image.get('system:time_start')).format('YYYY-MM-dd').getInfo()
+        # Get the timestamp for metadata writing
+        time_start_ms = image.get('system:time_start').getInfo()
         final_tif_path = os.path.join(out_folder, f"{file_prefix}{date_str}.tif")
 
         if os.path.exists(final_tif_path):
@@ -212,6 +238,9 @@ def download_s2_bands(image_collection, big_folder, roi, file_prefix, roi_name, 
                     with rasterio.open(final_tif_path, 'w', **profile) as dst:
                         for idx, arr in enumerate(band_arrays, start=1):
                             dst.write(arr, idx)
+                    
+                    # Write metadata to the final file
+                    write_metadata_to_tiff(final_tif_path, time_start_ms, 'S2_8days')
                     
                     logging.info(f"Successfully downloaded S2 image for {date_str}.")
                     download_success = True
@@ -353,5 +382,4 @@ if __name__ == '__main__':
         pass 
 
     # logging.info("Example run finished.")
-
 

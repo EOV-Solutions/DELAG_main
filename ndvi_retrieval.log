@@ -1313,3 +1313,78 @@ ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
 2025-07-22 12:57:10,639 - INFO - Sentinel-2 data retrieval finished for ROI 'C-48-56-A'.
 2025-07-22 12:57:10,639 - INFO - ==================================================
 2025-07-22 12:57:10,639 - INFO - Data retrieval orchestration finished. Total time: 3:58:15.842264
+2025-08-04 15:03:20,971 - INFO - ==================================================
+2025-08-04 15:03:20,971 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 15:03:20,971 - INFO - LST retrieval period: 2015-01-01 to 2025-01-01
+2025-08-04 15:41:27,500 - INFO - ==================================================
+2025-08-04 15:41:27,500 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 15:41:27,501 - INFO - LST retrieval period: 2015-01-01 to 2025-01-01
+2025-08-04 16:05:18,120 - INFO - ==================================================
+2025-08-04 16:05:18,120 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:05:18,120 - INFO - LST retrieval period: 2015-01-01 to 2017-01-01
+2025-08-04 16:06:33,380 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:06:33,380 - INFO - ==================================================
+2025-08-04 16:06:33,380 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:06:33,381 - INFO - Dynamically determined L8 pivot date: 2015-01-15
+2025-08-04 16:06:33,381 - WARNING - No L9 files found in /mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst. Falling back to default L9 pivot date: 2022-01-01
+2025-08-04 16:06:33,381 - INFO - Generated 45 target dates for ERA5 retrieval.
+2025-08-04 16:07:27,365 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-04 16:07:27,367 - WARNING - Found 33 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-08-04 16:08:06,050 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:08:06,050 - INFO - ==================================================
+2025-08-04 16:08:06,050 - INFO - Starting MODIS data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:08:06,051 - INFO - Generated 33 target dates for MODIS retrieval based on LST files.
+2025-08-04 16:08:27,253 - INFO - MODIS data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:08:27,253 - INFO - ==================================================
+2025-08-04 16:08:27,253 - INFO - Starting Sentinel-2 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:08:27,257 - INFO - Requesting S2 composites for 33 dates based on LST files.
+2025-08-04 16:08:28,911 - WARNING - No valid S2 composites found for ROI 'F-48-93-B'. Skipping download.
+2025-08-04 16:08:28,912 - INFO - Sentinel-2 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:08:28,912 - INFO - ==================================================
+2025-08-04 16:08:28,912 - INFO - Data retrieval orchestration finished. Total time: 0:03:11.991548
+2025-08-04 16:15:19,052 - INFO - ==================================================
+2025-08-04 16:15:19,052 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:15:19,052 - INFO - LST retrieval period: 2015-01-01 to 2017-01-01
+2025-08-04 16:16:51,887 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:16:51,887 - INFO - ==================================================
+2025-08-04 16:16:51,887 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:16:51,888 - INFO - Dynamically determined L8 pivot date: 2015-01-15
+2025-08-04 16:16:51,888 - WARNING - No L9 files found in /mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst. Falling back to default L9 pivot date: 2022-01-01
+2025-08-04 16:16:51,889 - INFO - Generated 45 target dates for ERA5 retrieval.
+2025-08-04 16:18:04,171 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-04 16:18:04,173 - WARNING - Found 33 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-08-04 16:18:49,995 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:18:49,995 - INFO - ==================================================
+2025-08-04 16:18:49,995 - INFO - Starting MODIS data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:18:49,997 - INFO - Generated 33 target dates for MODIS retrieval based on LST files.
+2025-08-04 16:19:15,737 - INFO - MODIS data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:19:15,737 - INFO - ==================================================
+2025-08-04 16:19:15,737 - INFO - Starting Sentinel-2 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:19:15,740 - INFO - Requesting S2 composites for 33 dates based on LST files.
+2025-08-04 16:19:17,322 - WARNING - No valid S2 composites found for ROI 'F-48-93-B'. Skipping download.
+2025-08-04 16:19:17,322 - INFO - Sentinel-2 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:19:17,323 - INFO - ==================================================
+2025-08-04 16:19:17,323 - INFO - Data retrieval orchestration finished. Total time: 0:03:59.783781
+2025-08-04 16:30:34,805 - INFO - ==================================================
+2025-08-04 16:30:34,805 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:30:34,805 - INFO - LST retrieval period: 2015-01-01 to 2017-01-01
+2025-08-04 16:32:28,539 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:32:28,539 - INFO - ==================================================
+2025-08-04 16:32:28,539 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:32:28,540 - INFO - Dynamically determined L8 pivot date: 2015-01-15
+2025-08-04 16:32:28,540 - WARNING - No L9 files found in /mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst. Falling back to default L9 pivot date: 2022-01-01
+2025-08-04 16:32:28,541 - INFO - Generated 45 target dates for ERA5 retrieval.
+2025-08-04 16:35:07,103 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-04 16:35:07,104 - WARNING - Found 1 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-08-04 16:35:10,043 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:35:10,044 - INFO - ==================================================
+2025-08-04 16:35:10,044 - INFO - Starting MODIS data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:35:10,044 - INFO - Generated 33 target dates for MODIS retrieval based on LST files.
+2025-08-04 16:36:52,873 - INFO - MODIS data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:36:52,874 - INFO - ==================================================
+2025-08-04 16:36:52,874 - INFO - Starting Sentinel-2 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 16:36:52,877 - INFO - Requesting S2 composites for 33 dates based on LST files.
+2025-08-04 16:36:54,500 - WARNING - No valid S2 composites found for ROI 'F-48-93-B'. Skipping download.
+2025-08-04 16:36:54,500 - INFO - Sentinel-2 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 16:36:54,500 - INFO - ==================================================
+2025-08-04 16:36:54,500 - INFO - Data retrieval orchestration finished. Total time: 0:06:21.493446

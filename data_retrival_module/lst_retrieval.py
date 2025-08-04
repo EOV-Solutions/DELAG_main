@@ -7,8 +7,31 @@ import shutil
 import time
 import rasterio
 import numpy as np
+from datetime import datetime
 
 ee.Initialize(project='ee-hadat-461702-p4')
+
+def write_metadata_to_tiff(tif_path, timestamp_ms=None, acquisition_type=None):
+    """Writes timestamp metadata to a GeoTIFF file."""
+    if os.path.exists(tif_path):
+        try:
+            with rasterio.open(tif_path, 'r+') as dst:
+                tags = {}
+                if timestamp_ms:
+                    dt_object = datetime.fromtimestamp(timestamp_ms / 1000)
+                    datetime_str = dt_object.strftime('%Y:%m:%d %H:%M:%S')
+                    tags['DATETIME'] = datetime_str
+                    print(f"  > Wrote DATETIME: {datetime_str}")
+                
+                if acquisition_type:
+                    tags['ACQUISITION_TYPE'] = acquisition_type
+                    print(f"  > Wrote ACQUISITION_TYPE: {acquisition_type}")
+                
+                if tags:
+                    dst.update_tags(**tags)
+
+        except Exception as e:
+            print(f"Warning: Failed to write metadata to {tif_path}: {e}")
 
 def count_nodata(tif_path):
     """Counts the number of NoData pixels in a GeoTIFF."""
@@ -54,6 +77,9 @@ def lst_retrive(date_start, date_end, geometry, ROI, main_folder):
             image = ee.Image(imageList.get(i))
             # Get the image date formatted as YYYY-MM-dd.
             imageDate = ee.Date(image.get('system:time_start')).format('YYYY-MM-dd').getInfo()
+            
+            # Get the timestamp for metadata writing
+            time_start_ms = image.get('system:time_start').getInfo()
 
             dest_folder_path = os.path.join(main_folder, ROI, "lst")
             os.makedirs(dest_folder_path, exist_ok=True)
@@ -111,6 +137,8 @@ def lst_retrive(date_start, date_end, geometry, ROI, main_folder):
                         # The new image is better (less nodata), so replace the old one
                         os.remove(competitor_path)
                         shutil.move(temp_tif_path, current_satellite_path)
+                        # Write metadata to the new file
+                        write_metadata_to_tiff(current_satellite_path, time_start_ms, f'{satellite}_LST')
                         print(f"Successfully downloaded LST for {satellite} on {imageDate} (replaced {competitor_satellite}).")
                     else:
                         # The existing image is better, discard the new one
@@ -118,6 +146,8 @@ def lst_retrive(date_start, date_end, geometry, ROI, main_folder):
                 else:
                     # No competitor exists, just save the downloaded file
                     shutil.move(temp_tif_path, current_satellite_path)
+                    # Write metadata to the new file
+                    write_metadata_to_tiff(current_satellite_path, time_start_ms, f'{satellite}_LST')
                     print(f"Successfully downloaded LST for {satellite} on {imageDate}.")
 
             # Clean up the temporary directory

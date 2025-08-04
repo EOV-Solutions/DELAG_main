@@ -1,0 +1,97 @@
+2025-08-04 14:08:56,350 - INFO - ==================================================
+2025-08-04 14:08:56,350 - INFO - STEP 1: Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:08:56,355 - INFO - Using existing file as reference grid: L8_lst16days_2021-09-28.tif
+2025-08-04 14:08:56,432 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 14:08:56,432 - INFO - ==================================================
+2025-08-04 14:08:56,432 - INFO - STEP 2: Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:08:57,226 - INFO - ERA5 retrieval complete.
+2025-08-04 14:08:57,226 - INFO - ==================================================
+2025-08-04 14:08:57,226 - INFO - STEP 3: Starting MODIS data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:09:00,452 - INFO - MODIS retrieval complete.
+2025-08-04 14:09:00,452 - INFO - ==================================================
+2025-08-04 14:09:00,452 - INFO - STEP 4: Starting Sentinel-2 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:09:57,650 - INFO - ==================================================
+2025-08-04 14:09:57,650 - INFO - STEP 1: Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:09:57,744 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 14:09:57,744 - ERROR - LST folder is empty. Cannot proceed with ERA5, MODIS, or S2 retrieval.
+2025-08-04 14:14:31,615 - INFO - ==================================================
+2025-08-04 14:14:31,615 - INFO - STEP 1: Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:14:31,715 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 14:14:31,715 - ERROR - LST folder is empty. Cannot proceed with ERA5, MODIS, or S2 retrieval.
+2025-08-04 14:27:41,417 - INFO - ==================================================
+2025-08-04 14:27:41,418 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:27:41,431 - WARNING - LST retrieval interface needs to be updated to work without input_folder reference. Skipping for now.
+2025-08-04 14:27:41,431 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 14:27:41,431 - INFO - ==================================================
+2025-08-04 14:27:41,432 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:27:41,432 - WARNING - Skipping ERA5 retrieval: LST output folder for reference grid is empty or does not exist at '/mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst'.
+2025-08-04 14:27:41,432 - INFO - ==================================================
+2025-08-04 14:27:41,432 - INFO - Starting MODIS data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:27:41,432 - WARNING - Skipping MODIS retrieval: LST output folder for reference grid is empty or does not exist at '/mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst'.
+2025-08-04 14:27:41,432 - INFO - ==================================================
+2025-08-04 14:27:41,432 - INFO - Starting Sentinel-2 data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:27:41,432 - WARNING - Skipping Sentinel-2 retrieval: LST output folder is empty or does not exist at '/mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst'.
+2025-08-04 14:27:41,432 - INFO - ==================================================
+2025-08-04 14:27:41,432 - INFO - Data retrieval orchestration finished. Total time: 0:00:01.004627
+2025-08-04 14:31:22,333 - INFO - ==================================================
+2025-08-04 14:31:22,334 - INFO - STEP 1: Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:31:22,405 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 14:31:22,405 - ERROR - LST folder is empty. Cannot proceed with ERA5, MODIS, or S2 retrieval.
+2025-08-04 14:32:05,874 - INFO - ==================================================
+2025-08-04 14:32:05,874 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:32:05,888 - WARNING - LST retrieval interface needs to be updated to work without input_folder reference. Skipping for now.
+2025-08-04 14:32:05,888 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 14:32:05,888 - ERROR - LST folder is empty. Cannot proceed with ERA5, MODIS, or S2 retrieval.
+2025-08-04 14:34:21,296 - INFO - ==================================================
+2025-08-04 14:34:21,297 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:34:21,297 - INFO - Processing LST for date: 2015-01-01
+2025-08-04 14:34:21,648 - INFO - Created temporary reference grid at: /mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst/temp_reference.tif
+2025-08-04 14:34:22,666 - INFO - Processing LST for date: 2015-01-17
+2025-08-04 14:34:23,750 - INFO - Processing LST for date: 2015-02-02
+2025-08-04 14:34:24,736 - INFO - Processing LST for date: 2015-02-18
+2025-08-04 14:34:25,740 - INFO - Processing LST for date: 2015-03-06
+2025-08-04 14:34:26,636 - INFO - Processing LST for date: 2015-03-22
+2025-08-04 14:34:27,818 - INFO - Processing LST for date: 2015-04-07
+2025-08-04 14:34:28,751 - INFO - Processing LST for date: 2015-04-23
+2025-08-04 14:34:29,797 - INFO - Processing LST for date: 2015-05-09
+2025-08-04 14:34:30,904 - INFO - Processing LST for date: 2015-05-25
+2025-08-04 14:34:31,952 - INFO - Processing LST for date: 2015-06-10
+2025-08-04 14:34:32,850 - INFO - Processing LST for date: 2015-06-26
+2025-08-04 14:34:33,857 - INFO - Processing LST for date: 2015-07-12
+2025-08-04 14:34:34,875 - INFO - Processing LST for date: 2015-07-28
+2025-08-04 14:34:35,791 - INFO - Processing LST for date: 2015-08-13
+2025-08-04 14:34:36,600 - INFO - Processing LST for date: 2015-08-29
+2025-08-04 14:34:37,455 - INFO - Processing LST for date: 2015-09-14
+2025-08-04 14:34:38,354 - INFO - Processing LST for date: 2015-09-30
+2025-08-04 14:34:39,340 - INFO - Processing LST for date: 2015-10-16
+2025-08-04 14:34:40,222 - INFO - Processing LST for date: 2015-11-01
+2025-08-04 14:34:41,215 - INFO - Processing LST for date: 2015-11-17
+2025-08-04 14:34:42,088 - INFO - Processing LST for date: 2015-12-03
+2025-08-04 14:34:42,858 - INFO - Processing LST for date: 2015-12-19
+2025-08-04 14:34:43,789 - INFO - Processing LST for date: 2016-01-04
+2025-08-04 14:34:44,755 - INFO - Processing LST for date: 2016-01-20
+2025-08-04 14:34:45,619 - INFO - Processing LST for date: 2016-02-05
+2025-08-04 14:34:46,502 - INFO - Processing LST for date: 2016-02-21
+2025-08-04 14:34:47,411 - INFO - Processing LST for date: 2016-03-08
+2025-08-04 14:34:48,349 - INFO - Processing LST for date: 2016-03-24
+2025-08-04 14:34:49,189 - INFO - Processing LST for date: 2016-04-09
+2025-08-04 14:34:49,956 - INFO - Processing LST for date: 2016-04-25
+2025-08-04 14:34:50,882 - INFO - Processing LST for date: 2016-05-11
+2025-08-04 14:34:51,698 - INFO - Processing LST for date: 2016-05-27
+2025-08-04 14:34:52,696 - INFO - Processing LST for date: 2016-06-12
+2025-08-04 14:34:53,432 - INFO - Processing LST for date: 2016-06-28
+2025-08-04 14:34:54,220 - INFO - Processing LST for date: 2016-07-14
+2025-08-04 14:34:55,116 - INFO - Processing LST for date: 2016-07-30
+2025-08-04 14:34:56,100 - INFO - Processing LST for date: 2016-08-15
+2025-08-04 14:34:56,910 - INFO - Processing LST for date: 2016-08-31
+2025-08-04 14:34:57,727 - INFO - Processing LST for date: 2016-09-16
+2025-08-04 14:34:58,492 - INFO - Processing LST for date: 2016-10-02
+2025-08-04 14:34:59,338 - INFO - Processing LST for date: 2016-10-18
+2025-08-04 14:35:00,219 - INFO - Processing LST for date: 2016-11-03
+2025-08-04 14:35:00,973 - INFO - Processing LST for date: 2016-11-19
+2025-08-04 14:40:12,982 - INFO - ==================================================
+2025-08-04 14:40:12,983 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-04 14:40:12,983 - INFO - Collecting all available Landsat LST images from 2015-01-01 to 2025-01-01
+2025-08-04 14:40:14,153 - INFO - Created temporary reference grid at: /mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/F-48-93-B/lst/temp_reference.tif
+2025-08-04 14:40:16,292 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-04 14:40:16,292 - ERROR - LST folder is empty. Cannot proceed with ERA5, MODIS, or S2 retrieval.

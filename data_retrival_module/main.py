@@ -11,6 +11,7 @@ import ee
 from lst_retrieval import lst_retrive
 from s2_retrieval import main_s2_retrieval
 from era5_retriever import main as era5_main_retrieval
+from modis_retriever import main as modis_main_retrieval
 
 # Configure logging for the orchestrator
 logging.basicConfig(
@@ -213,7 +214,47 @@ def main():
     except Exception as e:
         logging.critical(f"An error occurred during ERA5 retrieval for '{roi_name}': {e}", exc_info=True)
 
-    # --- 5. Run Sentinel-2 Data Retrieval ---
+    # --- 6. Run MODIS Data Retrieval ---
+    logging.info("="*50)
+    logging.info(f"Starting MODIS data retrieval for ROI '{roi_name}'...")
+    try:
+        lst_output_folder = os.path.join(args.output_folder, roi_name, "lst")
+        modis_output_folder = os.path.join(args.output_folder, roi_name, "modis")
+
+        if not os.path.exists(lst_output_folder) or not any(fname.lower().endswith('.tif') for fname in os.listdir(lst_output_folder)):
+            logging.warning(f"Skipping MODIS retrieval: LST output folder for reference grid is empty or does not exist at '{lst_output_folder}'.")
+        else:
+            # Get unique dates from the downloaded LST filenames for MODIS retrieval
+            lst_tif_files = [f for f in os.listdir(lst_output_folder) if f.lower().endswith('.tif')]
+            modis_target_dates_str = set()
+            for tif_file in lst_tif_files:
+                try:
+                    # Filename format is "{satellite}_lst16days_{YYYY-MM-DD}.tif"
+                    date_str = tif_file.split('_')[-1].replace('.tif', '')
+                    # Validate date format before adding
+                    datetime.strptime(date_str, "%Y-%m-%d")
+                    modis_target_dates_str.add(date_str)
+                except (ValueError, IndexError):
+                    logging.warning(f"Could not parse date from LST filename for MODIS: {tif_file}")
+
+            if not modis_target_dates_str:
+                logging.warning("No valid dates found from LST files. Skipping MODIS retrieval.")
+            else:
+                logging.info(f"Generated {len(modis_target_dates_str)} target dates for MODIS retrieval based on LST files.")
+
+                # Pass the generated dates to the MODIS retrieval function
+                modis_main_retrieval(
+                    input_folder=lst_output_folder,
+                    output_folder=modis_output_folder,
+                    specific_dates=sorted(list(modis_target_dates_str))
+                )
+
+                logging.info(f"MODIS data retrieval finished for ROI '{roi_name}'.")
+
+    except Exception as e:
+        logging.critical(f"An error occurred during MODIS retrieval for '{roi_name}': {e}", exc_info=True)
+
+    # --- 7. Run Sentinel-2 Data Retrieval ---
     # For S2, we now process dates based on the LST files that were downloaded.
     logging.info("="*50)
     logging.info(f"Starting Sentinel-2 data retrieval for ROI '{roi_name}'...")

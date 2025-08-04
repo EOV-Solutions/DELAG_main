@@ -10,7 +10,7 @@ import datetime
 BASE_DATA_DIR = "/mnt/hdd12tb/code/nhatvm/DELAG_main/data/preprocessed_data" # USER TO VERIFY/SET THIS
 
 # Name of the specific ROI folder to process from BASE_DATA_DIR
-ROI_NAME = "C-48-56-A" # USER TO SET THIS to one of the subfolders
+ROI_NAME = "C-49-1-D" # USER TO SET THIS to one of the subfolders
 
 # Construct full paths for the selected ROI
 ROI_BASE_PATH = os.path.join(BASE_DATA_DIR, ROI_NAME)
