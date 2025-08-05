@@ -17,13 +17,10 @@ import utils
 
 def load_landsat_lst(
     landsat_lst_dir: str,
-    # start_date: str, # No longer used to define the primary iteration range
-    # end_date: str,   # No longer used to define the primary iteration range
-    # target_resolution_val: int, # Keep if used for something else, or remove if only for ref grid from LST
     lst_nodata_val: float,
     app_config: 'config', # For OUTPUT_DIR
     reference_grid_path: str = None
-) -> tuple[np.ndarray, list, dict, str]: # Removed valid_pixel_counts for now, can be re-added if needed for this sparse approach
+) -> tuple[np.ndarray, list, dict, str]:
     """
     Loads, preprocesses, and aligns Landsat LST data for a given ROI
     ONLY for dates where LST files are found.
@@ -46,7 +43,6 @@ def load_landsat_lst(
     """
     print(f"Loading and preprocessing Landsat LST data from: {landsat_lst_dir} (sparse approach)")
     lst_data_list = []
-    # cloud_mask_list = [] # Can be re-added if a separate 0/1 mask is needed downstream
     loaded_dates = []
     actual_reference_grid_path = reference_grid_path
 
@@ -122,7 +118,6 @@ def load_landsat_lst(
         # Averaging logic for multiple files on the same day remains
         daily_lst_sum = np.zeros((target_height, target_width), dtype=np.float64)
         daily_valid_pixel_count = np.zeros((target_height, target_width), dtype=np.int16)
-        # daily_final_mask = np.ones((target_height, target_width), dtype=np.uint8) # if re-adding cloud_mask_list
 
         processed_at_least_one_file_for_day = False
         for i, lst_fpath in enumerate(lst_files_for_day):
@@ -140,7 +135,6 @@ def load_landsat_lst(
                     
                     daily_lst_sum[valid_pixels_this_obs] += current_lst_data[valid_pixels_this_obs]
                     daily_valid_pixel_count[valid_pixels_this_obs] += 1
-                    # daily_final_mask[valid_pixels_this_obs] = 0 # if using cloud_mask_list
                 os.remove(temp_aligned_lst_path)
                 processed_at_least_one_file_for_day = True
             except Exception as e:
@@ -161,7 +155,6 @@ def load_landsat_lst(
         # If all observations for a pixel were nodata, it also remains NaN.
         
         lst_data_list.append(avg_daily_lst)
-        # cloud_mask_list.append(np.where(np.isnan(avg_daily_lst), 1, 0).astype(np.uint8)) # if separate mask needed
         loaded_dates.append(current_day_dt)
 
     if not lst_data_list:
@@ -200,8 +193,6 @@ def load_landsat_lst(
     
     # --- End of outlier removal ---
     
-    # valid_pixel_counts_sparse = np.sum(~np.isnan(lst_stack_nan), axis=0) # Recalculate if needed
-
     print(f"Loaded {len(loaded_dates)} LST scenes. Stack shape: {lst_stack_nan.shape}")
     # Return LST stack (with NaNs for nodata pixels) and the list of dates for which data was loaded.
     # Cloud mask stack is implicitly handled by NaNs in lst_stack_nan.
@@ -211,7 +202,6 @@ def load_era5_skin_temp(
     era5_skin_temp_dir: str, 
     target_dates: list, # list of datetime objects from LST loading (actual LST dates)
     reference_grid_path: str, 
-    # target_resolution_val: int, # Not directly used if aligning to reference_grid_path
     app_config: 'config' # For OUTPUT_DIR
 ) -> tuple[np.ndarray, list]:
     """
@@ -342,6 +332,277 @@ def load_era5_skin_temp(
         print("ERA5 stack fully interpolated.")
 
     return era5_stack_full, target_dates
+
+def load_era5_as_primary_timeline(
+    era5_skin_temp_dir: str,
+    app_config: 'config',
+    reference_grid_path: str = None
+) -> tuple[np.ndarray, list, str]:
+    """
+    Load ERA5 data to establish the primary timeline for the entire pipeline.
+    This function determines what dates will be included in the final reconstruction.
+    
+    Args:
+        era5_skin_temp_dir (str): Directory containing ERA5 files
+        app_config: Configuration object
+        reference_grid_path (str, optional): Reference grid path (can be None initially)
+        
+    Returns:
+        tuple[np.ndarray, list, str]:
+            - era5_stack (np.ndarray): ERA5 data stack (time, height, width)
+            - era5_dates (list): List of datetime objects for ERA5 timeline
+            - actual_reference_grid_path (str): Reference grid path used
+    """
+    print(f"Loading ERA5 data to establish primary timeline from: {era5_skin_temp_dir}")
+    
+    # Discover all ERA5 files
+    all_era5_files = sorted(glob.glob(os.path.join(era5_skin_temp_dir, "*.tif")) + 
+                           glob.glob(os.path.join(era5_skin_temp_dir, "*.img")))
+    
+    if not all_era5_files:
+        raise FileNotFoundError(f"No ERA5 .tif or .img files found in {era5_skin_temp_dir}")
+    
+    # Parse dates from ERA5 filenames
+    file_date_mapping = {}
+    for f_path in all_era5_files:
+        fname = os.path.basename(f_path)
+        import re
+        match = re.search(r'(\d{4}[-_]?\d{2}[-_]?\d{2})', fname)
+        if match:
+            date_str_from_fname = match.group(1).replace('-', '').replace('_', '')
+            try:
+                file_dt = pd.to_datetime(date_str_from_fname, format='%Y%m%d')
+                if file_dt not in file_date_mapping:
+                    file_date_mapping[file_dt] = []
+                file_date_mapping[file_dt].append(f_path)
+            except ValueError:
+                print(f"Could not parse date from ERA5 filename: {fname}, skipping file.")
+        else:
+            print(f"Could not find date pattern in ERA5 filename: {fname}, skipping file.")
+    
+    if not file_date_mapping:
+        raise FileNotFoundError(f"No ERA5 files with parseable dates found in {era5_skin_temp_dir}")
+    
+    # Apply date filtering if configured
+    sorted_era5_dates = sorted(file_date_mapping.keys())
+    if hasattr(app_config, 'START_DATE') and app_config.START_DATE and \
+       hasattr(app_config, 'END_DATE') and app_config.END_DATE:
+        start_dt_config = pd.to_datetime(app_config.START_DATE)
+        end_dt_config = pd.to_datetime(app_config.END_DATE)
+        era5_dates_to_process = [
+            dt for dt in sorted_era5_dates if start_dt_config <= dt <= end_dt_config
+        ]
+        print(f"Filtered ERA5 dates based on config START/END_DATE. Processing {len(era5_dates_to_process)} dates.")
+    else:
+        era5_dates_to_process = sorted_era5_dates
+        print(f"Processing all {len(era5_dates_to_process)} found ERA5 dates (no START/END_DATE filter).")
+    
+    # Use the first ERA5 file as reference if none provided
+    if not reference_grid_path:
+        first_era5_date = era5_dates_to_process[0]
+        reference_grid_path = file_date_mapping[first_era5_date][0]
+        print(f"Using {reference_grid_path} as reference grid for ERA5 primary timeline.")
+    
+    # Get target dimensions
+    with rasterio.open(reference_grid_path) as ref_src:
+        target_height, target_width = ref_src.height, ref_src.width
+    
+    # Load ERA5 data for all dates
+    era5_stack = np.full((len(era5_dates_to_process), target_height, target_width), np.nan, dtype=np.float32)
+    
+    for i, date_dt in enumerate(tqdm(era5_dates_to_process, desc="Loading ERA5 Primary Timeline")):
+        era5_files_for_day = file_date_mapping.get(date_dt, [])
+        if not era5_files_for_day:
+            continue  # Leave NaNs for this date
+        
+        era5_fpath = era5_files_for_day[0]  # Take first file if multiple
+        temp_aligned_era5_path = os.path.join(app_config.OUTPUT_DIR, f"temp_aligned_era5_primary_{date_dt.strftime('%Y%m%d')}.tif")
+        
+        try:
+            utils.align_rasters(reference_grid_path, era5_fpath, temp_aligned_era5_path,
+                              resampling_method=RasterioResampling.nearest)
+            with rasterio.open(temp_aligned_era5_path) as src:
+                era5_data = src.read(1).astype(np.float32)
+                era5_stack[i, :, :] = era5_data
+            os.remove(temp_aligned_era5_path)
+        except Exception as e:
+            print(f"Error loading ERA5 file {era5_fpath} for date {date_dt}: {e}")
+            continue
+    
+    # Apply ERA5 interpolation if enabled
+    if hasattr(app_config, 'INTERPOLATE_ERA5') and app_config.INTERPOLATE_ERA5:
+        print("Performing temporal-spatial interpolation on ERA5 primary timeline...")
+        era5_stack = interpolate_era5_stack(era5_stack, target_height, target_width, era5_dates_to_process)
+    
+    print(f"ERA5 primary timeline established with {len(era5_dates_to_process)} dates. Shape: {era5_stack.shape}")
+    return era5_stack, era5_dates_to_process, reference_grid_path
+
+
+def create_synthetic_lst_for_era5_timeline(
+    era5_dates: list,
+    landsat_lst_dir: str,
+    reference_grid_path: str,
+    lst_nodata_val: float,
+    app_config: 'config'
+) -> tuple[np.ndarray, list]:
+    """
+    Create LST stack aligned to ERA5 timeline by:
+    1. Loading available LST data
+    2. Creating synthetic LST for missing dates via temporal interpolation
+    
+    Args:
+        era5_dates (list): Primary timeline dates from ERA5
+        landsat_lst_dir (str): Directory containing LST files
+        reference_grid_path (str): Reference grid for alignment
+        lst_nodata_val (float): NoData value for LST
+        app_config: Configuration object
+        
+    Returns:
+        tuple[np.ndarray, list]:
+            - lst_stack_aligned (np.ndarray): LST stack aligned to ERA5 timeline
+            - era5_dates (list): Input ERA5 dates (returned for consistency)
+    """
+    print(f"Creating LST stack aligned to ERA5 timeline with synthetic gap-filling...")
+    
+    # Get target dimensions
+    with rasterio.open(reference_grid_path) as ref_src:
+        target_height, target_width = ref_src.height, ref_src.width
+    
+    # Initialize LST stack with NaNs
+    lst_stack_aligned = np.full((len(era5_dates), target_height, target_width), np.nan, dtype=np.float32)
+    
+    # Load available LST data
+    all_lst_files = sorted(glob.glob(os.path.join(landsat_lst_dir, "*.tif")) + 
+                          glob.glob(os.path.join(landsat_lst_dir, "*.img")))
+    
+    lst_file_date_mapping = {}
+    for f_path in all_lst_files:
+        fname = os.path.basename(f_path)
+        import re
+        match = re.search(r'(\d{4}[-_]?\d{2}[-_]?\d{2})', fname)
+        if match:
+            date_str_from_fname = match.group(1).replace('-', '').replace('_', '')
+            try:
+                file_dt = pd.to_datetime(date_str_from_fname, format='%Y%m%d')
+                if file_dt not in lst_file_date_mapping:
+                    lst_file_date_mapping[file_dt] = []
+                lst_file_date_mapping[file_dt].append(f_path)
+            except ValueError:
+                print(f"Could not parse date from LST filename: {fname}")
+        else:
+            print(f"Could not find date pattern in LST filename: {fname}")
+    
+    # Load LST data for available dates
+    lst_dates_loaded = []
+    for i, era5_date in enumerate(tqdm(era5_dates, desc="Loading Available LST Data")):
+        lst_files_for_day = lst_file_date_mapping.get(era5_date, [])
+        
+        if lst_files_for_day:
+            # Process LST data (same logic as original load_landsat_lst)
+            daily_lst_sum = np.zeros((target_height, target_width), dtype=np.float64)
+            daily_valid_count = np.zeros((target_height, target_width), dtype=np.int16)
+            
+            for j, lst_fpath in enumerate(lst_files_for_day):
+                temp_aligned_lst_path = os.path.join(app_config.OUTPUT_DIR, f"temp_aligned_lst_era5_{era5_date.strftime('%Y%m%d')}_{j}.tif")
+                try:
+                    utils.align_rasters(reference_grid_path, lst_fpath, temp_aligned_lst_path,
+                                      resampling_method=RasterioResampling.bilinear)
+                    with rasterio.open(temp_aligned_lst_path) as lsrc:
+                        current_lst_data = lsrc.read(1, out_dtype=np.float32)
+                        nodata_mask = ((current_lst_data == lst_nodata_val) | np.isnan(current_lst_data))
+                        valid_pixels = ~nodata_mask
+                        
+                        daily_lst_sum[valid_pixels] += current_lst_data[valid_pixels]
+                        daily_valid_count[valid_pixels] += 1
+                    os.remove(temp_aligned_lst_path)
+                except Exception as e:
+                    print(f"Error processing LST file {lst_fpath}: {e}")
+                    continue
+            
+            # Calculate average LST for the day
+            avg_daily_lst = np.full((target_height, target_width), np.nan, dtype=np.float32)
+            valid_for_avg = daily_valid_count > 0
+            avg_daily_lst[valid_for_avg] = (daily_lst_sum[valid_for_avg] / daily_valid_count[valid_for_avg]).astype(np.float32)
+            
+            lst_stack_aligned[i, :, :] = avg_daily_lst
+            lst_dates_loaded.append(era5_date)
+    
+    print(f"Loaded LST data for {len(lst_dates_loaded)} out of {len(era5_dates)} ERA5 dates")
+    
+    # Apply outlier removal to loaded LST data
+    outlier_method = getattr(app_config, 'LST_OUTLIER_METHOD', 'none').lower()
+    print(f"Applying '{outlier_method}' LST outlier detection method.")
+    
+    if outlier_method == 'percentile':
+        lower_percentile = getattr(app_config, 'LST_PERCENTILE_LOWER', 10)
+        upper_percentile = getattr(app_config, 'LST_PERCENTILE_UPPER', 90)
+        valid_lst_values = lst_stack_aligned[~np.isnan(lst_stack_aligned)]
+        
+        if valid_lst_values.size > 0:
+            lower_bound = np.percentile(valid_lst_values, lower_percentile)
+            upper_bound = np.percentile(valid_lst_values, upper_percentile)
+            
+            print(f"Using percentile method: Lower bound ({lower_percentile}%)={lower_bound:.2f}, Upper bound ({upper_percentile}%)={upper_bound:.2f}")
+            
+            outlier_mask = (lst_stack_aligned < lower_bound) | (lst_stack_aligned > upper_bound)
+            num_outliers = np.sum(outlier_mask)
+            
+            if num_outliers > 0:
+                print(f"Removing {num_outliers} outlier pixels ({num_outliers / valid_lst_values.size * 100:.2f}% of valid data).")
+                lst_stack_aligned[outlier_mask] = np.nan
+    
+    # Perform temporal interpolation to fill missing LST dates
+    print("Performing temporal interpolation to create synthetic LST for missing ERA5 dates...")
+    for r in tqdm(range(target_height), desc="LST Temporal Interpolation", leave=False):
+        for c in range(target_width):
+            pixel_series = pd.Series(lst_stack_aligned[:, r, c])
+            lst_stack_aligned[:, r, c] = pixel_series.interpolate(method='linear', limit_direction='both').to_numpy()
+    
+    # Optional: Apply spatial interpolation for remaining NaNs
+    synthetic_dates_created = len(era5_dates) - len(lst_dates_loaded)
+    print(f"Created synthetic LST for {synthetic_dates_created} dates via temporal interpolation")
+    
+    return lst_stack_aligned, era5_dates
+
+
+def interpolate_era5_stack(era5_stack: np.ndarray, target_height: int, target_width: int, era5_dates: list) -> np.ndarray:
+    """Helper function to interpolate ERA5 stack temporally and spatially."""
+    # Temporal interpolation
+    for r in tqdm(range(target_height), desc="ERA5 Temporal Interpolation", leave=False):
+        for c in range(target_width):
+            series = pd.Series(era5_stack[:, r, c])
+            era5_stack[:, r, c] = series.interpolate(method='linear', limit_direction='both').to_numpy()
+    
+    # Spatial interpolation for remaining NaNs
+    from scipy.interpolate import griddata
+    points = None
+    for t in tqdm(range(len(era5_dates)), desc="ERA5 Spatial Interpolation", leave=False):
+        slice_data = era5_stack[t, :, :]
+        if np.isnan(slice_data).any():
+            if points is None:
+                x_coords, y_coords = np.meshgrid(np.arange(target_width), np.arange(target_height))
+                points = np.vstack((x_coords.ravel(), y_coords.ravel())).T
+            
+            valid_mask = ~np.isnan(slice_data)
+            values = slice_data[valid_mask]
+            points_with_values = points[valid_mask.ravel()]
+            
+            if points_with_values.shape[0] >= 3:
+                nan_locs = np.where(np.isnan(slice_data))
+                try:
+                    interp_vals = griddata(points_with_values, values, 
+                                         (nan_locs[1], nan_locs[0]), method='linear')
+                    if not np.all(np.isnan(interp_vals)):
+                        slice_data[nan_locs] = interp_vals
+                except Exception:
+                    interp_vals_nearest = griddata(points_with_values, values,
+                                                 (nan_locs[1], nan_locs[0]), method='nearest')
+                    if not np.all(np.isnan(interp_vals_nearest)):
+                        slice_data[nan_locs] = interp_vals_nearest
+                era5_stack[t, :, :] = slice_data
+    
+    return era5_stack
+
 
 def load_sentinel2_reflectance(
     s2_dir: str, 
@@ -486,66 +747,63 @@ def load_coordinates(reference_grid_path: str, normalize: bool = True) -> tuple[
         
     return x_coords, y_coords, x_scaler, y_scaler
 
-def preprocess_all_data(app_config) -> dict:
+def preprocess_all_data_era5_primary(app_config) -> dict:
     """
-    Main function to preprocess all data for a given ROI based on app_config.
-    Timeline is defined by LST+ERA5 common dates. S2 and NDVI are aligned to this timeline,
-    padding with np.nan for missing data.
-    Raises ValueError if essential data cannot be loaded or aligned.
+    Alternative preprocessing function that uses ERA5 as the primary timeline.
+    This ensures that reconstruction images will cover all ERA5 dates.
+    
+    Timeline is defined by ERA5 dates. LST data is loaded for available dates,
+    and synthetic LST is created for missing dates via temporal interpolation.
+    S2 and other data are aligned to this ERA5-based timeline.
     """
-    print(f"Starting preprocessing for ROI: {app_config.ROI_NAME}")
+    print(f"Starting ERA5-primary preprocessing for ROI: {app_config.ROI_NAME}")
     os.makedirs(app_config.OUTPUT_DIR, exist_ok=True)
 
-    # 1. Load Landsat LST data - this determines initial set of available LST dates
+    # --- Dynamic Path Construction ---
+    roi_base_path = os.path.join(app_config.BASE_DATA_DIR, app_config.ROI_NAME)
+    landsat_lst_path = os.path.join(roi_base_path, app_config.LANDSAT_LST_SUBDIR)
+    era5_skin_temp_path = os.path.join(roi_base_path, app_config.ERA5_SKIN_TEMP_SUBDIR)
+    s2_reflectance_path = os.path.join(roi_base_path, app_config.SENTINEL2_REFLECTANCE_SUBDIR)
+    
+    # 1. Load ERA5 data first to establish the primary timeline
     try:
-        lst_stack_initial_load, dates_with_lst_files, geo_profile, actual_reference_grid_path = load_landsat_lst(
-            landsat_lst_dir=app_config.LANDSAT_LST_PATH,
-            lst_nodata_val=app_config.LST_NODATA_VALUE,
+        era5_stack_primary, era5_primary_dates, actual_reference_grid_path = load_era5_as_primary_timeline(
+            era5_skin_temp_dir=era5_skin_temp_path,
             app_config=app_config,
-            reference_grid_path=None 
+            reference_grid_path=None
         )
     except FileNotFoundError as e:
-        raise ValueError(f"Critical error during LST loading for ROI {app_config.ROI_NAME}: {e}") from e
+        raise ValueError(f"Critical error during ERA5 loading for ROI {app_config.ROI_NAME}: {e}") from e
     
-    if not dates_with_lst_files:
-        raise ValueError(f"No LST data found for ROI {app_config.ROI_NAME} after initial load. Cannot proceed.")
+    if not era5_primary_dates:
+        raise ValueError(f"No ERA5 data found for ROI {app_config.ROI_NAME} after initial load. Cannot proceed.")
 
-    target_height = geo_profile['height']
-    target_width = geo_profile['width']
+    target_height = era5_stack_primary.shape[1]
+    target_width = era5_stack_primary.shape[2]
 
-    # 2. Load ERA5 skin temperature data, targeting dates where LST files were found.
-    # `load_era5_skin_temp` ensures its output stack covers all `dates_with_lst_files`,
-    # using interpolation and returning the same list of dates.
-    # These `primary_common_dates` are common to LST and ERA5.
-    era5_stack_for_primary_dates, primary_common_dates = load_era5_skin_temp(
-        era5_skin_temp_dir=app_config.ERA5_SKIN_TEMP_PATH,
-        target_dates=dates_with_lst_files, # Use LST dates as the target for ERA5
-        reference_grid_path=actual_reference_grid_path,
-        app_config=app_config
-    )
-
-    if not primary_common_dates: # Should not happen if dates_with_lst_files was not empty
-        raise ValueError(f"ERA5 processing resulted in no common dates for ROI {app_config.ROI_NAME}. Cannot proceed.")
+    # 2. Create LST stack aligned to ERA5 timeline with synthetic gap-filling
+    try:
+        lst_stack_aligned, _ = create_synthetic_lst_for_era5_timeline(
+            era5_dates=era5_primary_dates,
+            landsat_lst_dir=landsat_lst_path,
+            reference_grid_path=actual_reference_grid_path,
+            lst_nodata_val=app_config.LST_NODATA_VALUE,
+            app_config=app_config
+        )
+    except Exception as e:
+        print(f"Warning: Could not create synthetic LST stack: {e}")
+        print("Creating empty LST stack for ERA5 timeline...")
+        lst_stack_aligned = np.full((len(era5_primary_dates), target_height, target_width), np.nan, dtype=np.float32)
     
-    # Filter the initially loaded LST stack to align with primary_common_dates.
-    # This step is crucial if load_era5_skin_temp somehow returned a subset of dates_with_lst_files,
-    # or if the order changed (though it shouldn't).
-    # Since load_era5_skin_temp now returns the *input* target_dates, and its stack is aligned to them,
-    # primary_common_dates is identical to dates_with_lst_files here.
-    # So, lst_stack_initial_load is already aligned with primary_common_dates.
-    lst_stack_primary = lst_stack_initial_load
-    
-    print(f"Primary timeline established with {len(primary_common_dates)} dates common to LST & ERA5.")
-    print(f"  LST stack shape for primary timeline: {lst_stack_primary.shape}")
-    print(f"  ERA5 stack shape for primary timeline: {era5_stack_for_primary_dates.shape}")
+    print(f"Primary timeline established with {len(era5_primary_dates)} ERA5 dates.")
+    print(f"  ERA5 stack shape: {era5_stack_primary.shape}")
+    print(f"  LST stack shape (with synthetic): {lst_stack_aligned.shape}")
 
-    # 3. Load Sentinel-2 reflectance data, aligned to `primary_common_dates`.
-    # The modified `load_sentinel2_reflectance` returns an S2 stack fully aligned to `primary_common_dates`,
-    # with NaNs for missing S2 data.
-    num_s2_bands_expected = getattr(app_config, 'NUM_S2_BANDS', 4) # Get from config or default
+    # 3. Load Sentinel-2 reflectance data, aligned to ERA5 primary timeline
+    num_s2_bands_expected = getattr(app_config, 'NUM_S2_BANDS', 4)
     s2_reflectance_stack_primary, _ = load_sentinel2_reflectance(
-        s2_dir=app_config.SENTINEL2_REFLECTANCE_PATH,
-        target_dates=primary_common_dates, # Align to LST+ERA5 timeline
+        s2_dir=s2_reflectance_path,
+        target_dates=era5_primary_dates,  # Use ERA5 dates as target
         actual_ref_grid_path=actual_reference_grid_path,
         target_height=target_height,
         target_width=target_width,
@@ -553,11 +811,11 @@ def preprocess_all_data(app_config) -> dict:
         app_config=app_config,
         num_s2_bands=num_s2_bands_expected
     )
-    print(f"S2 stack loaded for primary timeline. Shape: {s2_reflectance_stack_primary.shape}")
+    print(f"S2 stack loaded for ERA5 timeline. Shape: {s2_reflectance_stack_primary.shape}")
 
-    # 4. Create Day of Year (DOY) stack for the primary timeline
-    doy_stack_1d = np.array([date.timetuple().tm_yday for date in primary_common_dates], dtype=np.int16)
-    print(f"DOY stack (1D) created for primary timeline. Shape: {doy_stack_1d.shape}")
+    # 4. Create Day of Year (DOY) stack for the ERA5 timeline
+    doy_stack_1d = np.array([date.timetuple().tm_yday for date in era5_primary_dates], dtype=np.int16)
+    print(f"DOY stack (1D) created for ERA5 timeline. Shape: {doy_stack_1d.shape}")
 
     # 5. Load Coordinate data
     lon_coords, lat_coords, lon_scaler, lat_scaler = load_coordinates(
@@ -566,20 +824,20 @@ def preprocess_all_data(app_config) -> dict:
     )
     print(f"Coordinates loaded. Lon shape: {lon_coords.shape}, Lat shape: {lat_coords.shape}")
     
-    # 6. S2 Interpolation (applied to the S2 stack that's aligned with primary_common_dates)
-    s2_final_stack = s2_reflectance_stack_primary # Initialize
+    # 6. S2 Interpolation (applied to the S2 stack that's aligned with ERA5 dates)
+    s2_final_stack = s2_reflectance_stack_primary  # Initialize
     if hasattr(app_config, 'INTERPOLATE_S2') and not app_config.INTERPOLATE_S2:
         print("S2 interpolation skipped due to app_config.INTERPOLATE_S2 = False.")
         if np.isnan(s2_final_stack).any():
             print(f"Warning: Non-interpolated S2 stack contains {np.isnan(s2_final_stack).sum()} NaNs.")
-    elif s2_reflectance_stack_primary.size > 0 and primary_common_dates:
-        print(f"S2 stack for interpolation (aligned to primary dates). Shape: {s2_reflectance_stack_primary.shape}")
+    elif s2_reflectance_stack_primary.size > 0 and era5_primary_dates:
+        print(f"S2 stack for interpolation (aligned to ERA5 dates). Shape: {s2_reflectance_stack_primary.shape}")
         s2_interpolated_stack = s2_reflectance_stack_primary.copy()
         num_bands_s2 = s2_interpolated_stack.shape[1]
-        num_iterations = app_config.S2_INTERPOLATION_ITERATIONS if hasattr(app_config, 'S2_INTERPOLATION_ITERATIONS') else 2
+        num_iterations = getattr(app_config, 'S2_INTERPOLATION_ITERATIONS', 2)
 
         print(f"Starting iterative temporal-spatial interpolation for S2 stack ({num_iterations} iterations)...")
-        from scipy.interpolate import griddata # Ensure this is imported
+        from scipy.interpolate import griddata
 
         for iteration in range(num_iterations):
             print(f"  S2 Interpolation Iteration {iteration + 1}/{num_iterations}")
@@ -600,7 +858,7 @@ def preprocess_all_data(app_config) -> dict:
                 print("    No NaNs remaining in S2 stack after temporal. Stopping S2 interpolation early this iteration.")
                 break 
 
-            # Spatial griddata (linear)
+            # Spatial griddata (linear) - same logic as original
             points_spatial_s2 = None 
             for t in tqdm(range(s2_interpolated_stack.shape[0]), desc=f"  Iter {iteration+1} S2 Spatial Interp (Time)", leave=False):
                 for b in range(num_bands_s2):
@@ -621,13 +879,13 @@ def preprocess_all_data(app_config) -> dict:
                                 interpolated_values_s2 = griddata(points_with_values_s2, values_s2, (grid_x_nan_s2, grid_y_nan_s2), method='linear')
                                 if not np.all(np.isnan(interpolated_values_s2)):
                                     slice_data[np.isnan(slice_data)] = interpolated_values_s2
-                            except Exception: # Try nearest on linear failure
+                            except Exception:
                                 try:
                                     interpolated_values_s2_nearest = griddata(points_with_values_s2, values_s2, (grid_x_nan_s2, grid_y_nan_s2), method='nearest')
                                     if not np.all(np.isnan(interpolated_values_s2_nearest)):
                                         slice_data[np.isnan(slice_data)] = interpolated_values_s2_nearest
                                 except Exception:
-                                    pass # print(f"    S2 spatial nearest also failed (t={t},b={b})")
+                                    pass
                         elif points_with_values_s2.shape[0] > 0 : 
                             nan_locations_s2 = np.where(np.isnan(slice_data))
                             try:
@@ -635,13 +893,10 @@ def preprocess_all_data(app_config) -> dict:
                                 if not np.all(np.isnan(interpolated_values_s2_nearest)):
                                     slice_data[nan_locations_s2] = interpolated_values_s2_nearest
                             except Exception:
-                                pass # print(f"    S2 spatial nearest fallback failed (t={t},b={b})")
+                                pass
                         s2_interpolated_stack[t, b, :, :] = slice_data
             nan_count_after_spatial = np.isnan(s2_interpolated_stack).sum()
             print(f"    NaNs after spatial: {nan_count_after_spatial} (was {nan_count_after_temporal})")
-            if nan_count_after_spatial == nan_count_after_temporal and nan_count_after_spatial > 0:
-                print("    No change in NaN count after spatial step this iteration for S2.")
-                # break # Optionally break
         
         s2_final_stack = s2_interpolated_stack
         if np.isnan(s2_final_stack).any():
@@ -649,12 +904,11 @@ def preprocess_all_data(app_config) -> dict:
         else:
             print("S2 stack successfully interpolated.")
     else: 
-        print("S2 stack is empty or no primary common dates, or interpolation disabled. Skipping S2 interpolation.")
-        if not (hasattr(app_config, 'INTERPOLATE_S2') and not app_config.INTERPOLATE_S2) and not (s2_reflectance_stack_primary.size > 0 and primary_common_dates):
-             s2_final_stack = np.full((len(primary_common_dates), num_s2_bands_expected, target_height, target_width), np.nan, dtype=np.float32)
+        print("S2 stack is empty or no ERA5 dates, or interpolation disabled. Skipping S2 interpolation.")
+        s2_final_stack = np.full((len(era5_primary_dates), num_s2_bands_expected, target_height, target_width), np.nan, dtype=np.float32)
 
-    # 8. Spatial Sampling for Training (NEW STEP)
-    training_pixel_mask = np.ones((target_height, target_width), dtype=bool) # Default to all True
+    # 7. Spatial Sampling for Training (same as original)
+    training_pixel_mask = np.ones((target_height, target_width), dtype=bool)
     if hasattr(app_config, 'SPATIAL_TRAINING_SAMPLE_PERCENTAGE') and app_config.SPATIAL_TRAINING_SAMPLE_PERCENTAGE < 1.0:
         sample_percentage = app_config.SPATIAL_TRAINING_SAMPLE_PERCENTAGE
         min_pixels = getattr(app_config, 'MIN_PIXELS_FOR_SPATIAL_SAMPLING', 100)
@@ -662,15 +916,13 @@ def preprocess_all_data(app_config) -> dict:
         total_pixels_in_grid = target_height * target_width
         num_pixels_to_sample_float = total_pixels_in_grid * sample_percentage
         num_pixels_to_sample = max(min_pixels, int(num_pixels_to_sample_float))
-        num_pixels_to_sample = min(num_pixels_to_sample, total_pixels_in_grid) # Cannot sample more than available
+        num_pixels_to_sample = min(num_pixels_to_sample, total_pixels_in_grid)
 
         print(f"Spatially sampling {num_pixels_to_sample} pixels ({sample_percentage*100}%, min set to {min_pixels}) for training.")
         
-        # Create a flat list of all possible (row, col) indices
         all_pixel_indices = np.array([(r, c) for r in range(target_height) for c in range(target_width)])
         
-        # Randomly choose indices
-        np.random.seed(app_config.RANDOM_SEED if hasattr(app_config, 'RANDOM_SEED') else 42)
+        np.random.seed(getattr(app_config, 'RANDOM_SEED', 42))
         selected_indices_flat = np.random.choice(len(all_pixel_indices), size=num_pixels_to_sample, replace=False)
         selected_pixel_coords = all_pixel_indices[selected_indices_flat]
         
@@ -681,251 +933,64 @@ def preprocess_all_data(app_config) -> dict:
     else:
         print("Using all spatial pixels for training (SPATIAL_TRAINING_SAMPLE_PERCENTAGE is 1.0 or not defined).")
 
-    # All stacks (LST, ERA5, S2, NDVI if used) are now aligned to primary_common_dates.
-    # No further date-based filtering of stacks is needed here.
-
-    print(f"Preprocessing complete for ROI: {app_config.ROI_NAME}. Final number of aligned dates in primary timeline: {len(primary_common_dates)}")
+    print(f"ERA5-primary preprocessing complete for ROI: {app_config.ROI_NAME}. Final number of dates in ERA5 timeline: {len(era5_primary_dates)}")
+    
+    # Create geo_profile from the reference grid
+    with rasterio.open(actual_reference_grid_path) as ref_src:
+        geo_profile = ref_src.profile.copy()
+        geo_profile.update({
+            'width': target_width,
+            'height': target_height,
+            'dtype': 'float32',
+            'nodata': app_config.LST_NODATA_VALUE
+        })
     
     output_data = {
-        "lst_stack": np.array(lst_stack_primary, dtype=np.float32),
-        "era5_stack": np.array(era5_stack_for_primary_dates, dtype=np.float32),
+        "lst_stack": np.array(lst_stack_aligned, dtype=np.float32),
+        "era5_stack": np.array(era5_stack_primary, dtype=np.float32),
         "s2_reflectance_stack": np.array(s2_final_stack, dtype=np.float32),
         "doy_stack": np.array(doy_stack_1d, dtype=np.int16),
         "lon_coords": np.array(lon_coords, dtype=np.float32),
         "lat_coords": np.array(lat_coords, dtype=np.float32),
         "geo_profile": geo_profile,
-        "common_dates": primary_common_dates, # This is the LST+ERA5 common timeline
+        "common_dates": era5_primary_dates,  # This is now the ERA5 timeline
         "lon_scaler": lon_scaler,
         "lat_scaler": lat_scaler,
         "reference_grid_path": actual_reference_grid_path,
         "roi_name": app_config.ROI_NAME,
-        "training_pixel_mask": training_pixel_mask # Add the mask to output
+        "training_pixel_mask": training_pixel_mask,
+        "timeline_source": "era5_primary"  # Add metadata about which timeline approach was used
     }
-
-    # If ndvi_stack_final is None (e.g. GP_USE_NDVI_FEATURE is False), it won't be added.
-    # The GP model part (prepare_gp_training_data) should handle ndvi_stack being potentially absent from the dict.
         
     return output_data
 
-# def generate_dummy_raster(output_path, height, width, num_bands, dtype, nodata_val, constant_val=None, profile_base=None):
-#     # ... existing code ...
-
-# # --- Test block for data_preprocessing.py ---
-# if __name__ == '__main__':
-#     import shutil
-#     from sklearn.preprocessing import MinMaxScaler # Added for TestConfig scaler objects
-
-#     # Define a dummy config for testing
-#     class TestConfig:
-#         # --- Test ROI Setup ---
-#         BASE_DATA_DIR = "./dummy_delag_data/"
-#         ROI_NAME = "TestROI_S2_Temporal" # New name for this test
+    print(f"ERA5-primary preprocessing complete for ROI: {app_config.ROI_NAME}. Final number of dates in ERA5 timeline: {len(era5_primary_dates)}")
+    
+    # Create geo_profile from the reference grid
+    with rasterio.open(actual_reference_grid_path) as ref_src:
+        geo_profile = ref_src.profile.copy()
+        geo_profile.update({
+            'width': target_width,
+            'height': target_height,
+            'dtype': 'float32',
+            'nodata': app_config.LST_NODATA_VALUE
+        })
+    
+    output_data = {
+        "lst_stack": np.array(lst_stack_aligned, dtype=np.float32),
+        "era5_stack": np.array(era5_stack_primary, dtype=np.float32),
+        "s2_reflectance_stack": np.array(s2_final_stack, dtype=np.float32),
+        "doy_stack": np.array(doy_stack_1d, dtype=np.int16),
+        "lon_coords": np.array(lon_coords, dtype=np.float32),
+        "lat_coords": np.array(lat_coords, dtype=np.float32),
+        "geo_profile": geo_profile,
+        "common_dates": era5_primary_dates,  # This is now the ERA5 timeline
+        "lon_scaler": lon_scaler,
+        "lat_scaler": lat_scaler,
+        "reference_grid_path": actual_reference_grid_path,
+        "roi_name": app_config.ROI_NAME,
+        "training_pixel_mask": training_pixel_mask,
+        "timeline_source": "era5_primary"  # Add metadata about which timeline approach was used
+    }
         
-#         ROI_BASE_PATH = os.path.join(BASE_DATA_DIR, ROI_NAME)
-#         LANDSAT_LST_SUBDIR = "lst"
-#         ERA5_SKIN_TEMP_SUBDIR = "era5"
-#         SENTINEL2_REFLECTANCE_SUBDIR = "s2_images"
-#         NDVI_INFER_SUBDIR = "ndvi_infer" # For testing inferred NDVI loading
-
-#         LANDSAT_LST_PATH = os.path.join(ROI_BASE_PATH, LANDSAT_LST_SUBDIR)
-#         ERA5_SKIN_TEMP_PATH = os.path.join(ROI_BASE_PATH, ERA5_SKIN_TEMP_SUBDIR)
-#         SENTINEL2_REFLECTANCE_PATH = os.path.join(ROI_BASE_PATH, SENTINEL2_REFLECTANCE_SUBDIR)
-#         NDVI_INFER_PATH = os.path.join(ROI_BASE_PATH, NDVI_INFER_SUBDIR) # For testing
-
-#         OUTPUT_DIR_BASE = "./dummy_delag_output/"
-#         OUTPUT_DIR = os.path.join(OUTPUT_DIR_BASE, ROI_NAME) # ROI-specific output for temp files
-
-#         TARGET_RESOLUTION = 30 # Dummy, not directly used by align_rasters if ref exists
-#         START_DATE = "2023-01-01"
-#         END_DATE = "2023-01-03" # Short period for testing
-#         LST_NODATA_VALUE = -9999.0
-#         S2_NODATA_VALUE = -9999.0 # Added for S2
-#         DAYS_OF_YEAR = 365 # Dummy
-#         RANDOM_SEED = 42
-#         GP_USE_NDVI_FEATURE = False # Test default behavior
-#         S2_RED_INDEX = 2 # Example for dummy data [B,G,R,N]
-#         S2_NIR_INDEX = 3 # Example for dummy data [B,G,R,N]
-#         # GP_RESIDUAL_FEATURES might be defined in the main config, not strictly needed here for preprocessing test itself
-#         # but band order B2,B3,B4,B8 is implicitly assumed for S2 dummy data.
-
-#     test_config = TestConfig()
-
-#     # Create dummy directories and files
-#     os.makedirs(test_config.LANDSAT_LST_PATH, exist_ok=True)
-#     os.makedirs(test_config.ERA5_SKIN_TEMP_PATH, exist_ok=True)
-#     os.makedirs(test_config.SENTINEL2_REFLECTANCE_PATH, exist_ok=True)
-#     os.makedirs(os.path.join(test_config.ROI_BASE_PATH, test_config.NDVI_INFER_SUBDIR), exist_ok=True) # Create dummy ndvi_infer dir
-#     os.makedirs(test_config.OUTPUT_DIR, exist_ok=True) # For temp aligned files
-
-#     dummy_height, dummy_width = 10, 10
-#     num_bands_s2 = 4 # B2, B3, B4, B8
-#     np.random.seed(test_config.RANDOM_SEED)
-
-#     # Create a reference profile (e.g., from the first LST image)
-#     ref_affine = rasterio.Affine(test_config.TARGET_RESOLUTION, 0.0, 500000.0, 
-#                                  0.0, -test_config.TARGET_RESOLUTION, 6000000.0)
-#     ref_profile_test = {
-#         'driver': 'GTiff', 'dtype': 'float32', 'nodata': test_config.LST_NODATA_VALUE,
-#         'width': dummy_width, 'height': dummy_height, 'count': 1,
-#         'crs': rasterio.CRS.from_epsg(32630), # Example CRS
-#         'transform': ref_affine
-#     }
-
-#     dates_to_create = pd.to_datetime([test_config.START_DATE, "2023-01-02", test_config.END_DATE])
-
-#     # Dummy LST files
-#     for i, date_obj in enumerate(dates_to_create):
-#         date_str = date_obj.strftime("%Y%m%d")
-#         lst_file = os.path.join(test_config.LANDSAT_LST_PATH, f"LST_dummy_{date_str}.tif")
-#         dummy_lst_data = np.random.rand(dummy_height, dummy_width).astype(np.float32) * 30 + 273.15
-#         if i % 2 == 0: # Make some LST data cloudy
-#             dummy_lst_data[0:dummy_height//2, :] = test_config.LST_NODATA_VALUE
-#         with rasterio.open(lst_file, 'w', **ref_profile_test) as dst:
-#             dst.write(dummy_lst_data, 1)
-#         if i == 0: # Save one as a potential reference for other loaders if needed
-#             shutil.copy(lst_file, os.path.join(test_config.ROI_BASE_PATH, "reference_grid_dummy.tif"))
-
-
-#     # Dummy ERA5 files
-#     for date_obj in dates_to_create:
-#         date_str = date_obj.strftime("%Y%m%d")
-#         era5_file = os.path.join(test_config.ERA5_SKIN_TEMP_PATH, f"ERA5_dummy_{date_str}.tif")
-#         dummy_era5_data = np.random.rand(dummy_height, dummy_width).astype(np.float32) * 20 + 280.0
-#         # ERA5 typically coarser, but here we make it same res for simplicity of dummy data
-#         with rasterio.open(era5_file, 'w', **ref_profile_test) as dst:
-#             dst.write(dummy_era5_data, 1)
-
-#     # Dummy Sentinel-2 files (multi-band, multiple per day with varying clouds)
-#     s2_profile_test = ref_profile_test.copy()
-#     s2_profile_test['count'] = num_bands_s2
-#     s2_profile_test['nodata'] = test_config.S2_NODATA_VALUE # S2 nodata
-
-#     for date_obj in dates_to_create:
-#         date_str_s2_fmt = date_obj.strftime("%Y-%m-%d") # Filename format YYYY-MM-DD
-#         for i in range(3): # Create 3 versions for each day
-#             s2_file = os.path.join(test_config.SENTINEL2_REFLECTANCE_PATH, f"s2_4bands_{date_str_s2_fmt}_id{i}.tif")
-#             dummy_s2_data_multiband = np.random.rand(num_bands_s2, dummy_height, dummy_width).astype(np.float32) * 0.3
-            
-#             # Introduce nodata to simulate clouds, more in earlier IDs
-#             if i == 0: # Most cloudy
-#                 dummy_s2_data_multiband[:, 0:dummy_height*3//4, :] = test_config.S2_NODATA_VALUE
-#             elif i == 1: # Moderately cloudy
-#                 dummy_s2_data_multiband[:, 0:dummy_height//2, :] = test_config.S2_NODATA_VALUE
-#             # else: i == 2 is least cloudy / clear
-            
-#             with rasterio.open(s2_file, 'w', **s2_profile_test) as dst:
-#                 dst.write(dummy_s2_data_multiband)
-    
-#     # Add an S2 file for a date that does NOT exist in LST/ERA5 to test filtering
-#     extra_s2_date = (dates_to_create[-1] + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
-#     s2_file_extra = os.path.join(test_config.SENTINEL2_REFLECTANCE_PATH, f"s2_4bands_{extra_s2_date}_id0.tif")
-#     dummy_s2_data_extra = np.random.rand(num_bands_s2, dummy_height, dummy_width).astype(np.float32) * 0.3
-#     with rasterio.open(s2_file_extra, 'w', **s2_profile_test) as dst:
-#         dst.write(dummy_s2_data_extra)
-
-#     # Dummy Inferred NDVI files (single band)
-#     ndvi_profile_test = ref_profile_test.copy()
-#     ndvi_profile_test['nodata'] = -9999.0 # Example, or could be np.nan if files already processed
-#     for date_obj in dates_to_create: # Create NDVI for common dates
-#         date_str_ndvi_fmt = date_obj.strftime("%Y-%m-%d")
-#         ndvi_file = os.path.join(test_config.NDVI_INFER_PATH, f"ndvi_inferred_{date_str_ndvi_fmt}.tif")
-#         dummy_ndvi_data = (np.random.rand(dummy_height, dummy_width).astype(np.float32) * 2) - 1 # NDVI range -1 to 1
-#         # Introduce some nodata into NDVI to test nanmean/handling
-#         if date_obj == dates_to_create[0]: # Make first day's NDVI partially nodata
-#             dummy_ndvi_data[0:dummy_height//3, :] = ndvi_profile_test['nodata']
-#         with rasterio.open(ndvi_file, 'w', **ndvi_profile_test) as dst:
-#             dst.write(dummy_ndvi_data, 1)
-    
-#     # Add an NDVI file for a date that also exists in LST/ERA5/S2 but only ONE of them, to test date filtering
-#     # For this test, we ensure all dummy LST/ERA5/S2 exist for dates_to_create, so NDVI will just align to these.
-#     # To truly test NDVI reducing common dates, one of the LST/ERA5/S2 would need to be missing for a date where NDVI exists,
-#     # or NDVI missing for a date where LST/ERA5/S2 exist.
-#     # The current logic for load_ndvi_infer_stack processes only common_dates_s2.
-
-#     print(f"Dummy data generated in: {test_config.BASE_DATA_DIR}")
-#     print(f"Dummy output will be in: {test_config.OUTPUT_DIR_BASE}")
-
-#     class TestConfigNDVI(TestConfig):
-#         def __init__(self):
-#             super().__init__()
-#             self.GP_USE_NDVI_FEATURE = True
-#             # S2_RED_INDEX and S2_NIR_INDEX are inherited from TestConfig
-
-#     test_configs_to_run = {
-#         "Default": test_config,
-#         "NDVI_Enabled": TestConfigNDVI()
-#     }
-
-#     # Clean up potential old dummy data before running tests
-#     # This is important if a previous test run failed and didn't clean up.
-#     # if os.path.exists(test_config.BASE_DATA_DIR):
-#     #     shutil.rmtree(test_config.BASE_DATA_DIR)
-#     # if os.path.exists(test_config.OUTPUT_DIR_BASE):
-#     #     shutil.rmtree(test_config.OUTPUT_DIR_BASE)
-
-#     # Create dummy directories and files (common for all test configs)
-#     os.makedirs(test_config.LANDSAT_LST_PATH, exist_ok=True)
-#     os.makedirs(test_config.ERA5_SKIN_TEMP_PATH, exist_ok=True)
-#     os.makedirs(test_config.SENTINEL2_REFLECTANCE_PATH, exist_ok=True)
-#     os.makedirs(test_config.OUTPUT_DIR, exist_ok=True) # For temp aligned files
-
-#     for test_name, current_run_config in test_configs_to_run.items():
-#         print(f"\n--- Running preprocess_all_data with TestConfig: {test_name} ---")
-#         # Ensure output directory is clean/exists for this specific config run if they differ,
-#         # or use a common one. For this test, `current_run_config.OUTPUT_DIR` should be used.
-#         # os.makedirs(current_run_config.OUTPUT_DIR, exist_ok=True) # If OUTPUT_DIR varies per config
-
-#         try:
-#             preprocessed_output = preprocess_all_data(current_run_config)
-#             print(f"\n--- Preprocessing Output Summary for {test_name} ---")
-#             for key, value in preprocessed_output.items():
-#                 if isinstance(value, np.ndarray):
-#                     print(f"  {key}: shape {value.shape}, dtype {value.dtype}, NaNs: {np.isnan(value).sum()}")
-#                 elif isinstance(value, list) and value and isinstance(value[0], pd.Timestamp):
-#                      print(f"  {key}: {len(value)} timestamps from {value[0]} to {value[-1]}")
-#                 elif isinstance(value, dict) and key=="geo_profile":
-#                      print(f"  {key}: CRS {value.get('crs')}, Transform {value.get('transform')}")
-#                 else:
-#                     print(f"  {key}: {type(value)}")
-            
-#             assert preprocessed_output['lst_stack'].shape == (len(dates_to_create), dummy_height, dummy_width)
-#             assert preprocessed_output['era5_stack'].shape == (len(dates_to_create), dummy_height, dummy_width)
-#             assert preprocessed_output['s2_reflectance_stack'].shape == (len(dates_to_create), num_bands_s2, dummy_height, dummy_width)
-#             assert preprocessed_output['doy_stack'].shape == (len(dates_to_create),)
-#             assert preprocessed_output['lon_coords'].shape == (dummy_height, dummy_width)
-            
-#             if current_run_config.GP_USE_NDVI_FEATURE:
-#                 assert 'ndvi_stack' in preprocessed_output, "ndvi_stack should be in output when GP_USE_NDVI_FEATURE is True"
-#                 assert preprocessed_output['ndvi_stack'] is not None, "ndvi_stack should not be None when GP_USE_NDVI_FEATURE is True and files exist"
-#                 assert preprocessed_output['ndvi_stack'].shape[0] <= len(dates_to_create), "NDVI stack time dim too large"
-#                 if preprocessed_output['ndvi_stack'].shape[0] > 0: # If any NDVI data loaded
-#                     assert preprocessed_output['ndvi_stack'].shape[1:] == (dummy_height, dummy_width), "NDVI stack spatial dims incorrect"
-#                     # Check that other stacks are filtered if NDVI reduced the number of common dates
-#                     assert preprocessed_output['lst_stack'].shape[0] == preprocessed_output['ndvi_stack'].shape[0]
-#                 # assert not np.all(np.isnan(preprocessed_output['ndvi_stack'])), "NDVI stack should not be all NaNs if S2 data is valid"
-#             else:
-#                 assert 'ndvi_stack' not in preprocessed_output or preprocessed_output['ndvi_stack'] is None or preprocessed_output['ndvi_stack'].size == 0, \
-#                     "ndvi_stack should not be in output or be None/empty when GP_USE_NDVI_FEATURE is False"
-
-#             # Check if S2 for 2023-01-01 (most cloudy original was id0) has been replaced by id2 (least cloudy)
-#             s2_day1_data = preprocessed_output['s2_reflectance_stack'][0] # First day
-#             # If the "least cloudy" version (id2) was chosen, it should have no NaNs from nodata if it was fully clear
-#             # The dummy data for id2 has no S2_NODATA_VALUE
-#             assert np.sum(np.isnan(s2_day1_data)) == 0, "S2 data for the first day should be the least cloudy version (no NaNs from nodata if id2 was clear)"
-
-#             print("\n--- Test for preprocess_all_data PASSED ---")
-
-#         except Exception as e:
-#             print(f"Error during preprocessing test: {e}")
-#             import traceback
-#             traceback.print_exc()
-#         finally:
-#             # Clean up dummy directories
-#             # shutil.rmtree(test_config.BASE_DATA_DIR, ignore_errors=True) # Careful if tests run in parallel or share base
-#             # shutil.rmtree(current_run_config.OUTPUT_DIR_BASE, ignore_errors=True) # This might be too broad if OUTPUT_DIR_BASE is shared
-#             # If OUTPUT_DIR is config-specific, clean that instead:
-#             # if os.path.exists(current_run_config.OUTPUT_DIR):
-#             #    shutil.rmtree(current_run_config.OUTPUT_DIR)
-#             pass # Deferring cleanup decisions
-
-#     print(f"Dummy data and output directories ({test_config.BASE_DATA_DIR}, {test_config.OUTPUT_DIR_BASE}) were NOT automatically cleaned up. Please remove them manually if desired.") 
+    return output_data

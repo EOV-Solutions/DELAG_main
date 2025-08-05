@@ -110,6 +110,7 @@ def main(args):
     # Set config attributes from args
     config.ROI_NAME = args.roi_name
     print(f"ROI name: {config.ROI_NAME}")
+    print(f"Timeline mode: {args.timeline_mode}")
     # Override OUTPUT_DIR to be based on ROI name, not a timestamp
     config.OUTPUT_DIR = os.path.join(config.OUTPUT_DIR_BASE, config.ROI_NAME)
 
@@ -125,7 +126,12 @@ def main(args):
     # 1. Data Preprocessing
     print("\nStep 1: Data Preprocessing")
     try:
-        preprocessed_data = data_preprocessing.preprocess_all_data(config)
+        if args.timeline_mode == "era5_primary":
+            print("Using ERA5 as primary timeline (reconstruction will cover all ERA5 dates)")
+            preprocessed_data = data_preprocessing.preprocess_all_data_era5_primary(config)
+        else:
+            print("Using LST as primary timeline (original approach)")
+            preprocessed_data = data_preprocessing.preprocess_all_data(config)
     except Exception as e:
         print(f"Error during data preprocessing: {e}")
         import traceback
@@ -198,7 +204,9 @@ def main(args):
             'train_count': len(train_data['common_dates']),
             'test_count': len(test_data['common_dates']),
             'train_date_range': f"{args.train_start} to {args.train_end}",
-            'test_date_range': f"{args.test_start} to {args.test_end}"
+            'test_date_range': f"{args.test_start} to {args.test_end}",
+            'timeline_mode': args.timeline_mode,
+            'timeline_source': preprocessed_data.get('timeline_source', 'lst_based')
         }
         split_info_filename = os.path.join(config.OUTPUT_DIR, 'data_split_info.json')
         with open(split_info_filename, 'w') as f:
@@ -218,6 +226,7 @@ if __name__ == '__main__':
     parser.add_argument('--train_end', type=str, default='2021-01-01', help="End date for training data (YYYY-MM-DD).")
     parser.add_argument('--test_start', type=str, default='2021-01-01', help="Start date for test data (YYYY-MM-DD).")
     parser.add_argument('--test_end', type=str, default='2023-01-01', help="End date for test data (YYYY-MM-DD).")
+    parser.add_argument('--timeline_mode', type=str, default='lst_primary', choices=['lst_primary', 'era5_primary'], help="Timeline mode for data preprocessing.")
     
     args = parser.parse_args()
     main(args) 
