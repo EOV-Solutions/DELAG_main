@@ -26,6 +26,62 @@ except Exception:
 
 # --- Utility Functions (Adapted from new_main.py) ---
 
+def get_lst_acquisition_time(lst_file_path):
+    """
+    Extracts the acquisition time from LST file metadata.
+    Returns a datetime object with the acquisition time.
+    """
+    try:
+        with rasterio.open(lst_file_path) as src:
+            # Try to get DATETIME from tags
+            tags = src.tags()
+            datetime_str = tags.get('DATETIME')
+            
+            if datetime_str:
+                # Parse the datetime string (format: YYYY:MM:DD HH:MM:SS)
+                try:
+                    # Handle different possible formats
+                    if ':' in datetime_str and len(datetime_str.split(':')) >= 6:
+                        # Format: YYYY:MM:DD HH:MM:SS
+                        dt_parts = datetime_str.split(' ')
+                        date_part = dt_parts[0].replace(':', '-')
+                        time_part = dt_parts[1]
+                        full_datetime_str = f"{date_part} {time_part}"
+                        return datetime.strptime(full_datetime_str, '%Y-%m-%d %H:%M:%S')
+                    else:
+                        # Try other formats
+                        return datetime.strptime(datetime_str, '%Y:%m:%d %H:%M:%S')
+                except ValueError as e:
+                    print(f"Warning: Could not parse DATETIME from {lst_file_path}: {datetime_str}, Error: {e}")
+            
+            # Fallback: try to get time from system:time_start if available
+            # This would require additional metadata that might not be available
+            print(f"Warning: No DATETIME metadata found in {lst_file_path}. Using default time (10:30 UTC).")
+            
+    except Exception as e:
+        print(f"Error reading metadata from {lst_file_path}: {e}")
+    
+    # Default fallback: assume 10:30 UTC (typical Landsat overpass time)
+    return None
+
+def get_lst_file_for_date(lst_folder, target_date):
+    """
+    Finds the LST file for a specific date and returns its path.
+    Returns None if no file is found.
+    """
+    date_str = target_date.strftime('%Y-%m-%d')
+    pattern = f"*_{date_str}.tif"
+    matching_files = glob.glob(os.path.join(lst_folder, pattern))
+    
+    if matching_files:
+        # Return the first matching file (prefer L9 over L8 if both exist)
+        l9_files = [f for f in matching_files if 'L9_' in f]
+        if l9_files:
+            return l9_files[0]
+        return matching_files[0]
+    
+    return None
+
 def get_roi_coords_from_tif(tif_path):
     """Reads bounds from a TIF and converts them to the target CRS."""
     with rasterio.open(tif_path) as dataset:
@@ -213,8 +269,94 @@ def resample_to_match_reference(source_path, reference_path):
 
 # --- Core ERA5 Function ---
 
+def get_era5_for_date_with_time(target_date, roi_geom, region, out_folder, reference_tif_path, lst_folder):
+    """
+    Fetches and exports ERA5 Land hourly data for a specific date and time.
+    The time is determined from the LST acquisition time to ensure temporal consistency.
+    """
+    date_str = target_date.strftime('%Y-%m-%d')
+    out_path = os.path.join(out_folder, f'ERA5_data_{date_str}.tif')
+    
+    # 1. Check if the file already exists and skip if it does
+    if SKIPPING and os.path.exists(out_path):
+        print(f"Skipping ERA5 download for {date_str}: file already exists.")
+        resample_to_match_reference(out_path, reference_tif_path)
+        return
+
+    # 2. Get LST acquisition time to determine the target hour
+    lst_file_path = get_lst_file_for_date(lst_folder, target_date)
+    if not lst_file_path:
+        print(f"Warning: No LST file found for {date_str}. Using default time (10:30 UTC).")
+        target_hour = 10  # Default to 10:30 UTC
+    else:
+        acquisition_time = get_lst_acquisition_time(lst_file_path)
+        if acquisition_time:
+            target_hour = acquisition_time.hour
+            print(f"Using LST acquisition time for {date_str}: {acquisition_time.strftime('%H:%M:%S')} UTC")
+        else:
+            target_hour = 10  # Default to 10:30 UTC
+            print(f"Using default time for {date_str}: 10:30 UTC")
+
+    try:
+        # Use ERA5 hourly data instead of daily aggregated data
+        start = ee.Date(target_date)
+        end = ee.Date(target_date).advance(1, 'day')
+        
+        # Get hourly ERA5 data - using the standard ERA5 collection
+        era5_hourly_collection = ee.ImageCollection('ECMWF/ERA5_LAND/HOURLY') \
+            .filterDate(start, end) \
+            .filterBounds(roi_geom)
+
+        if era5_hourly_collection.size().getInfo() == 0:
+            print(f"Skipping ERA5 download for {date_str}: No hourly images found.")
+            return
+        
+        # Find the closest hour to the target hour
+        def find_closest_hour(image):
+            image_time = ee.Date(image.get('system:time_start'))
+            image_hour = image_time.get('hour')
+            hour_diff = ee.Number(image_hour).subtract(target_hour).abs()
+            return image.set('hour_diff', hour_diff)
+        
+        # Add hour difference to each image and sort by it
+        era5_with_diff = era5_hourly_collection.map(find_closest_hour)
+        sorted_collection = era5_with_diff.sort('hour_diff')
+        
+        # Get the image with the closest hour
+        best_img = ee.Image(sorted_collection.first())
+        
+        # Get the actual time of the selected image for metadata
+        actual_time = ee.Date(best_img.get('system:time_start'))
+        actual_hour = actual_time.get('hour').getInfo()
+        time_start_ms = best_img.get('system:time_start').getInfo()
+        
+        print(f"Selected ERA5 hourly data for {date_str} at {actual_hour}:00 UTC (target was {target_hour}:00)")
+        
+        # Export the hourly skin temperature data
+        export_ee_image(
+            image=best_img,
+            bands=['skin_temperature'],
+            region=region,
+            out_path=out_path,
+            scale=EXPORT_SCALE,
+            crs=TARGET_CRS,
+            timestamp_ms=time_start_ms,
+            acquisition_type=f'Hourly_{actual_hour:02d}:00'
+        )
+        time.sleep(0.5)  # Pause to avoid overwhelming the server
+
+        # 3. Resample the newly downloaded image to match the reference
+        if os.path.exists(out_path):
+            resample_to_match_reference(out_path, reference_tif_path)
+
+    except ee.EEException as e:
+        print(f"Download failed for ERA5 {date_str}: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred for {date_str}: {e}")
+
 def get_era5_for_date(target_date, roi_geom, region, out_folder, reference_tif_path):
     """
+    Legacy function for backward compatibility.
     Fetches and exports the closest ERA5 Land image for a specific date.
     It downloads two key bands: 2m air temperature and skin temperature.
     After download, it resamples the image to match the reference TIF.
@@ -236,7 +378,7 @@ def get_era5_for_date(target_date, roi_geom, region, out_folder, reference_tif_p
         start = ee.Date(target_date)
         end = ee.Date(target_date).advance(1, 'day')
         
-        era5_collection = ee.ImageCollection('ECMWF/ERA5_LAND/DAILY_AGGR') \
+        era5_collection = ee.ImageCollection('ECMWF/ERA5_LAND/DAILY') \
             .filterDate(start, end) \
             .filterBounds(roi_geom)
 
@@ -284,6 +426,7 @@ def main(input_folder, output_folder, specific_dates=None):
     Main function to orchestrate ERA5 data retrieval.
     It can either derive dates from LST files in the input folder
     or use a specific list of provided dates.
+    Uses time-aware retrieval based on LST acquisition times.
     """
     overall_start_time = time.time()
     os.makedirs(output_folder, exist_ok=True)
@@ -319,11 +462,11 @@ def main(input_folder, output_folder, specific_dates=None):
 
     print(f"Found {len(dates_to_process)} total dates to process for ERA5 retrieval.")
 
-    # --- 3. Process each date ---
+    # --- 3. Process each date using time-aware retrieval ---
     for i, target_date in enumerate(dates_to_process):
         date_str = target_date.strftime('%Y-%m-%d')
         print(f"--- Processing date {i+1}/{len(dates_to_process)}: {date_str} ---")
-        get_era5_for_date(target_date, roi_geometry, roi_coords, output_folder, reference_tif)
+        get_era5_for_date_with_time(target_date, roi_geometry, roi_coords, output_folder, reference_tif, input_folder)
 
     total_time = time.time() - overall_start_time
     print(f"\nERA5 retrieval complete. Total time: {total_time:.2f} seconds.")

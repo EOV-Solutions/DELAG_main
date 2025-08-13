@@ -112,3 +112,4 @@ Run them using `python <script_name>.py`. Make sure to check the source code of 
 -   `main.py`: Main entry point for the application (currently empty).
 -   `process_s2_data.py`: Main script for Sentinel-2 data processing.
 -   `requirements.txt`: Project dependencies.
+# DELAG_main

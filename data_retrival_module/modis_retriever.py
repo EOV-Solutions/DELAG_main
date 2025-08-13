@@ -25,6 +25,62 @@ except Exception:
 
 # --- Utility Functions (Unchanged) ---
 
+def get_lst_acquisition_time(lst_file_path):
+    """
+    Extracts the acquisition time from LST file metadata.
+    Returns a datetime object with the acquisition time.
+    """
+    try:
+        with rasterio.open(lst_file_path) as src:
+            # Try to get DATETIME from tags
+            tags = src.tags()
+            datetime_str = tags.get('DATETIME')
+            
+            if datetime_str:
+                # Parse the datetime string (format: YYYY:MM:DD HH:MM:SS)
+                try:
+                    # Handle different possible formats
+                    if ':' in datetime_str and len(datetime_str.split(':')) >= 6:
+                        # Format: YYYY:MM:DD HH:MM:SS
+                        dt_parts = datetime_str.split(' ')
+                        date_part = dt_parts[0].replace(':', '-')
+                        time_part = dt_parts[1]
+                        full_datetime_str = f"{date_part} {time_part}"
+                        return datetime.strptime(full_datetime_str, '%Y-%m-%d %H:%M:%S')
+                    else:
+                        # Try other formats
+                        return datetime.strptime(datetime_str, '%Y:%m:%d %H:%M:%S')
+                except ValueError as e:
+                    print(f"Warning: Could not parse DATETIME from {lst_file_path}: {datetime_str}, Error: {e}")
+            
+            # Fallback: try to get time from system:time_start if available
+            # This would require additional metadata that might not be available
+            print(f"Warning: No DATETIME metadata found in {lst_file_path}. Using default time (10:30 UTC).")
+            
+    except Exception as e:
+        print(f"Error reading metadata from {lst_file_path}: {e}")
+    
+    # Default fallback: assume 10:30 UTC (typical Landsat overpass time)
+    return None
+
+def get_lst_file_for_date(lst_folder, target_date):
+    """
+    Finds the LST file for a specific date and returns its path.
+    Returns None if no file is found.
+    """
+    date_str = target_date.strftime('%Y-%m-%d')
+    pattern = f"*_{date_str}.tif"
+    matching_files = glob.glob(os.path.join(lst_folder, pattern))
+    
+    if matching_files:
+        # Return the first matching file (prefer L9 over L8 if both exist)
+        l9_files = [f for f in matching_files if 'L9_' in f]
+        if l9_files:
+            return l9_files[0]
+        return matching_files[0]
+    
+    return None
+
 def get_roi_coords_from_tif(tif_path):
     """Reads bounds from a TIF and converts them to the target CRS."""
     with rasterio.open(tif_path) as dataset:
@@ -166,8 +222,117 @@ def resample_to_match_reference(source_path, reference_path):
 
 # --- Updated MODIS Function ---
 
+def get_modis_for_date_with_time(target_date, roi_geom, region, out_folder, reference_tif_path, lst_folder):
+    """
+    Fetches and exports MODIS Land Surface Temperature for a specific date and time.
+    The time is determined from the LST acquisition time to select appropriate day/night data.
+    """
+    date_str = target_date.strftime('%Y-%m-%d')
+    out_path = os.path.join(out_folder, f'MODIS_LST_{date_str}.tif')
+    
+    if SKIPPING and os.path.exists(out_path):
+        print(f"Skipping MODIS download for {date_str}: file already exists.")
+        resample_to_match_reference(out_path, reference_tif_path)
+        return
+
+    # Get LST acquisition time to determine day/night selection
+    lst_file_path = get_lst_file_for_date(lst_folder, target_date)
+    if not lst_file_path:
+        print(f"Warning: No LST file found for {date_str}. Using default day data.")
+        use_day_data = True
+    else:
+        acquisition_time = get_lst_acquisition_time(lst_file_path)
+        if acquisition_time:
+            # Determine if LST was acquired during day or night
+            # Day: 6:00 - 18:00 UTC, Night: 18:00 - 6:00 UTC
+            hour = acquisition_time.hour
+            use_day_data = 6 <= hour < 18
+            print(f"Using LST acquisition time for {date_str}: {acquisition_time.strftime('%H:%M:%S')} UTC ({'Day' if use_day_data else 'Night'})")
+        else:
+            use_day_data = True
+            print(f"Using default day data for {date_str}")
+
+    try:
+        start_date = ee.Date(target_date)
+        end_date = start_date.advance(1, 'day')
+        
+        modis_collection = ee.ImageCollection('MODIS/061/MOD11A1') \
+            .filterDate(start_date, end_date) \
+            .filterBounds(roi_geom)
+
+        collection_size = modis_collection.size().getInfo()
+        if collection_size == 0:
+            print(f"Skipping MODIS download for {date_str}: No images found.")
+            return
+            
+        print(f"Found {collection_size} MODIS images for {date_str}")
+        
+        # Select the appropriate band based on day/night
+        if use_day_data:
+            band_name = 'LST_Day_1km'
+            acquisition_type = 'Day'
+        else:
+            band_name = 'LST_Night_1km'
+            acquisition_type = 'Night'
+        
+        # Use toList(1).get(0) instead of first() for more reliable image extraction
+        image = ee.Image(modis_collection.toList(1).get(0))
+        
+        # Copy properties to ensure metadata is preserved through processing.
+        image_with_props = ee.Image(image.copyProperties(image, ['system:time_start', 'system:time_end']))
+        
+        # Get the timestamp for metadata writing
+        time_start_ms = image_with_props.get('system:time_start').getInfo()
+        
+        # Apply scale factor to get LST in Kelvin
+        lst_kelvin = image_with_props.select(band_name).multiply(0.02).rename('LST_Kelvin')
+        
+        # Check for valid data in the ROI before exporting
+        stats = lst_kelvin.reduceRegion(
+            reducer=ee.Reducer.minMax(),
+            geometry=roi_geom,
+            scale=1000,  # Native resolution of MODIS LST
+            maxPixels=1e9
+        ).getInfo()
+
+        # If the dictionary is empty or the keys have null values, there's no valid data
+        if not stats or stats.get('LST_Kelvin_min') is None:
+            print(f"Skipping MODIS download for {date_str}: No valid data found in the ROI (likely all cloudy).")
+            return
+            
+        print(f"LST Kelvin range for {date_str} ({acquisition_type}): {stats}")
+ 
+        print(f"Exporting MODIS LST data for {date_str} ({acquisition_type})...")
+        export_ee_image(
+            image=lst_kelvin,
+            bands=['LST_Kelvin'],
+            region=region,
+            out_path=out_path,
+            scale=EXPORT_SCALE,
+            crs=TARGET_CRS,
+            timestamp_ms=time_start_ms,
+            acquisition_type=acquisition_type
+        )
+ 
+        if os.path.exists(out_path) and os.path.getsize(out_path) > 0:
+            resample_to_match_reference(out_path, reference_tif_path)
+            if verify_image(out_path):
+                print(f"Verified: {os.path.basename(out_path)}")
+            else:
+                print(f"Deleting invalid file: {os.path.basename(out_path)}")
+                os.remove(out_path)
+        elif os.path.exists(out_path):
+             print(f"Downloaded file {os.path.basename(out_path)} is empty. Deleting.")
+             os.remove(out_path)
+
+    except ee.EEException as e:
+        print(f"Download failed for MODIS {date_str}: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred for {date_str}: {e}")
+
 def get_modis_for_date(target_date, roi_geom, region, out_folder, reference_tif_path):
     """
+    Legacy function for backward compatibility.
     Fetches and exports MODIS Land Surface Temperature for a specific date.
     It downloads the LST_Day_1km band in Kelvin, writes metadata, 
     and resamples the image to match the reference TIF.
@@ -253,6 +418,12 @@ def get_modis_for_date(target_date, roi_geom, region, out_folder, reference_tif_
 # --- Main Execution Logic (Unchanged) ---
 
 def main(input_folder, output_folder, specific_dates=None):
+    """
+    Main function to orchestrate MODIS data retrieval.
+    It can either derive dates from LST files in the input folder
+    or use a specific list of provided dates.
+    Uses time-aware retrieval based on LST acquisition times.
+    """
     overall_start_time = time.time()
     os.makedirs(output_folder, exist_ok=True)
     all_tifs = glob.glob(os.path.join(input_folder, '*.tif'))
@@ -280,7 +451,7 @@ def main(input_folder, output_folder, specific_dates=None):
     for i, target_date in enumerate(dates_to_process):
         date_str = target_date.strftime('%Y-%m-%d')
         print(f"--- Processing date {i+1}/{len(dates_to_process)}: {date_str} ---")
-        get_modis_for_date(target_date, roi_geometry, roi_coords, output_folder, reference_tif)
+        get_modis_for_date_with_time(target_date, roi_geometry, roi_coords, output_folder, reference_tif, input_folder)
     total_time = time.time() - overall_start_time
     print(f"\nMODIS retrieval complete. Total time: {total_time:.2f} seconds.")
 

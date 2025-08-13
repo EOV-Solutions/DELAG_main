@@ -3,4 +3,10 @@ requests
 rasterio
 python-dotenv
 pandas
-numpy 
+numpy
+matplotlib
+tqdm
+pathlib
+seaborn
+scipy
+scikit-learn 
