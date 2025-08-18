@@ -2749,3 +2749,1033 @@ ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
 2025-08-13 11:25:39,728 - INFO - Successfully downloaded S2 image for 2023-02-24.
 2025-08-13 11:28:11,764 - INFO - Successfully downloaded S2 image for 2023-03-04.
 2025-08-13 11:31:02,801 - INFO - Successfully downloaded S2 image for 2023-03-12.
+2025-08-13 11:33:42,045 - INFO - Successfully downloaded S2 image for 2023-03-20.
+2025-08-13 11:36:06,499 - INFO - Successfully downloaded S2 image for 2023-04-05.
+2025-08-13 11:38:59,984 - WARNING - Request error for 2023-04-13 (attempt 1/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')).
+2025-08-13 11:40:24,031 - INFO - Successfully downloaded S2 image for 2023-04-13.
+2025-08-13 11:42:38,064 - INFO - Successfully downloaded S2 image for 2023-04-21.
+2025-08-13 11:44:44,265 - INFO - Successfully downloaded S2 image for 2023-04-29.
+2025-08-13 11:52:39,504 - WARNING - Request error for 2023-05-07 (attempt 1/3): HTTPSConnectionPool(host='earthengine.googleapis.com', port=443): Read timed out. (read timeout=300).
+2025-08-13 11:52:52,439 - WARNING - Sleeping 0.35 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json, after ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2025-08-13 13:48:15,835 - INFO - ==================================================
+2025-08-13 13:48:15,835 - INFO - Starting LST data retrieval for ROI 'C-49-1-D'...
+2025-08-13 13:48:15,835 - INFO - LST retrieval period: 2020-01-01 to 2025-01-10
+2025-08-13 14:06:31,639 - INFO - LST data retrieval finished for ROI 'C-49-1-D'.
+2025-08-13 14:06:31,640 - INFO - ==================================================
+2025-08-13 14:06:31,640 - INFO - Starting ERA5 data retrieval for ROI 'C-49-1-D'...
+2025-08-13 14:06:31,647 - INFO - L8 date range: 2020-01-15 to 2025-01-28
+2025-08-13 14:06:31,647 - INFO - L9 date range: 2021-12-04 to 2025-01-20
+2025-08-13 14:06:31,647 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-13 14:06:31,649 - INFO - Generated 185 target dates for ERA5 retrieval.
+2025-08-13 14:06:31,972 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-13 14:06:31,975 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-13 14:06:31,975 - INFO - ERA5 data retrieval finished for ROI 'C-49-1-D'.
+2025-08-13 14:06:31,977 - INFO - ==================================================
+2025-08-13 14:06:31,978 - INFO - Starting Sentinel-2 data retrieval for ROI 'C-49-1-D'...
+2025-08-13 14:06:31,983 - INFO - Requesting S2 composites for 224 dates based on LST files.
+2025-08-13 14:07:22,750 - WARNING - Sleeping 0.82 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 503
+2025-08-13 14:07:46,031 - INFO - Skipping S2 download for 2020-01-15: file already exists.
+2025-08-13 14:08:32,565 - INFO - Skipping S2 download for 2020-01-31: file already exists.
+2025-08-13 14:09:13,242 - WARNING - Sleeping 1.43 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 503
+2025-08-13 14:09:23,346 - INFO - Skipping S2 download for 2020-02-16: file already exists.
+2025-08-13 14:10:06,837 - INFO - Skipping S2 download for 2020-03-03: file already exists.
+2025-08-13 14:10:55,194 - INFO - Skipping S2 download for 2020-03-19: file already exists.
+2025-08-13 14:11:42,248 - INFO - Skipping S2 download for 2020-04-04: file already exists.
+2025-08-13 14:12:23,682 - INFO - Skipping S2 download for 2020-04-20: file already exists.
+2025-08-13 14:13:04,462 - INFO - Skipping S2 download for 2020-04-29: file already exists.
+2025-08-13 14:13:41,656 - INFO - Skipping S2 download for 2020-05-06: file already exists.
+2025-08-13 14:14:22,807 - INFO - Skipping S2 download for 2020-06-07: file already exists.
+2025-08-13 14:15:05,599 - INFO - Skipping S2 download for 2020-06-23: file already exists.
+2025-08-13 14:15:44,495 - INFO - Skipping S2 download for 2020-07-09: file already exists.
+2025-08-13 14:16:26,130 - INFO - Skipping S2 download for 2020-07-25: file already exists.
+2025-08-13 14:17:06,330 - INFO - Skipping S2 download for 2020-08-10: file already exists.
+2025-08-13 14:17:52,315 - INFO - Skipping S2 download for 2020-08-26: file already exists.
+2025-08-13 14:18:35,244 - INFO - Skipping S2 download for 2020-09-11: file already exists.
+2025-08-13 14:19:20,943 - INFO - Skipping S2 download for 2020-10-29: file already exists.
+2025-08-13 14:19:59,709 - INFO - Skipping S2 download for 2020-12-16: file already exists.
+2025-08-13 14:20:45,869 - INFO - Skipping S2 download for 2021-01-01: file already exists.
+2025-08-13 14:21:39,285 - INFO - Skipping S2 download for 2021-01-17: file already exists.
+2025-08-13 14:22:17,489 - INFO - Skipping S2 download for 2021-02-02: file already exists.
+2025-08-13 14:22:59,145 - INFO - Skipping S2 download for 2021-02-18: file already exists.
+2025-08-13 14:23:35,392 - INFO - Skipping S2 download for 2021-03-06: file already exists.
+2025-08-13 14:24:20,425 - INFO - Skipping S2 download for 2021-03-22: file already exists.
+2025-08-13 14:25:05,193 - INFO - Skipping S2 download for 2021-04-07: file already exists.
+2025-08-13 14:25:42,509 - INFO - Skipping S2 download for 2021-04-16: file already exists.
+2025-08-13 14:26:31,152 - INFO - Skipping S2 download for 2021-04-23: file already exists.
+2025-08-13 14:27:12,482 - INFO - Skipping S2 download for 2021-05-02: file already exists.
+2025-08-13 14:27:51,269 - INFO - Skipping S2 download for 2021-05-09: file already exists.
+2025-08-13 14:28:32,486 - INFO - Skipping S2 download for 2021-05-18: file already exists.
+2025-08-13 14:29:19,291 - INFO - Skipping S2 download for 2021-06-03: file already exists.
+2025-08-13 14:29:58,944 - INFO - Skipping S2 download for 2021-06-10: file already exists.
+2025-08-13 14:30:37,760 - INFO - Skipping S2 download for 2021-06-19: file already exists.
+2025-08-13 14:31:17,313 - INFO - Skipping S2 download for 2021-06-26: file already exists.
+2025-08-13 14:31:56,520 - INFO - Skipping S2 download for 2021-07-28: file already exists.
+2025-08-13 14:32:37,365 - INFO - Skipping S2 download for 2021-08-13: file already exists.
+2025-08-13 14:33:23,732 - INFO - Skipping S2 download for 2021-08-29: file already exists.
+2025-08-13 14:34:00,328 - INFO - Skipping S2 download for 2021-09-30: file already exists.
+2025-08-13 14:34:41,298 - INFO - Skipping S2 download for 2021-10-16: file already exists.
+2025-08-13 14:35:24,409 - INFO - Skipping S2 download for 2021-11-01: file already exists.
+2025-08-13 14:36:04,727 - INFO - Skipping S2 download for 2021-12-03: file already exists.
+2025-08-13 14:36:44,834 - INFO - Skipping S2 download for 2021-12-04: file already exists.
+2025-08-13 14:37:30,902 - INFO - Skipping S2 download for 2021-12-11: file already exists.
+2025-08-13 14:38:09,990 - INFO - Skipping S2 download for 2021-12-27: file already exists.
+2025-08-13 14:38:54,128 - INFO - Skipping S2 download for 2022-01-04: file already exists.
+2025-08-13 14:39:39,161 - INFO - Skipping S2 download for 2022-01-12: file already exists.
+2025-08-13 14:40:21,573 - INFO - Skipping S2 download for 2022-01-20: file already exists.
+2025-08-13 14:41:20,373 - INFO - Skipping S2 download for 2022-01-28: file already exists.
+2025-08-13 14:42:11,816 - INFO - Skipping S2 download for 2022-02-05: file already exists.
+2025-08-13 14:43:00,162 - INFO - Skipping S2 download for 2022-02-13: file already exists.
+2025-08-13 14:43:42,325 - INFO - Skipping S2 download for 2022-02-21: file already exists.
+2025-08-13 14:44:18,828 - INFO - Skipping S2 download for 2022-03-01: file already exists.
+2025-08-13 14:45:01,659 - INFO - Skipping S2 download for 2022-03-09: file already exists.
+2025-08-13 14:45:46,928 - INFO - Skipping S2 download for 2022-03-25: file already exists.
+2025-08-13 14:46:28,085 - INFO - Skipping S2 download for 2022-04-02: file already exists.
+2025-08-13 14:47:12,654 - INFO - Skipping S2 download for 2022-04-10: file already exists.
+2025-08-13 14:47:59,875 - INFO - Skipping S2 download for 2022-04-11: file already exists.
+2025-08-13 14:48:40,574 - INFO - Skipping S2 download for 2022-04-18: file already exists.
+2025-08-13 14:49:05,114 - WARNING - Sleeping 1.79 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 503
+2025-08-13 14:49:34,775 - INFO - Skipping S2 download for 2022-04-19: file already exists.
+2025-08-13 14:50:10,693 - INFO - Skipping S2 download for 2022-04-26: file already exists.
+2025-08-13 14:50:49,917 - INFO - Skipping S2 download for 2022-04-27: file already exists.
+2025-08-13 14:51:24,144 - INFO - Skipping S2 download for 2022-05-04: file already exists.
+2025-08-13 14:51:59,152 - INFO - Skipping S2 download for 2022-05-12: file already exists.
+2025-08-13 14:52:59,742 - INFO - Skipping S2 download for 2022-05-13: file already exists.
+2025-08-13 14:53:35,597 - INFO - Skipping S2 download for 2022-05-20: file already exists.
+2025-08-13 14:54:16,566 - INFO - Skipping S2 download for 2022-05-28: file already exists.
+2025-08-13 14:54:55,193 - INFO - Skipping S2 download for 2022-05-29: file already exists.
+2025-08-13 14:55:39,224 - INFO - Skipping S2 download for 2022-06-05: file already exists.
+2025-08-13 14:56:53,966 - INFO - Skipping S2 download for 2022-06-13: file already exists.
+2025-08-13 14:57:46,920 - INFO - Skipping S2 download for 2022-06-21: file already exists.
+2025-08-13 14:58:37,467 - INFO - Skipping S2 download for 2022-06-22: file already exists.
+2025-08-13 14:59:38,373 - INFO - Skipping S2 download for 2022-06-29: file already exists.
+2025-08-13 15:00:19,280 - INFO - Skipping S2 download for 2022-06-30: file already exists.
+2025-08-13 15:01:18,703 - INFO - Skipping S2 download for 2022-07-07: file already exists.
+2025-08-13 15:01:28,239 - INFO - ==================================================
+2025-08-13 15:01:28,239 - INFO - Starting LST data retrieval for ROI 'F-48-93-B'...
+2025-08-13 15:01:28,239 - INFO - LST retrieval period: 2020-01-01 to 2025-01-01
+2025-08-13 15:01:58,008 - INFO - Skipping S2 download for 2022-07-15: file already exists.
+2025-08-13 15:02:45,718 - INFO - Skipping S2 download for 2022-07-23: file already exists.
+2025-08-13 15:03:29,924 - INFO - Skipping S2 download for 2022-08-09: file already exists.
+2025-08-13 15:04:17,210 - INFO - Skipping S2 download for 2022-09-01: file already exists.
+2025-08-13 15:04:58,985 - INFO - Skipping S2 download for 2022-09-09: file already exists.
+2025-08-13 15:05:40,910 - INFO - Skipping S2 download for 2022-09-10: file already exists.
+2025-08-13 15:06:20,306 - INFO - Skipping S2 download for 2022-09-17: file already exists.
+2025-08-13 15:06:57,882 - INFO - Skipping S2 download for 2022-09-25: file already exists.
+2025-08-13 15:07:34,075 - INFO - Skipping S2 download for 2022-09-26: file already exists.
+2025-08-13 15:08:10,362 - INFO - Skipping S2 download for 2022-10-19: file already exists.
+2025-08-13 15:08:34,141 - INFO - LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-13 15:08:34,141 - INFO - ==================================================
+2025-08-13 15:08:34,141 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-13 15:08:34,145 - INFO - L8 date range: 2020-05-04 to 2024-11-23
+2025-08-13 15:08:34,146 - INFO - L9 date range: 2022-02-27 to 2024-12-17
+2025-08-13 15:08:34,146 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-13 15:08:34,147 - INFO - Generated 170 target dates for ERA5 retrieval.
+2025-08-13 15:08:49,834 - INFO - Skipping S2 download for 2022-10-20: file already exists.
+2025-08-13 15:09:29,449 - INFO - Skipping S2 download for 2022-10-27: file already exists.
+2025-08-13 15:10:15,492 - INFO - Skipping S2 download for 2022-10-28: file already exists.
+2025-08-13 15:11:01,715 - INFO - Skipping S2 download for 2022-11-04: file already exists.
+2025-08-13 15:11:42,448 - INFO - Skipping S2 download for 2022-11-28: file already exists.
+2025-08-13 15:12:20,523 - INFO - Skipping S2 download for 2022-12-06: file already exists.
+2025-08-13 15:12:58,858 - INFO - Skipping S2 download for 2022-12-22: file already exists.
+2025-08-13 15:13:42,465 - INFO - Skipping S2 download for 2022-12-30: file already exists.
+2025-08-13 15:14:38,310 - INFO - Skipping S2 download for 2023-01-15: file already exists.
+2025-08-13 15:15:19,517 - INFO - Skipping S2 download for 2023-01-23: file already exists.
+2025-08-13 15:16:19,888 - INFO - Skipping S2 download for 2023-01-31: file already exists.
+2025-08-13 15:17:00,436 - INFO - Skipping S2 download for 2023-02-08: file already exists.
+2025-08-13 15:17:52,435 - INFO - Skipping S2 download for 2023-02-09: file already exists.
+2025-08-13 15:18:20,728 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-13 15:18:20,730 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-13 15:18:20,730 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-13 15:18:20,731 - INFO - ==================================================
+2025-08-13 15:18:20,731 - INFO - Starting Sentinel-2 data retrieval for ROI 'F-48-93-B'...
+2025-08-13 15:18:20,734 - INFO - Requesting S2 composites for 122 dates based on LST files.
+2025-08-13 15:18:33,149 - INFO - Skipping S2 download for 2023-02-16: file already exists.
+2025-08-13 15:19:06,430 - INFO - Skipping S2 download for 2020-05-04: file already exists.
+2025-08-13 15:19:23,967 - INFO - Skipping S2 download for 2023-02-17: file already exists.
+2025-08-13 15:19:37,581 - INFO - Skipping S2 download for 2020-05-20: file already exists.
+2025-08-13 15:20:12,006 - INFO - Skipping S2 download for 2020-06-05: file already exists.
+2025-08-13 15:20:18,381 - INFO - Skipping S2 download for 2023-02-24: file already exists.
+2025-08-13 15:20:59,987 - INFO - Skipping S2 download for 2020-06-21: file already exists.
+2025-08-13 15:21:25,911 - INFO - Skipping S2 download for 2020-07-23: file already exists.
+2025-08-13 15:21:32,080 - INFO - Skipping S2 download for 2023-03-04: file already exists.
+2025-08-13 15:22:02,684 - INFO - Skipping S2 download for 2020-08-08: file already exists.
+2025-08-13 15:22:21,436 - INFO - Skipping S2 download for 2023-03-12: file already exists.
+2025-08-13 15:22:43,079 - INFO - Skipping S2 download for 2020-08-24: file already exists.
+2025-08-13 15:23:01,389 - INFO - Skipping S2 download for 2023-03-20: file already exists.
+2025-08-13 15:23:16,760 - INFO - Skipping S2 download for 2020-10-11: file already exists.
+2025-08-13 15:23:47,795 - INFO - Skipping S2 download for 2020-10-27: file already exists.
+2025-08-13 15:24:04,854 - INFO - Skipping S2 download for 2023-04-05: file already exists.
+2025-08-13 15:24:36,461 - INFO - Skipping S2 download for 2020-11-12: file already exists.
+2025-08-13 15:25:19,201 - INFO - Skipping S2 download for 2020-11-28: file already exists.
+2025-08-13 15:25:28,065 - INFO - Skipping S2 download for 2023-04-13: file already exists.
+2025-08-13 15:26:21,395 - INFO - Skipping S2 download for 2020-12-14: file already exists.
+2025-08-13 15:26:28,588 - INFO - Skipping S2 download for 2023-04-21: file already exists.
+2025-08-13 15:27:12,313 - INFO - Skipping S2 download for 2021-01-15: file already exists.
+2025-08-13 15:27:27,103 - INFO - Skipping S2 download for 2023-04-29: file already exists.
+2025-08-13 15:27:36,955 - INFO - Skipping S2 download for 2021-02-16: file already exists.
+2025-08-13 15:28:12,041 - INFO - Skipping S2 download for 2021-04-21: file already exists.
+2025-08-13 15:28:32,520 - INFO - Skipping S2 download for 2021-05-07: file already exists.
+2025-08-13 15:29:07,246 - INFO - Skipping S2 download for 2021-05-23: file already exists.
+2025-08-13 15:29:34,854 - INFO - Skipping S2 download for 2021-06-24: file already exists.
+2025-08-13 15:29:48,442 - INFO - Successfully downloaded S2 image for 2023-05-07.
+2025-08-13 15:30:06,860 - INFO - Skipping S2 download for 2021-07-10: file already exists.
+2025-08-13 15:31:05,123 - INFO - Skipping S2 download for 2021-07-26: file already exists.
+2025-08-13 15:31:47,666 - INFO - Skipping S2 download for 2021-08-11: file already exists.
+2025-08-13 15:32:28,402 - INFO - Skipping S2 download for 2021-08-27: file already exists.
+2025-08-13 15:33:02,489 - INFO - Successfully downloaded S2 image for 2023-05-15.
+2025-08-13 15:33:21,145 - INFO - Skipping S2 download for 2021-09-12: file already exists.
+2025-08-13 15:33:56,026 - INFO - Skipping S2 download for 2021-09-28: file already exists.
+2025-08-13 15:34:32,780 - INFO - Skipping S2 download for 2021-11-15: file already exists.
+2025-08-13 15:34:59,506 - INFO - Skipping S2 download for 2021-12-01: file already exists.
+2025-08-13 15:35:19,379 - INFO - Skipping S2 download for 2021-12-17: file already exists.
+2025-08-13 15:35:41,716 - INFO - Skipping S2 download for 2022-01-02: file already exists.
+2025-08-13 15:36:01,777 - INFO - Successfully downloaded S2 image for 2023-05-16.
+2025-08-13 15:36:13,126 - INFO - Skipping S2 download for 2022-01-18: file already exists.
+2025-08-13 15:36:45,066 - INFO - Skipping S2 download for 2022-02-27: file already exists.
+2025-08-13 15:37:13,863 - INFO - Skipping S2 download for 2022-03-31: file already exists.
+2025-08-13 15:37:36,497 - INFO - Skipping S2 download for 2022-04-08: file already exists.
+2025-08-13 15:38:06,481 - INFO - Skipping S2 download for 2022-05-02: file already exists.
+2025-08-13 15:38:30,974 - INFO - Successfully downloaded S2 image for 2023-05-23.
+2025-08-13 15:38:44,404 - INFO - Skipping S2 download for 2022-05-10: file already exists.
+2025-08-13 15:39:12,147 - INFO - Skipping S2 download for 2022-05-18: file already exists.
+2025-08-13 15:39:48,153 - INFO - Skipping S2 download for 2022-05-26: file already exists.
+2025-08-13 15:40:18,704 - INFO - Skipping S2 download for 2022-06-03: file already exists.
+2025-08-13 15:40:35,685 - INFO - Skipping S2 download for 2022-06-11: file already exists.
+2025-08-13 15:40:40,978 - INFO - Successfully downloaded S2 image for 2023-05-31.
+2025-08-13 15:41:04,387 - INFO - Skipping S2 download for 2022-06-19: file already exists.
+2025-08-13 15:41:28,298 - INFO - Skipping S2 download for 2022-06-27: file already exists.
+2025-08-13 15:41:55,527 - INFO - Skipping S2 download for 2022-07-05: file already exists.
+2025-08-13 15:42:43,321 - INFO - Skipping S2 download for 2022-07-13: file already exists.
+2025-08-13 15:42:55,697 - INFO - Successfully downloaded S2 image for 2023-06-01.
+2025-08-13 15:43:36,378 - INFO - Skipping S2 download for 2022-07-21: file already exists.
+2025-08-13 15:44:14,159 - INFO - Skipping S2 download for 2022-07-29: file already exists.
+2025-08-13 15:44:39,028 - INFO - Skipping S2 download for 2022-08-14: file already exists.
+2025-08-13 15:44:43,679 - INFO - Successfully downloaded S2 image for 2023-06-08.
+2025-08-13 15:45:09,432 - INFO - Skipping S2 download for 2022-08-22: file already exists.
+2025-08-13 15:45:34,485 - INFO - Skipping S2 download for 2022-08-30: file already exists.
+2025-08-13 15:45:59,793 - INFO - Skipping S2 download for 2022-09-07: file already exists.
+2025-08-13 15:46:23,969 - INFO - Skipping S2 download for 2022-09-15: file already exists.
+2025-08-13 15:46:40,762 - INFO - Successfully downloaded S2 image for 2023-06-16.
+2025-08-13 15:46:43,236 - INFO - Skipping S2 download for 2022-10-17: file already exists.
+2025-08-13 15:47:04,874 - INFO - Skipping S2 download for 2022-10-25: file already exists.
+2025-08-13 15:47:23,659 - INFO - Skipping S2 download for 2022-11-02: file already exists.
+2025-08-13 15:47:52,142 - INFO - Skipping S2 download for 2022-11-18: file already exists.
+2025-08-13 15:48:11,812 - INFO - Skipping S2 download for 2022-12-12: file already exists.
+2025-08-13 15:48:23,569 - INFO - Successfully downloaded S2 image for 2023-06-17.
+2025-08-13 15:48:31,983 - INFO - Skipping S2 download for 2022-12-20: file already exists.
+2025-08-13 15:48:57,105 - INFO - Skipping S2 download for 2022-12-28: file already exists.
+2025-08-13 15:49:25,470 - INFO - Skipping S2 download for 2023-01-13: file already exists.
+2025-08-13 15:50:06,925 - INFO - Skipping S2 download for 2023-01-21: file already exists.
+2025-08-13 15:50:45,674 - INFO - Skipping S2 download for 2023-01-29: file already exists.
+2025-08-13 15:51:06,911 - INFO - Successfully downloaded S2 image for 2023-06-24.
+2025-08-13 15:51:18,424 - INFO - Skipping S2 download for 2023-03-02: file already exists.
+2025-08-13 15:51:51,854 - INFO - Skipping S2 download for 2023-03-10: file already exists.
+2025-08-13 15:52:26,502 - INFO - Skipping S2 download for 2023-03-18: file already exists.
+2025-08-13 15:52:59,122 - INFO - Skipping S2 download for 2023-04-03: file already exists.
+2025-08-13 15:53:03,335 - INFO - Successfully downloaded S2 image for 2023-07-02.
+2025-08-13 15:53:33,044 - INFO - Skipping S2 download for 2023-04-19: file already exists.
+2025-08-13 15:53:53,315 - INFO - Skipping S2 download for 2023-05-05: file already exists.
+2025-08-13 15:54:23,888 - INFO - Skipping S2 download for 2023-05-21: file already exists.
+2025-08-13 15:54:46,108 - INFO - Skipping S2 download for 2023-05-29: file already exists.
+2025-08-13 15:55:13,989 - INFO - Skipping S2 download for 2023-06-06: file already exists.
+2025-08-13 15:55:32,063 - INFO - Successfully downloaded S2 image for 2023-07-03.
+2025-08-13 15:55:38,657 - INFO - Skipping S2 download for 2023-06-22: file already exists.
+2025-08-13 15:56:03,893 - INFO - Skipping S2 download for 2023-06-30: file already exists.
+2025-08-13 15:57:49,952 - INFO - Successfully downloaded S2 image for 2023-07-08.
+2025-08-13 15:58:07,056 - INFO - Successfully downloaded S2 image for 2023-07-10.
+2025-08-13 15:59:34,568 - INFO - Successfully downloaded S2 image for 2023-07-16.
+2025-08-13 15:59:50,199 - INFO - Successfully downloaded S2 image for 2023-07-26.
+2025-08-13 16:01:12,774 - INFO - Successfully downloaded S2 image for 2023-07-24.
+2025-08-13 16:02:11,435 - INFO - Successfully downloaded S2 image for 2023-08-03.
+2025-08-13 16:02:21,587 - INFO - Successfully downloaded S2 image for 2023-08-17.
+2025-08-13 16:03:37,240 - INFO - Successfully downloaded S2 image for 2023-08-25.
+2025-08-13 16:04:13,461 - INFO - Successfully downloaded S2 image for 2023-08-11.
+2025-08-13 16:05:29,745 - INFO - Successfully downloaded S2 image for 2023-09-02.
+2025-08-13 16:06:15,465 - INFO - Successfully downloaded S2 image for 2023-08-19.
+2025-08-13 16:07:31,967 - INFO - Successfully downloaded S2 image for 2023-09-10.
+2025-08-13 16:09:02,767 - INFO - Successfully downloaded S2 image for 2023-09-18.
+2025-08-13 16:09:18,232 - INFO - Successfully downloaded S2 image for 2023-08-27.
+2025-08-13 16:10:39,626 - INFO - Successfully downloaded S2 image for 2023-10-04.
+2025-08-13 16:11:03,055 - INFO - Successfully downloaded S2 image for 2023-09-04.
+2025-08-13 16:11:45,180 - INFO - Successfully downloaded S2 image for 2023-10-20.
+2025-08-13 16:12:32,627 - INFO - Successfully downloaded S2 image for 2023-09-05.
+2025-08-13 16:13:00,116 - INFO - Successfully downloaded S2 image for 2023-10-28.
+2025-08-13 16:14:23,940 - INFO - Successfully downloaded S2 image for 2023-11-05.
+2025-08-13 16:14:24,473 - INFO - Successfully downloaded S2 image for 2023-09-12.
+2025-08-13 16:16:15,032 - INFO - Successfully downloaded S2 image for 2023-11-21.
+2025-08-13 16:16:18,283 - INFO - Successfully downloaded S2 image for 2023-09-20.
+2025-08-13 16:17:16,949 - INFO - Successfully downloaded S2 image for 2023-11-29.
+2025-08-13 16:18:21,482 - INFO - Successfully downloaded S2 image for 2023-12-07.
+2025-08-13 16:18:27,503 - INFO - Successfully downloaded S2 image for 2023-09-28.
+2025-08-13 16:19:26,028 - INFO - Successfully downloaded S2 image for 2023-12-15.
+2025-08-13 16:20:25,752 - INFO - Successfully downloaded S2 image for 2023-12-23.
+2025-08-13 16:20:31,233 - INFO - Successfully downloaded S2 image for 2023-10-06.
+2025-08-13 16:21:31,767 - INFO - Successfully downloaded S2 image for 2023-12-31.
+2025-08-13 16:22:30,592 - INFO - Successfully downloaded S2 image for 2024-01-08.
+2025-08-13 16:22:44,102 - INFO - Successfully downloaded S2 image for 2023-10-14.
+2025-08-13 16:23:42,120 - INFO - Successfully downloaded S2 image for 2024-01-16.
+2025-08-13 16:25:13,469 - INFO - Successfully downloaded S2 image for 2023-10-22.
+2025-08-13 16:25:39,693 - INFO - Successfully downloaded S2 image for 2024-04-05.
+2025-08-13 16:26:54,006 - INFO - Successfully downloaded S2 image for 2024-04-21.
+2025-08-13 16:28:04,052 - INFO - Successfully downloaded S2 image for 2023-10-23.
+2025-08-13 16:28:24,157 - INFO - Successfully downloaded S2 image for 2024-04-29.
+2025-08-13 16:29:48,737 - INFO - Successfully downloaded S2 image for 2023-10-30.
+2025-08-13 16:30:02,274 - INFO - Successfully downloaded S2 image for 2024-05-15.
+2025-08-13 16:31:12,390 - INFO - Successfully downloaded S2 image for 2024-05-23.
+2025-08-13 16:31:48,135 - INFO - Successfully downloaded S2 image for 2023-12-01.
+2025-08-13 16:32:42,773 - INFO - Successfully downloaded S2 image for 2024-06-16.
+2025-08-13 16:33:42,076 - INFO - Successfully downloaded S2 image for 2023-12-09.
+2025-08-13 16:39:06,532 - WARNING - Request error for 2024-07-10 (attempt 1/3): HTTPSConnectionPool(host='earthengine.googleapis.com', port=443): Read timed out. (read timeout=300).
+2025-08-13 16:40:09,469 - WARNING - Sleeping 0.57 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json, after ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2025-08-13 16:41:33,366 - INFO - Successfully downloaded S2 image for 2024-07-10.
+2025-08-13 16:43:07,507 - INFO - Successfully downloaded S2 image for 2024-08-03.
+2025-08-13 16:44:41,638 - INFO - Successfully downloaded S2 image for 2024-08-27.
+2025-08-13 16:46:15,737 - INFO - Successfully downloaded S2 image for 2024-09-04.
+2025-08-13 16:48:10,490 - INFO - Successfully downloaded S2 image for 2024-09-12.
+2025-08-13 16:49:22,134 - INFO - Successfully downloaded S2 image for 2024-09-20.
+2025-08-13 16:50:57,688 - INFO - Successfully downloaded S2 image for 2024-09-28.
+2025-08-13 16:52:41,385 - INFO - Successfully downloaded S2 image for 2024-10-06.
+2025-08-13 16:54:18,658 - INFO - Successfully downloaded S2 image for 2024-10-14.
+2025-08-13 16:55:19,523 - INFO - Successfully downloaded S2 image for 2024-10-22.
+2025-08-13 16:57:03,195 - INFO - Successfully downloaded S2 image for 2024-10-30.
+2025-08-13 16:58:42,355 - INFO - Successfully downloaded S2 image for 2024-11-07.
+2025-08-13 17:00:24,796 - INFO - Successfully downloaded S2 image for 2024-11-15.
+2025-08-13 17:02:03,313 - INFO - Successfully downloaded S2 image for 2024-11-23.
+2025-08-13 17:04:01,640 - INFO - Successfully downloaded S2 image for 2024-12-01.
+2025-08-13 17:05:49,985 - INFO - Successfully downloaded S2 image for 2024-12-17.
+2025-08-13 17:05:49,990 - INFO - Sentinel-2 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-13 17:05:49,990 - INFO - ==================================================
+2025-08-13 17:05:49,990 - INFO - Data retrieval orchestration finished. Total time: 2:04:23.117781
+2025-08-14 09:10:07,734 - INFO - ==================================================
+2025-08-14 09:10:07,734 - INFO - Starting LST data retrieval for ROI 'C-49-1-D'...
+2025-08-14 09:10:07,734 - INFO - LST retrieval period: 2020-01-01 to 2025-01-10
+2025-08-14 10:08:44,330 - INFO - ==================================================
+2025-08-14 10:08:44,330 - INFO - Starting ERA5 data retrieval for ROI 'C-49-1-D'...
+2025-08-14 10:08:44,334 - INFO - L8 date range: 2020-01-15 to 2025-01-28
+2025-08-14 10:08:44,334 - INFO - L9 date range: 2021-12-04 to 2025-01-20
+2025-08-14 10:08:44,334 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 10:08:44,335 - INFO - Generated 185 target dates for ERA5 retrieval.
+2025-08-14 10:08:46,319 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 10:08:46,325 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 10:08:46,326 - INFO - ERA5 data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 10:08:46,329 - INFO - ==================================================
+2025-08-14 10:08:46,329 - INFO - Data retrieval orchestration finished. Total time: 0:00:03.916842
+2025-08-14 10:10:30,203 - INFO - ==================================================
+2025-08-14 10:10:30,203 - INFO - Starting ERA5 data retrieval for ROI 'C-49-1-D'...
+2025-08-14 10:10:30,206 - INFO - L8 date range: 2020-01-15 to 2025-01-28
+2025-08-14 10:10:30,206 - INFO - L9 date range: 2021-12-04 to 2025-01-20
+2025-08-14 10:10:30,206 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 10:10:30,207 - INFO - Generated 185 target dates for ERA5 retrieval.
+2025-08-14 10:10:30,536 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 10:10:30,539 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 10:10:30,539 - INFO - ERA5 data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 10:10:30,541 - INFO - ==================================================
+2025-08-14 10:10:30,541 - INFO - Starting MODIS data retrieval for ROI 'C-49-1-D'...
+2025-08-14 10:10:30,541 - INFO - Generated 224 target dates for MODIS retrieval based on LST files.
+2025-08-14 10:10:37,369 - INFO - MODIS data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 10:10:37,370 - INFO - ==================================================
+2025-08-14 10:10:37,370 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-49-1-D'...
+2025-08-14 10:10:37,370 - INFO - Generated 224 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 10:10:37,370 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 10:10:37,371 - INFO - Loaded openEO client config from sources: []
+2025-08-14 10:10:47,563 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 10:10:47,564 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 10:10:50,513 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 10:10:50,514 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 10:10:50,515 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 10:10:58,401 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 10:10:58,402 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 10:10:58,448 - INFO - Requesting SLSTR L2 LST for 224 dates (units=kelvin)
+2025-08-14 10:11:49,716 - INFO - Resampled S3_SLSTR_LST_2020-01-15.tif to 30m resolution
+2025-08-14 10:12:53,174 - INFO - Resampled S3_SLSTR_LST_2020-01-31.tif to 30m resolution
+2025-08-14 10:13:46,227 - INFO - Resampled S3_SLSTR_LST_2020-02-16.tif to 30m resolution
+2025-08-14 10:14:26,101 - INFO - Resampled S3_SLSTR_LST_2020-03-03.tif to 30m resolution
+2025-08-14 10:14:48,069 - INFO - Resampled S3_SLSTR_LST_2020-03-19.tif to 30m resolution
+2025-08-14 10:15:28,258 - INFO - Resampled S3_SLSTR_LST_2020-04-04.tif to 30m resolution
+2025-08-14 10:15:52,232 - INFO - Resampled S3_SLSTR_LST_2020-04-20.tif to 30m resolution
+2025-08-14 10:16:20,786 - INFO - Resampled S3_SLSTR_LST_2020-04-29.tif to 30m resolution
+2025-08-14 10:16:45,290 - INFO - Resampled S3_SLSTR_LST_2020-05-06.tif to 30m resolution
+2025-08-14 10:17:07,664 - INFO - Resampled S3_SLSTR_LST_2020-05-22.tif to 30m resolution
+2025-08-14 10:17:26,159 - INFO - Resampled S3_SLSTR_LST_2020-06-07.tif to 30m resolution
+2025-08-14 10:17:48,596 - INFO - Resampled S3_SLSTR_LST_2020-06-23.tif to 30m resolution
+2025-08-14 10:18:06,972 - INFO - Resampled S3_SLSTR_LST_2020-07-09.tif to 30m resolution
+2025-08-14 10:18:26,890 - INFO - Resampled S3_SLSTR_LST_2020-07-25.tif to 30m resolution
+2025-08-14 10:18:47,121 - INFO - Resampled S3_SLSTR_LST_2020-08-10.tif to 30m resolution
+2025-08-14 10:19:11,473 - INFO - Resampled S3_SLSTR_LST_2020-08-26.tif to 30m resolution
+2025-08-14 10:19:29,584 - INFO - Resampled S3_SLSTR_LST_2020-09-11.tif to 30m resolution
+2025-08-14 10:19:54,038 - INFO - Resampled S3_SLSTR_LST_2020-10-29.tif to 30m resolution
+2025-08-14 10:20:14,678 - INFO - Resampled S3_SLSTR_LST_2020-12-16.tif to 30m resolution
+2025-08-14 10:20:35,496 - INFO - Resampled S3_SLSTR_LST_2021-01-01.tif to 30m resolution
+2025-08-14 10:20:45,895 - INFO - Resampled S3_SLSTR_LST_2021-01-17.tif to 30m resolution
+2025-08-14 10:20:59,438 - INFO - Resampled S3_SLSTR_LST_2021-02-02.tif to 30m resolution
+2025-08-14 10:21:00,547 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 10:21:02,215 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 10:21:02,215 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 10:21:21,098 - INFO - Resampled S3_SLSTR_LST_2021-02-18.tif to 30m resolution
+2025-08-14 10:21:40,915 - INFO - Resampled S3_SLSTR_LST_2021-03-06.tif to 30m resolution
+2025-08-14 10:21:53,177 - INFO - Resampled S3_SLSTR_LST_2021-03-22.tif to 30m resolution
+2025-08-14 10:22:10,729 - INFO - Resampled S3_SLSTR_LST_2021-04-07.tif to 30m resolution
+2025-08-14 10:22:32,360 - INFO - Resampled S3_SLSTR_LST_2021-04-16.tif to 30m resolution
+2025-08-14 10:22:53,476 - INFO - Resampled S3_SLSTR_LST_2021-04-23.tif to 30m resolution
+2025-08-14 10:23:11,649 - INFO - Resampled S3_SLSTR_LST_2021-05-02.tif to 30m resolution
+2025-08-14 10:23:29,214 - INFO - Resampled S3_SLSTR_LST_2021-05-09.tif to 30m resolution
+2025-08-14 10:23:48,274 - INFO - Resampled S3_SLSTR_LST_2021-05-18.tif to 30m resolution
+2025-08-14 10:24:05,133 - INFO - Resampled S3_SLSTR_LST_2021-06-03.tif to 30m resolution
+2025-08-14 10:24:23,513 - INFO - Resampled S3_SLSTR_LST_2021-06-10.tif to 30m resolution
+2025-08-14 10:24:43,731 - INFO - Resampled S3_SLSTR_LST_2021-06-19.tif to 30m resolution
+2025-08-14 10:25:13,188 - INFO - Resampled S3_SLSTR_LST_2021-06-26.tif to 30m resolution
+2025-08-14 10:25:30,425 - INFO - Resampled S3_SLSTR_LST_2021-07-12.tif to 30m resolution
+2025-08-14 10:25:42,041 - INFO - Resampled S3_SLSTR_LST_2021-07-28.tif to 30m resolution
+2025-08-14 10:25:59,938 - INFO - Resampled S3_SLSTR_LST_2021-08-13.tif to 30m resolution
+2025-08-14 10:26:20,575 - INFO - Resampled S3_SLSTR_LST_2021-08-29.tif to 30m resolution
+2025-08-14 10:26:40,161 - INFO - Resampled S3_SLSTR_LST_2021-09-14.tif to 30m resolution
+2025-08-14 10:26:59,368 - INFO - Resampled S3_SLSTR_LST_2021-09-30.tif to 30m resolution
+2025-08-14 10:27:16,118 - INFO - Resampled S3_SLSTR_LST_2021-10-16.tif to 30m resolution
+2025-08-14 10:27:35,009 - INFO - Resampled S3_SLSTR_LST_2021-11-01.tif to 30m resolution
+2025-08-14 10:27:53,148 - INFO - Resampled S3_SLSTR_LST_2021-11-17.tif to 30m resolution
+2025-08-14 10:28:09,519 - INFO - Resampled S3_SLSTR_LST_2021-12-03.tif to 30m resolution
+2025-08-14 10:28:27,571 - INFO - Resampled S3_SLSTR_LST_2021-12-04.tif to 30m resolution
+2025-08-14 10:28:46,751 - INFO - Resampled S3_SLSTR_LST_2021-12-11.tif to 30m resolution
+2025-08-14 10:28:58,695 - INFO - Resampled S3_SLSTR_LST_2021-12-27.tif to 30m resolution
+2025-08-14 10:29:22,033 - INFO - Resampled S3_SLSTR_LST_2022-01-04.tif to 30m resolution
+2025-08-14 10:29:46,407 - INFO - Resampled S3_SLSTR_LST_2022-01-12.tif to 30m resolution
+2025-08-14 10:30:05,271 - INFO - Resampled S3_SLSTR_LST_2022-01-20.tif to 30m resolution
+2025-08-14 10:30:21,248 - INFO - Resampled S3_SLSTR_LST_2022-01-28.tif to 30m resolution
+2025-08-14 10:30:41,167 - INFO - Resampled S3_SLSTR_LST_2022-02-05.tif to 30m resolution
+2025-08-14 10:31:00,506 - INFO - Resampled S3_SLSTR_LST_2022-02-06.tif to 30m resolution
+2025-08-14 10:31:01,893 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 10:31:03,391 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 10:31:03,391 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 10:31:20,857 - INFO - Resampled S3_SLSTR_LST_2022-02-13.tif to 30m resolution
+2025-08-14 10:31:39,080 - INFO - Resampled S3_SLSTR_LST_2022-02-21.tif to 30m resolution
+2025-08-14 10:32:00,784 - INFO - Resampled S3_SLSTR_LST_2022-03-01.tif to 30m resolution
+2025-08-14 10:32:27,418 - INFO - Resampled S3_SLSTR_LST_2022-03-09.tif to 30m resolution
+2025-08-14 10:32:44,147 - INFO - Resampled S3_SLSTR_LST_2022-03-25.tif to 30m resolution
+2025-08-14 10:33:04,123 - INFO - Resampled S3_SLSTR_LST_2022-04-02.tif to 30m resolution
+2025-08-14 10:33:22,731 - INFO - Resampled S3_SLSTR_LST_2022-04-10.tif to 30m resolution
+2025-08-14 10:33:41,283 - INFO - Resampled S3_SLSTR_LST_2022-04-11.tif to 30m resolution
+2025-08-14 10:34:01,168 - INFO - Resampled S3_SLSTR_LST_2022-04-18.tif to 30m resolution
+2025-08-14 10:34:23,731 - INFO - Resampled S3_SLSTR_LST_2022-04-19.tif to 30m resolution
+2025-08-14 10:34:44,988 - INFO - Resampled S3_SLSTR_LST_2022-04-26.tif to 30m resolution
+2025-08-14 10:35:02,380 - INFO - Resampled S3_SLSTR_LST_2022-04-27.tif to 30m resolution
+2025-08-14 10:35:27,939 - INFO - Resampled S3_SLSTR_LST_2022-05-04.tif to 30m resolution
+2025-08-14 10:35:48,577 - INFO - Resampled S3_SLSTR_LST_2022-05-12.tif to 30m resolution
+2025-08-14 10:36:04,047 - INFO - Resampled S3_SLSTR_LST_2022-05-13.tif to 30m resolution
+2025-08-14 10:36:23,107 - INFO - Resampled S3_SLSTR_LST_2022-05-20.tif to 30m resolution
+2025-08-14 10:36:40,201 - INFO - Resampled S3_SLSTR_LST_2022-05-28.tif to 30m resolution
+2025-08-14 10:36:56,270 - INFO - Resampled S3_SLSTR_LST_2022-05-29.tif to 30m resolution
+2025-08-14 10:37:15,741 - INFO - Resampled S3_SLSTR_LST_2022-06-05.tif to 30m resolution
+2025-08-14 10:37:35,132 - INFO - Resampled S3_SLSTR_LST_2022-06-13.tif to 30m resolution
+2025-08-14 10:37:48,909 - INFO - Resampled S3_SLSTR_LST_2022-06-21.tif to 30m resolution
+2025-08-14 10:38:12,087 - INFO - Resampled S3_SLSTR_LST_2022-06-22.tif to 30m resolution
+2025-08-14 10:38:29,837 - INFO - Resampled S3_SLSTR_LST_2022-06-29.tif to 30m resolution
+2025-08-14 10:38:52,017 - INFO - Resampled S3_SLSTR_LST_2022-06-30.tif to 30m resolution
+2025-08-14 10:39:11,592 - INFO - Resampled S3_SLSTR_LST_2022-07-07.tif to 30m resolution
+2025-08-14 10:39:31,761 - INFO - Resampled S3_SLSTR_LST_2022-07-15.tif to 30m resolution
+2025-08-14 10:39:53,675 - INFO - Resampled S3_SLSTR_LST_2022-07-23.tif to 30m resolution
+2025-08-14 10:40:09,714 - INFO - Resampled S3_SLSTR_LST_2022-07-31.tif to 30m resolution
+2025-08-14 10:40:25,342 - INFO - Resampled S3_SLSTR_LST_2022-08-01.tif to 30m resolution
+2025-08-14 10:40:43,591 - INFO - Resampled S3_SLSTR_LST_2022-08-09.tif to 30m resolution
+2025-08-14 10:41:03,767 - INFO - Resampled S3_SLSTR_LST_2022-08-16.tif to 30m resolution
+2025-08-14 10:41:05,476 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 10:41:07,049 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 10:41:07,049 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 10:41:24,168 - INFO - Resampled S3_SLSTR_LST_2022-08-17.tif to 30m resolution
+2025-08-14 10:41:45,076 - INFO - Resampled S3_SLSTR_LST_2022-08-24.tif to 30m resolution
+2025-08-14 10:42:05,049 - INFO - Resampled S3_SLSTR_LST_2022-08-25.tif to 30m resolution
+2025-08-14 10:42:22,899 - INFO - Resampled S3_SLSTR_LST_2022-09-01.tif to 30m resolution
+2025-08-14 10:42:42,011 - INFO - Resampled S3_SLSTR_LST_2022-09-09.tif to 30m resolution
+2025-08-14 10:42:59,145 - INFO - Resampled S3_SLSTR_LST_2022-09-10.tif to 30m resolution
+2025-08-14 10:43:18,217 - INFO - Resampled S3_SLSTR_LST_2022-09-17.tif to 30m resolution
+2025-08-14 10:43:39,848 - INFO - Resampled S3_SLSTR_LST_2022-09-25.tif to 30m resolution
+2025-08-14 10:43:56,388 - INFO - Resampled S3_SLSTR_LST_2022-09-26.tif to 30m resolution
+2025-08-14 10:44:15,242 - INFO - Resampled S3_SLSTR_LST_2022-10-03.tif to 30m resolution
+2025-08-14 10:44:37,206 - INFO - Resampled S3_SLSTR_LST_2022-10-19.tif to 30m resolution
+2025-08-14 10:44:51,875 - INFO - Resampled S3_SLSTR_LST_2022-10-20.tif to 30m resolution
+2025-08-14 10:45:10,604 - INFO - Resampled S3_SLSTR_LST_2022-10-27.tif to 30m resolution
+2025-08-14 10:45:27,817 - INFO - Resampled S3_SLSTR_LST_2022-10-28.tif to 30m resolution
+2025-08-14 10:45:46,919 - INFO - Resampled S3_SLSTR_LST_2022-11-04.tif to 30m resolution
+2025-08-14 10:46:06,262 - INFO - Resampled S3_SLSTR_LST_2022-11-12.tif to 30m resolution
+2025-08-14 10:46:27,002 - INFO - Resampled S3_SLSTR_LST_2022-11-28.tif to 30m resolution
+2025-08-14 10:46:44,926 - INFO - Resampled S3_SLSTR_LST_2022-12-06.tif to 30m resolution
+2025-08-14 10:47:05,652 - INFO - Resampled S3_SLSTR_LST_2022-12-14.tif to 30m resolution
+2025-08-14 10:47:21,059 - INFO - Resampled S3_SLSTR_LST_2022-12-22.tif to 30m resolution
+2025-08-14 10:47:40,020 - INFO - Resampled S3_SLSTR_LST_2022-12-30.tif to 30m resolution
+2025-08-14 10:48:01,588 - INFO - Resampled S3_SLSTR_LST_2023-01-15.tif to 30m resolution
+2025-08-14 10:48:20,058 - INFO - Resampled S3_SLSTR_LST_2023-01-23.tif to 30m resolution
+2025-08-14 10:48:38,967 - INFO - Resampled S3_SLSTR_LST_2023-01-31.tif to 30m resolution
+2025-08-14 10:48:54,275 - INFO - Resampled S3_SLSTR_LST_2023-02-08.tif to 30m resolution
+2025-08-14 10:49:13,255 - INFO - Resampled S3_SLSTR_LST_2023-02-09.tif to 30m resolution
+2025-08-14 10:49:33,729 - INFO - Resampled S3_SLSTR_LST_2023-02-16.tif to 30m resolution
+2025-08-14 10:49:55,898 - INFO - Resampled S3_SLSTR_LST_2023-02-17.tif to 30m resolution
+2025-08-14 10:50:12,739 - INFO - Resampled S3_SLSTR_LST_2023-02-24.tif to 30m resolution
+2025-08-14 10:50:29,300 - INFO - Resampled S3_SLSTR_LST_2023-03-04.tif to 30m resolution
+2025-08-14 10:50:46,133 - INFO - Resampled S3_SLSTR_LST_2023-03-12.tif to 30m resolution
+2025-08-14 10:51:04,885 - INFO - Resampled S3_SLSTR_LST_2023-03-20.tif to 30m resolution
+2025-08-14 10:51:26,392 - INFO - Resampled S3_SLSTR_LST_2023-03-28.tif to 30m resolution
+2025-08-14 10:51:27,221 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 10:51:28,731 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 10:51:28,731 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 10:51:46,691 - INFO - Resampled S3_SLSTR_LST_2023-04-05.tif to 30m resolution
+2025-08-14 10:52:05,251 - INFO - Resampled S3_SLSTR_LST_2023-04-13.tif to 30m resolution
+2025-08-14 10:52:25,952 - INFO - Resampled S3_SLSTR_LST_2023-04-21.tif to 30m resolution
+2025-08-14 10:52:50,355 - INFO - Resampled S3_SLSTR_LST_2023-04-29.tif to 30m resolution
+2025-08-14 10:53:16,236 - INFO - Resampled S3_SLSTR_LST_2023-05-07.tif to 30m resolution
+2025-08-14 10:53:37,877 - INFO - Resampled S3_SLSTR_LST_2023-05-15.tif to 30m resolution
+2025-08-14 10:53:59,249 - INFO - Resampled S3_SLSTR_LST_2023-05-16.tif to 30m resolution
+2025-08-14 10:54:16,298 - INFO - Resampled S3_SLSTR_LST_2023-05-23.tif to 30m resolution
+2025-08-14 10:54:39,979 - INFO - Resampled S3_SLSTR_LST_2023-05-31.tif to 30m resolution
+2025-08-14 10:54:58,497 - INFO - Resampled S3_SLSTR_LST_2023-06-01.tif to 30m resolution
+2025-08-14 10:55:17,287 - INFO - Resampled S3_SLSTR_LST_2023-06-08.tif to 30m resolution
+2025-08-14 10:55:29,815 - INFO - Resampled S3_SLSTR_LST_2023-06-16.tif to 30m resolution
+2025-08-14 10:55:49,190 - INFO - Resampled S3_SLSTR_LST_2023-06-17.tif to 30m resolution
+2025-08-14 10:56:11,848 - INFO - Resampled S3_SLSTR_LST_2023-06-24.tif to 30m resolution
+2025-08-14 10:56:30,377 - INFO - Resampled S3_SLSTR_LST_2023-07-02.tif to 30m resolution
+2025-08-14 10:56:49,935 - INFO - Resampled S3_SLSTR_LST_2023-07-03.tif to 30m resolution
+2025-08-14 10:57:12,383 - INFO - Resampled S3_SLSTR_LST_2023-07-10.tif to 30m resolution
+2025-08-14 10:57:31,090 - INFO - Resampled S3_SLSTR_LST_2023-07-18.tif to 30m resolution
+2025-08-14 10:57:47,959 - INFO - Resampled S3_SLSTR_LST_2023-07-19.tif to 30m resolution
+2025-08-14 10:58:07,663 - INFO - Resampled S3_SLSTR_LST_2023-07-26.tif to 30m resolution
+2025-08-14 10:58:26,100 - INFO - Resampled S3_SLSTR_LST_2023-08-03.tif to 30m resolution
+2025-08-14 10:58:44,302 - INFO - Resampled S3_SLSTR_LST_2023-08-11.tif to 30m resolution
+2025-08-14 10:59:05,318 - INFO - Resampled S3_SLSTR_LST_2023-08-19.tif to 30m resolution
+2025-08-14 10:59:26,604 - INFO - Resampled S3_SLSTR_LST_2023-08-27.tif to 30m resolution
+2025-08-14 10:59:49,493 - INFO - Resampled S3_SLSTR_LST_2023-09-04.tif to 30m resolution
+2025-08-14 11:00:08,400 - INFO - Resampled S3_SLSTR_LST_2023-09-05.tif to 30m resolution
+2025-08-14 11:00:28,074 - INFO - Resampled S3_SLSTR_LST_2023-09-12.tif to 30m resolution
+2025-08-14 11:00:51,309 - INFO - Resampled S3_SLSTR_LST_2023-09-20.tif to 30m resolution
+2025-08-14 11:01:14,107 - INFO - Resampled S3_SLSTR_LST_2023-09-28.tif to 30m resolution
+2025-08-14 11:01:35,940 - INFO - Resampled S3_SLSTR_LST_2023-10-06.tif to 30m resolution
+2025-08-14 11:01:36,889 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 11:01:38,491 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 11:01:38,491 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 11:02:00,303 - INFO - Resampled S3_SLSTR_LST_2023-10-14.tif to 30m resolution
+2025-08-14 11:02:24,615 - INFO - Resampled S3_SLSTR_LST_2023-10-22.tif to 30m resolution
+2025-08-14 11:02:42,929 - INFO - Resampled S3_SLSTR_LST_2023-10-23.tif to 30m resolution
+2025-08-14 11:03:06,493 - INFO - Resampled S3_SLSTR_LST_2023-10-30.tif to 30m resolution
+2025-08-14 11:03:35,303 - INFO - Resampled S3_SLSTR_LST_2023-11-23.tif to 30m resolution
+2025-08-14 11:04:01,125 - INFO - Resampled S3_SLSTR_LST_2023-12-01.tif to 30m resolution
+2025-08-14 11:04:18,615 - INFO - Resampled S3_SLSTR_LST_2023-12-09.tif to 30m resolution
+2025-08-14 11:04:30,959 - INFO - Resampled S3_SLSTR_LST_2023-12-17.tif to 30m resolution
+2025-08-14 11:04:55,644 - INFO - Resampled S3_SLSTR_LST_2023-12-18.tif to 30m resolution
+2025-08-14 11:05:13,933 - INFO - Resampled S3_SLSTR_LST_2023-12-25.tif to 30m resolution
+2025-08-14 11:05:31,147 - INFO - Resampled S3_SLSTR_LST_2023-12-26.tif to 30m resolution
+2025-08-14 11:05:54,945 - INFO - Resampled S3_SLSTR_LST_2024-01-02.tif to 30m resolution
+2025-08-14 11:06:14,230 - INFO - Resampled S3_SLSTR_LST_2024-01-10.tif to 30m resolution
+2025-08-14 11:06:34,231 - INFO - Resampled S3_SLSTR_LST_2024-01-18.tif to 30m resolution
+2025-08-14 11:06:55,688 - INFO - Resampled S3_SLSTR_LST_2024-01-26.tif to 30m resolution
+2025-08-14 11:07:22,818 - INFO - Resampled S3_SLSTR_LST_2024-02-03.tif to 30m resolution
+2025-08-14 11:07:48,093 - INFO - Resampled S3_SLSTR_LST_2024-02-04.tif to 30m resolution
+2025-08-14 11:08:07,432 - INFO - Resampled S3_SLSTR_LST_2024-02-11.tif to 30m resolution
+2025-08-14 11:08:31,426 - INFO - Resampled S3_SLSTR_LST_2024-02-12.tif to 30m resolution
+2025-08-14 11:08:57,833 - INFO - Resampled S3_SLSTR_LST_2024-02-19.tif to 30m resolution
+2025-08-14 11:09:18,638 - INFO - Resampled S3_SLSTR_LST_2024-02-20.tif to 30m resolution
+2025-08-14 11:09:48,614 - INFO - Resampled S3_SLSTR_LST_2024-02-27.tif to 30m resolution
+2025-08-14 11:10:08,674 - INFO - Resampled S3_SLSTR_LST_2024-02-28.tif to 30m resolution
+2025-08-14 11:10:27,972 - INFO - Resampled S3_SLSTR_LST_2024-03-06.tif to 30m resolution
+2025-08-14 11:10:47,730 - INFO - Resampled S3_SLSTR_LST_2024-03-07.tif to 30m resolution
+2025-08-14 11:11:06,901 - INFO - Resampled S3_SLSTR_LST_2024-03-14.tif to 30m resolution
+2025-08-14 11:11:28,377 - INFO - Resampled S3_SLSTR_LST_2024-03-15.tif to 30m resolution
+2025-08-14 11:11:48,669 - INFO - Resampled S3_SLSTR_LST_2024-03-22.tif to 30m resolution
+2025-08-14 11:11:49,894 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 11:11:51,853 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 11:11:51,854 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 11:12:14,690 - INFO - Resampled S3_SLSTR_LST_2024-03-30.tif to 30m resolution
+2025-08-14 11:12:32,883 - INFO - Resampled S3_SLSTR_LST_2024-03-31.tif to 30m resolution
+2025-08-14 11:12:54,161 - INFO - Resampled S3_SLSTR_LST_2024-04-07.tif to 30m resolution
+2025-08-14 11:13:12,474 - INFO - Resampled S3_SLSTR_LST_2024-04-08.tif to 30m resolution
+2025-08-14 11:13:32,229 - INFO - Resampled S3_SLSTR_LST_2024-04-15.tif to 30m resolution
+2025-08-14 11:13:51,684 - INFO - Resampled S3_SLSTR_LST_2024-04-16.tif to 30m resolution
+2025-08-14 11:14:09,921 - INFO - Resampled S3_SLSTR_LST_2024-04-23.tif to 30m resolution
+2025-08-14 11:14:27,445 - INFO - Resampled S3_SLSTR_LST_2024-04-24.tif to 30m resolution
+2025-08-14 11:14:46,143 - INFO - Resampled S3_SLSTR_LST_2024-05-01.tif to 30m resolution
+2025-08-14 11:15:05,333 - INFO - Resampled S3_SLSTR_LST_2024-05-09.tif to 30m resolution
+2025-08-14 11:15:25,721 - INFO - Resampled S3_SLSTR_LST_2024-05-10.tif to 30m resolution
+2025-08-14 11:15:51,676 - INFO - Resampled S3_SLSTR_LST_2024-05-17.tif to 30m resolution
+2025-08-14 11:16:09,048 - INFO - Resampled S3_SLSTR_LST_2024-05-25.tif to 30m resolution
+2025-08-14 11:16:31,935 - INFO - Resampled S3_SLSTR_LST_2024-05-26.tif to 30m resolution
+2025-08-14 11:16:58,711 - INFO - Resampled S3_SLSTR_LST_2024-06-02.tif to 30m resolution
+2025-08-14 11:17:15,410 - INFO - Resampled S3_SLSTR_LST_2024-06-03.tif to 30m resolution
+2025-08-14 11:17:33,083 - INFO - Resampled S3_SLSTR_LST_2024-06-10.tif to 30m resolution
+2025-08-14 11:17:52,783 - INFO - Resampled S3_SLSTR_LST_2024-06-18.tif to 30m resolution
+2025-08-14 11:18:21,956 - INFO - Resampled S3_SLSTR_LST_2024-06-26.tif to 30m resolution
+2025-08-14 11:18:41,655 - INFO - Resampled S3_SLSTR_LST_2024-07-04.tif to 30m resolution
+2025-08-14 11:18:59,679 - INFO - Resampled S3_SLSTR_LST_2024-07-05.tif to 30m resolution
+2025-08-14 11:19:22,272 - INFO - Resampled S3_SLSTR_LST_2024-07-12.tif to 30m resolution
+2025-08-14 11:19:40,920 - INFO - Resampled S3_SLSTR_LST_2024-07-21.tif to 30m resolution
+2025-08-14 11:19:56,651 - INFO - Resampled S3_SLSTR_LST_2024-07-29.tif to 30m resolution
+2025-08-14 11:20:18,189 - INFO - Resampled S3_SLSTR_LST_2024-08-05.tif to 30m resolution
+2025-08-14 11:20:34,738 - INFO - Resampled S3_SLSTR_LST_2024-08-13.tif to 30m resolution
+2025-08-14 11:21:03,475 - INFO - Resampled S3_SLSTR_LST_2024-08-21.tif to 30m resolution
+2025-08-14 11:21:21,859 - INFO - Resampled S3_SLSTR_LST_2024-08-22.tif to 30m resolution
+2025-08-14 11:21:43,734 - INFO - Resampled S3_SLSTR_LST_2024-08-29.tif to 30m resolution
+2025-08-14 11:22:04,987 - INFO - Resampled S3_SLSTR_LST_2024-09-14.tif to 30m resolution
+2025-08-14 11:22:06,006 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 11:22:07,863 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 11:22:07,863 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 11:22:28,451 - INFO - Resampled S3_SLSTR_LST_2024-09-15.tif to 30m resolution
+2025-08-14 11:22:51,620 - INFO - Resampled S3_SLSTR_LST_2024-09-30.tif to 30m resolution
+2025-08-14 11:23:17,101 - INFO - Resampled S3_SLSTR_LST_2024-10-08.tif to 30m resolution
+2025-08-14 11:23:41,914 - INFO - Resampled S3_SLSTR_LST_2024-10-16.tif to 30m resolution
+2025-08-14 11:24:06,223 - INFO - Resampled S3_SLSTR_LST_2024-10-24.tif to 30m resolution
+2025-08-14 11:24:26,706 - INFO - Resampled S3_SLSTR_LST_2024-10-25.tif to 30m resolution
+2025-08-14 11:24:50,236 - INFO - Resampled S3_SLSTR_LST_2024-11-01.tif to 30m resolution
+2025-08-14 11:25:11,414 - INFO - Resampled S3_SLSTR_LST_2024-11-09.tif to 30m resolution
+2025-08-14 11:25:33,257 - INFO - Resampled S3_SLSTR_LST_2024-11-17.tif to 30m resolution
+2025-08-14 11:25:59,834 - INFO - Resampled S3_SLSTR_LST_2024-11-25.tif to 30m resolution
+2025-08-14 11:26:20,139 - INFO - Resampled S3_SLSTR_LST_2024-11-26.tif to 30m resolution
+2025-08-14 11:26:40,538 - INFO - Resampled S3_SLSTR_LST_2024-12-04.tif to 30m resolution
+2025-08-14 11:27:08,878 - INFO - Resampled S3_SLSTR_LST_2024-12-19.tif to 30m resolution
+2025-08-14 11:27:28,479 - INFO - Resampled S3_SLSTR_LST_2024-12-27.tif to 30m resolution
+2025-08-14 11:27:47,440 - INFO - Resampled S3_SLSTR_LST_2025-01-04.tif to 30m resolution
+2025-08-14 11:28:08,299 - INFO - Resampled S3_SLSTR_LST_2025-01-12.tif to 30m resolution
+2025-08-14 11:28:32,173 - INFO - Resampled S3_SLSTR_LST_2025-01-20.tif to 30m resolution
+2025-08-14 11:28:54,607 - INFO - Resampled S3_SLSTR_LST_2025-01-28.tif to 30m resolution
+2025-08-14 11:28:54,608 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 11:28:54,608 - INFO - ==================================================
+2025-08-14 11:28:54,608 - INFO - Data retrieval orchestration finished. Total time: 1:18:25.323603
+2025-08-14 14:14:37,864 - INFO - ==================================================
+2025-08-14 14:14:37,865 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:14:37,867 - INFO - L8 date range: 2020-05-04 to 2024-11-23
+2025-08-14 14:14:37,867 - INFO - L9 date range: 2022-02-27 to 2024-12-17
+2025-08-14 14:14:37,867 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 14:14:37,868 - INFO - Generated 170 target dates for ERA5 retrieval.
+2025-08-14 14:14:38,636 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 14:14:38,639 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 14:14:38,639 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-14 14:14:38,642 - INFO - ==================================================
+2025-08-14 14:14:38,642 - INFO - Starting MODIS data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:14:38,642 - INFO - Generated 122 target dates for MODIS retrieval based on LST files.
+2025-08-14 14:16:31,212 - INFO - MODIS data retrieval finished for ROI 'F-48-93-B'.
+2025-08-14 14:16:31,212 - INFO - ==================================================
+2025-08-14 14:16:31,212 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:16:31,213 - INFO - Generated 122 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 14:16:31,213 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 14:16:31,213 - INFO - Loaded openEO client config from sources: []
+2025-08-14 14:16:33,573 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 14:16:33,573 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 14:16:35,283 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 14:16:35,284 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 14:16:35,284 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:16:36,639 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 14:16:36,639 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:16:36,674 - INFO - Requesting SLSTR L2 LST for 122 dates (units=kelvin)
+2025-08-14 14:16:56,602 - INFO - Resampled S3_SLSTR_LST_2020-05-04.tif to 30m resolution
+2025-08-14 14:17:13,824 - INFO - Resampled S3_SLSTR_LST_2020-05-20.tif to 30m resolution
+2025-08-14 14:17:31,421 - INFO - Resampled S3_SLSTR_LST_2020-06-05.tif to 30m resolution
+2025-08-14 14:17:52,850 - INFO - Resampled S3_SLSTR_LST_2020-06-21.tif to 30m resolution
+2025-08-14 14:18:15,380 - INFO - Resampled S3_SLSTR_LST_2020-07-07.tif to 30m resolution
+2025-08-14 14:18:35,096 - INFO - Resampled S3_SLSTR_LST_2020-07-23.tif to 30m resolution
+2025-08-14 14:18:50,306 - INFO - Resampled S3_SLSTR_LST_2020-08-08.tif to 30m resolution
+2025-08-14 14:19:13,998 - INFO - Resampled S3_SLSTR_LST_2020-08-24.tif to 30m resolution
+2025-08-14 14:19:30,892 - INFO - Resampled S3_SLSTR_LST_2020-09-25.tif to 30m resolution
+2025-08-14 14:19:52,771 - INFO - Resampled S3_SLSTR_LST_2020-10-11.tif to 30m resolution
+2025-08-14 14:20:12,569 - INFO - Resampled S3_SLSTR_LST_2020-10-27.tif to 30m resolution
+2025-08-14 14:20:24,578 - INFO - Resampled S3_SLSTR_LST_2020-11-12.tif to 30m resolution
+2025-08-14 14:20:45,026 - INFO - Resampled S3_SLSTR_LST_2020-11-28.tif to 30m resolution
+2025-08-14 14:21:07,670 - INFO - Resampled S3_SLSTR_LST_2020-12-14.tif to 30m resolution
+2025-08-14 14:21:26,141 - INFO - Resampled S3_SLSTR_LST_2021-01-15.tif to 30m resolution
+2025-08-14 14:21:48,803 - INFO - Resampled S3_SLSTR_LST_2021-02-16.tif to 30m resolution
+2025-08-14 14:22:12,183 - INFO - Resampled S3_SLSTR_LST_2021-04-21.tif to 30m resolution
+2025-08-14 14:22:30,243 - INFO - Resampled S3_SLSTR_LST_2021-05-07.tif to 30m resolution
+2025-08-14 14:22:49,145 - INFO - Resampled S3_SLSTR_LST_2021-05-23.tif to 30m resolution
+2025-08-14 14:23:06,941 - INFO - Resampled S3_SLSTR_LST_2021-06-08.tif to 30m resolution
+2025-08-14 14:23:21,107 - INFO - Resampled S3_SLSTR_LST_2021-06-24.tif to 30m resolution
+2025-08-14 14:23:40,589 - INFO - Resampled S3_SLSTR_LST_2021-07-10.tif to 30m resolution
+2025-08-14 14:24:23,818 - INFO - Resampled S3_SLSTR_LST_2021-07-26.tif to 30m resolution
+2025-08-14 14:24:44,045 - INFO - Resampled S3_SLSTR_LST_2021-08-11.tif to 30m resolution
+2025-08-14 14:25:05,977 - INFO - Resampled S3_SLSTR_LST_2021-08-27.tif to 30m resolution
+2025-08-14 14:25:28,562 - INFO - Resampled S3_SLSTR_LST_2021-09-12.tif to 30m resolution
+2025-08-14 14:25:48,729 - INFO - Resampled S3_SLSTR_LST_2021-09-28.tif to 30m resolution
+2025-08-14 14:28:50,264 - INFO - Resampled S3_SLSTR_LST_2021-11-15.tif to 30m resolution
+2025-08-14 14:28:51,358 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:28:52,718 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 14:28:52,718 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 14:29:19,557 - INFO - Resampled S3_SLSTR_LST_2021-12-01.tif to 30m resolution
+2025-08-14 14:29:45,085 - INFO - Resampled S3_SLSTR_LST_2021-12-17.tif to 30m resolution
+2025-08-14 14:30:03,650 - INFO - Resampled S3_SLSTR_LST_2022-01-02.tif to 30m resolution
+2025-08-14 14:30:20,444 - INFO - Resampled S3_SLSTR_LST_2022-01-18.tif to 30m resolution
+2025-08-14 14:30:39,783 - INFO - Resampled S3_SLSTR_LST_2022-02-27.tif to 30m resolution
+2025-08-14 14:31:01,180 - INFO - Resampled S3_SLSTR_LST_2022-03-31.tif to 30m resolution
+2025-08-14 14:31:22,668 - INFO - Resampled S3_SLSTR_LST_2022-04-08.tif to 30m resolution
+2025-08-14 14:31:45,475 - INFO - Resampled S3_SLSTR_LST_2022-05-02.tif to 30m resolution
+2025-08-14 14:32:05,691 - INFO - Resampled S3_SLSTR_LST_2022-05-10.tif to 30m resolution
+2025-08-14 14:32:26,682 - INFO - Resampled S3_SLSTR_LST_2022-05-18.tif to 30m resolution
+2025-08-14 14:32:50,578 - INFO - Resampled S3_SLSTR_LST_2022-05-26.tif to 30m resolution
+2025-08-14 14:33:11,344 - INFO - Resampled S3_SLSTR_LST_2022-06-03.tif to 30m resolution
+2025-08-14 14:33:30,092 - INFO - Resampled S3_SLSTR_LST_2022-06-11.tif to 30m resolution
+2025-08-14 14:33:45,323 - INFO - Resampled S3_SLSTR_LST_2022-06-19.tif to 30m resolution
+2025-08-14 14:34:14,681 - INFO - Resampled S3_SLSTR_LST_2022-06-27.tif to 30m resolution
+2025-08-14 14:34:38,007 - INFO - Resampled S3_SLSTR_LST_2022-07-05.tif to 30m resolution
+2025-08-14 14:35:18,803 - INFO - Resampled S3_SLSTR_LST_2022-07-13.tif to 30m resolution
+2025-08-14 14:35:32,687 - INFO - Resampled S3_SLSTR_LST_2022-07-21.tif to 30m resolution
+2025-08-14 14:35:50,185 - INFO - Resampled S3_SLSTR_LST_2022-07-29.tif to 30m resolution
+2025-08-14 14:36:09,080 - INFO - Resampled S3_SLSTR_LST_2022-08-14.tif to 30m resolution
+2025-08-14 14:36:26,318 - INFO - Resampled S3_SLSTR_LST_2022-08-22.tif to 30m resolution
+2025-08-14 14:36:48,411 - INFO - Resampled S3_SLSTR_LST_2022-08-30.tif to 30m resolution
+2025-08-14 14:37:11,982 - INFO - Resampled S3_SLSTR_LST_2022-09-07.tif to 30m resolution
+2025-08-14 14:37:33,194 - INFO - Resampled S3_SLSTR_LST_2022-09-15.tif to 30m resolution
+2025-08-14 14:37:53,376 - INFO - Resampled S3_SLSTR_LST_2022-09-23.tif to 30m resolution
+2025-08-14 14:38:23,822 - INFO - Resampled S3_SLSTR_LST_2022-10-17.tif to 30m resolution
+2025-08-14 14:38:48,313 - INFO - Resampled S3_SLSTR_LST_2022-10-25.tif to 30m resolution
+2025-08-14 14:39:10,575 - INFO - Resampled S3_SLSTR_LST_2022-11-02.tif to 30m resolution
+2025-08-14 14:39:11,558 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:39:13,307 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 14:39:13,308 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 14:39:35,056 - INFO - Resampled S3_SLSTR_LST_2022-11-18.tif to 30m resolution
+2025-08-14 14:39:55,913 - INFO - Resampled S3_SLSTR_LST_2022-12-12.tif to 30m resolution
+2025-08-14 14:40:22,072 - INFO - Resampled S3_SLSTR_LST_2022-12-20.tif to 30m resolution
+2025-08-14 14:40:41,776 - INFO - Resampled S3_SLSTR_LST_2022-12-28.tif to 30m resolution
+2025-08-14 14:41:06,884 - INFO - Resampled S3_SLSTR_LST_2023-01-13.tif to 30m resolution
+2025-08-14 14:41:26,593 - INFO - Resampled S3_SLSTR_LST_2023-01-21.tif to 30m resolution
+2025-08-14 14:41:45,434 - INFO - Resampled S3_SLSTR_LST_2023-01-29.tif to 30m resolution
+2025-08-14 14:42:05,447 - INFO - Resampled S3_SLSTR_LST_2023-02-22.tif to 30m resolution
+2025-08-14 14:42:26,366 - INFO - Resampled S3_SLSTR_LST_2023-03-02.tif to 30m resolution
+2025-08-14 14:42:49,202 - INFO - Resampled S3_SLSTR_LST_2023-03-10.tif to 30m resolution
+2025-08-14 14:43:09,260 - INFO - Resampled S3_SLSTR_LST_2023-03-18.tif to 30m resolution
+2025-08-14 14:43:36,185 - INFO - Resampled S3_SLSTR_LST_2023-04-03.tif to 30m resolution
+2025-08-14 14:44:05,449 - INFO - Resampled S3_SLSTR_LST_2023-04-19.tif to 30m resolution
+2025-08-14 14:44:25,475 - INFO - Resampled S3_SLSTR_LST_2023-04-27.tif to 30m resolution
+2025-08-14 14:44:50,267 - INFO - Resampled S3_SLSTR_LST_2023-05-05.tif to 30m resolution
+2025-08-14 14:45:08,752 - INFO - Resampled S3_SLSTR_LST_2023-05-21.tif to 30m resolution
+2025-08-14 14:46:09,265 - INFO - ==================================================
+2025-08-14 14:46:09,265 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:46:09,267 - INFO - L8 date range: 2020-05-04 to 2024-11-23
+2025-08-14 14:46:09,267 - INFO - L9 date range: 2022-02-27 to 2024-12-17
+2025-08-14 14:46:09,267 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 14:46:09,268 - INFO - Generated 170 target dates for ERA5 retrieval.
+2025-08-14 14:46:09,508 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 14:46:09,510 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 14:46:09,510 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-14 14:46:09,511 - INFO - ==================================================
+2025-08-14 14:46:09,511 - INFO - Starting MODIS data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:46:09,511 - INFO - Generated 122 target dates for MODIS retrieval based on LST files.
+2025-08-14 14:47:22,699 - INFO - ==================================================
+2025-08-14 14:47:22,699 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:47:22,701 - INFO - L8 date range: 2020-05-04 to 2024-11-23
+2025-08-14 14:47:22,701 - INFO - L9 date range: 2022-02-27 to 2024-12-17
+2025-08-14 14:47:22,701 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 14:47:22,702 - INFO - Generated 170 target dates for ERA5 retrieval.
+2025-08-14 14:47:22,945 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 14:47:22,947 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 14:47:22,947 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-14 14:47:22,948 - INFO - ==================================================
+2025-08-14 14:47:22,948 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:47:22,948 - INFO - Generated 122 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 14:47:22,948 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 14:47:22,948 - INFO - Loaded openEO client config from sources: []
+2025-08-14 14:47:24,961 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 14:47:24,962 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 14:47:26,711 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 14:47:26,712 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 14:47:26,713 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:47:28,107 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 14:47:28,107 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:47:28,142 - INFO - Requesting SLSTR L2 LST for 122 dates (units=kelvin)
+2025-08-14 14:50:47,908 - INFO - ==================================================
+2025-08-14 14:50:47,908 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:50:47,909 - INFO - L8 date range: 2023-01-21 to 2024-11-23
+2025-08-14 14:50:47,909 - INFO - L9 date range: 2023-01-13 to 2024-12-17
+2025-08-14 14:50:47,910 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 14:50:47,910 - INFO - Generated 88 target dates for ERA5 retrieval.
+2025-08-14 14:50:48,062 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 14:50:48,063 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 14:50:48,063 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-14 14:50:48,064 - INFO - ==================================================
+2025-08-14 14:50:48,064 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:50:48,064 - INFO - Generated 62 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 14:50:48,064 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 14:50:48,065 - INFO - Loaded openEO client config from sources: []
+2025-08-14 14:50:50,528 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 14:50:50,528 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 14:50:51,671 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 14:50:51,672 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 14:50:51,672 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:50:52,643 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 14:50:52,644 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:50:52,683 - INFO - Requesting SLSTR L2 LST for 62 dates (units=kelvin)
+2025-08-14 14:55:36,504 - INFO - ==================================================
+2025-08-14 14:55:36,504 - INFO - Starting ERA5 data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:55:36,505 - INFO - L8 date range: 2024-01-08 to 2024-11-23
+2025-08-14 14:55:36,505 - INFO - L9 date range: 2024-01-16 to 2024-12-17
+2025-08-14 14:55:36,505 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 14:55:36,506 - INFO - Generated 43 target dates for ERA5 retrieval.
+2025-08-14 14:55:36,575 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 14:55:36,575 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 14:55:36,575 - INFO - ERA5 data retrieval finished for ROI 'F-48-93-B'.
+2025-08-14 14:55:36,576 - INFO - ==================================================
+2025-08-14 14:55:36,576 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'F-48-93-B'...
+2025-08-14 14:55:36,576 - INFO - Generated 27 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 14:55:36,576 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 14:55:36,576 - INFO - Loaded openEO client config from sources: []
+2025-08-14 14:55:38,565 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 14:55:38,565 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 14:55:39,328 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 14:55:39,329 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 14:55:39,329 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:55:40,281 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 14:55:40,282 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 14:55:40,315 - INFO - Requesting SLSTR L2 LST for 27 dates (units=kelvin)
+2025-08-14 14:59:48,990 - INFO - ==================================================
+2025-08-14 14:59:48,990 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-14 14:59:48,992 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-14 14:59:48,992 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-14 14:59:48,992 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 14:59:48,992 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-14 14:59:49,277 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 14:59:49,278 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 14:59:49,278 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-14 14:59:49,279 - INFO - ==================================================
+2025-08-14 14:59:49,279 - INFO - Data retrieval orchestration finished. Total time: 0:00:01.274835
+2025-08-14 15:01:20,423 - INFO - ==================================================
+2025-08-14 15:01:20,423 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-14 15:01:20,425 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-14 15:01:20,425 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-14 15:01:20,425 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 15:01:20,425 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-14 15:01:20,499 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 15:01:20,500 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 15:01:20,500 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-14 15:01:20,500 - INFO - ==================================================
+2025-08-14 15:01:20,501 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-14 15:01:20,501 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 15:01:20,501 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 15:01:20,501 - INFO - Loaded openEO client config from sources: []
+2025-08-14 15:01:22,651 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 15:01:22,651 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 15:01:23,634 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 15:01:23,634 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 15:01:23,635 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:01:24,912 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:01:24,912 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:01:24,946 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-14 15:01:24,954 - INFO - Skipping download for 2024-01-01: file already exists.
+2025-08-14 15:02:33,686 - WARNING - Failed to download 2024-05-15: [402] PaymentRequired: You do not have sufficient credits to perform this request. Please visit https://marketplace-portal.dataspace.copernicus.eu/pages/pricing to find more information on how to buy additional credits. (Upstream ref: '4cc01488-b4d6-4977-a208-96892e821fc5') (ref: r-25081408023248909d843e7d892bd1f5)
+2025-08-14 15:02:35,529 - WARNING - Failed to download 2024-05-23: [402] PaymentRequired: You do not have sufficient credits to perform this request. Please visit https://marketplace-portal.dataspace.copernicus.eu/pages/pricing to find more information on how to buy additional credits. (Upstream ref: 'd925858d-cee6-4f02-800e-8fda63c0e43c') (ref: r-25081408023449b0a3a3f46f7adf1727)
+2025-08-14 15:02:43,660 - INFO - ==================================================
+2025-08-14 15:02:43,660 - INFO - Starting ERA5 data retrieval for ROI 'C-49-1-D'...
+2025-08-14 15:02:43,661 - INFO - L8 date range: 2024-01-10 to 2025-01-28
+2025-08-14 15:02:43,661 - INFO - L9 date range: 2024-01-02 to 2025-01-20
+2025-08-14 15:02:43,661 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 15:02:43,662 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-14 15:02:52,199 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 15:02:52,200 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 15:02:52,201 - INFO - ERA5 data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 15:02:52,201 - INFO - ==================================================
+2025-08-14 15:02:52,201 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-49-1-D'...
+2025-08-14 15:02:52,202 - INFO - Generated 65 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 15:02:52,202 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 15:02:52,202 - INFO - Loaded openEO client config from sources: []
+2025-08-14 15:02:54,346 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 15:02:54,346 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 15:02:55,332 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 15:02:55,333 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 15:02:55,333 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:02:56,213 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:02:56,214 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:02:56,249 - INFO - Requesting SLSTR L2 LST for 65 dates (units=kelvin)
+2025-08-14 15:02:56,256 - INFO - Skipping download for 2024-01-02: file already exists.
+2025-08-14 15:02:56,256 - INFO - Skipping download for 2024-01-10: file already exists.
+2025-08-14 15:02:56,256 - INFO - Skipping download for 2024-01-18: file already exists.
+2025-08-14 15:02:56,256 - INFO - Skipping download for 2024-01-26: file already exists.
+2025-08-14 15:02:56,257 - INFO - Skipping download for 2024-02-03: file already exists.
+2025-08-14 15:02:56,257 - INFO - Skipping download for 2024-02-04: file already exists.
+2025-08-14 15:02:56,257 - INFO - Skipping download for 2024-02-11: file already exists.
+2025-08-14 15:02:56,257 - INFO - Skipping download for 2024-02-12: file already exists.
+2025-08-14 15:02:56,257 - INFO - Skipping download for 2024-02-19: file already exists.
+2025-08-14 15:02:56,257 - INFO - Skipping download for 2024-02-20: file already exists.
+2025-08-14 15:02:56,257 - INFO - Skipping download for 2024-02-27: file already exists.
+2025-08-14 15:02:56,258 - INFO - Skipping download for 2024-02-28: file already exists.
+2025-08-14 15:02:56,258 - INFO - Skipping download for 2024-03-06: file already exists.
+2025-08-14 15:02:56,258 - INFO - Skipping download for 2024-03-07: file already exists.
+2025-08-14 15:02:56,258 - INFO - Skipping download for 2024-03-14: file already exists.
+2025-08-14 15:02:56,258 - INFO - Skipping download for 2024-03-15: file already exists.
+2025-08-14 15:02:56,258 - INFO - Skipping download for 2024-03-22: file already exists.
+2025-08-14 15:02:56,259 - INFO - Skipping download for 2024-03-30: file already exists.
+2025-08-14 15:02:56,259 - INFO - Skipping download for 2024-03-31: file already exists.
+2025-08-14 15:02:56,259 - INFO - Skipping download for 2024-04-07: file already exists.
+2025-08-14 15:02:56,259 - INFO - Skipping download for 2024-04-08: file already exists.
+2025-08-14 15:02:56,259 - INFO - Skipping download for 2024-04-15: file already exists.
+2025-08-14 15:02:56,259 - INFO - Skipping download for 2024-04-16: file already exists.
+2025-08-14 15:02:56,259 - INFO - Skipping download for 2024-04-23: file already exists.
+2025-08-14 15:02:56,260 - INFO - Skipping download for 2024-04-24: file already exists.
+2025-08-14 15:02:56,260 - INFO - Skipping download for 2024-05-01: file already exists.
+2025-08-14 15:02:56,260 - INFO - Skipping download for 2024-05-09: file already exists.
+2025-08-14 15:02:56,260 - INFO - Skipping download for 2024-05-10: file already exists.
+2025-08-14 15:02:56,260 - INFO - Skipping download for 2024-05-17: file already exists.
+2025-08-14 15:02:56,260 - INFO - Skipping download for 2024-05-25: file already exists.
+2025-08-14 15:02:56,260 - INFO - Skipping download for 2024-05-26: file already exists.
+2025-08-14 15:02:56,261 - INFO - Skipping download for 2024-06-02: file already exists.
+2025-08-14 15:02:56,261 - INFO - Skipping download for 2024-06-03: file already exists.
+2025-08-14 15:02:56,261 - INFO - Skipping download for 2024-06-10: file already exists.
+2025-08-14 15:02:56,261 - INFO - Skipping download for 2024-06-18: file already exists.
+2025-08-14 15:02:56,261 - INFO - Skipping download for 2024-06-26: file already exists.
+2025-08-14 15:02:56,261 - INFO - Skipping download for 2024-07-04: file already exists.
+2025-08-14 15:02:56,261 - INFO - Skipping download for 2024-07-05: file already exists.
+2025-08-14 15:02:56,262 - INFO - Skipping download for 2024-07-12: file already exists.
+2025-08-14 15:02:56,262 - INFO - Skipping download for 2024-07-21: file already exists.
+2025-08-14 15:02:56,262 - INFO - Skipping download for 2024-07-29: file already exists.
+2025-08-14 15:02:56,262 - INFO - Skipping download for 2024-08-05: file already exists.
+2025-08-14 15:02:56,262 - INFO - Skipping download for 2024-08-13: file already exists.
+2025-08-14 15:02:56,262 - INFO - Skipping download for 2024-08-21: file already exists.
+2025-08-14 15:02:56,262 - INFO - Skipping download for 2024-08-22: file already exists.
+2025-08-14 15:02:56,263 - INFO - Skipping download for 2024-08-29: file already exists.
+2025-08-14 15:02:56,263 - INFO - Skipping download for 2024-09-14: file already exists.
+2025-08-14 15:02:56,263 - INFO - Skipping download for 2024-09-15: file already exists.
+2025-08-14 15:02:56,263 - INFO - Skipping download for 2024-09-30: file already exists.
+2025-08-14 15:02:56,263 - INFO - Skipping download for 2024-10-08: file already exists.
+2025-08-14 15:02:56,263 - INFO - Skipping download for 2024-10-16: file already exists.
+2025-08-14 15:02:56,263 - INFO - Skipping download for 2024-10-24: file already exists.
+2025-08-14 15:02:56,264 - INFO - Skipping download for 2024-10-25: file already exists.
+2025-08-14 15:02:56,264 - INFO - Skipping download for 2024-11-01: file already exists.
+2025-08-14 15:02:56,264 - INFO - Skipping download for 2024-11-09: file already exists.
+2025-08-14 15:02:56,264 - INFO - Skipping download for 2024-11-17: file already exists.
+2025-08-14 15:02:56,264 - INFO - Skipping download for 2024-11-25: file already exists.
+2025-08-14 15:02:56,264 - INFO - Skipping download for 2024-11-26: file already exists.
+2025-08-14 15:02:56,264 - INFO - Skipping download for 2024-12-04: file already exists.
+2025-08-14 15:02:56,265 - INFO - Skipping download for 2024-12-19: file already exists.
+2025-08-14 15:02:56,265 - INFO - Skipping download for 2024-12-27: file already exists.
+2025-08-14 15:02:56,265 - INFO - Skipping download for 2025-01-04: file already exists.
+2025-08-14 15:02:56,265 - INFO - Skipping download for 2025-01-12: file already exists.
+2025-08-14 15:02:56,265 - INFO - Skipping download for 2025-01-20: file already exists.
+2025-08-14 15:02:56,265 - INFO - Skipping download for 2025-01-28: file already exists.
+2025-08-14 15:02:56,266 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 15:02:56,266 - INFO - ==================================================
+2025-08-14 15:02:56,267 - INFO - Data retrieval orchestration finished. Total time: 0:00:13.581825
+2025-08-14 15:03:07,767 - INFO - Skipping download for 2024-01-17: file already exists.
+2025-08-14 15:03:07,767 - INFO - Skipping download for 2024-01-25: file already exists.
+2025-08-14 15:03:07,767 - INFO - Skipping download for 2024-02-02: file already exists.
+2025-08-14 15:03:07,767 - INFO - Skipping download for 2024-02-10: file already exists.
+2025-08-14 15:03:07,768 - INFO - Skipping download for 2024-02-18: file already exists.
+2025-08-14 15:03:07,768 - INFO - Skipping download for 2024-02-26: file already exists.
+2025-08-14 15:03:07,768 - INFO - Skipping download for 2024-03-05: file already exists.
+2025-08-14 15:03:07,768 - INFO - Skipping download for 2024-03-13: file already exists.
+2025-08-14 15:03:07,768 - INFO - Skipping download for 2024-03-21: file already exists.
+2025-08-14 15:03:07,768 - INFO - Skipping download for 2024-03-29: file already exists.
+2025-08-14 15:03:07,769 - INFO - Skipping download for 2024-04-06: file already exists.
+2025-08-14 15:03:07,769 - INFO - Skipping download for 2024-04-14: file already exists.
+2025-08-14 15:03:07,769 - INFO - Skipping download for 2024-04-22: file already exists.
+2025-08-14 15:03:07,769 - INFO - Skipping download for 2024-04-30: file already exists.
+2025-08-14 15:03:07,769 - INFO - Skipping download for 2024-05-08: file already exists.
+2025-08-14 15:03:07,769 - INFO - Skipping download for 2024-05-16: file already exists.
+2025-08-14 15:03:07,770 - INFO - Skipping download for 2024-05-24: file already exists.
+2025-08-14 15:03:07,770 - INFO - Skipping download for 2024-06-01: file already exists.
+2025-08-14 15:03:07,770 - INFO - Skipping download for 2024-06-17: file already exists.
+2025-08-14 15:03:07,770 - INFO - Skipping download for 2024-06-25: file already exists.
+2025-08-14 15:03:07,770 - INFO - Skipping download for 2024-07-03: file already exists.
+2025-08-14 15:03:07,770 - INFO - Skipping download for 2024-08-04: file already exists.
+2025-08-14 15:03:07,771 - INFO - Skipping download for 2024-08-12: file already exists.
+2025-08-14 15:03:07,771 - INFO - Skipping download for 2024-08-20: file already exists.
+2025-08-14 15:03:07,771 - INFO - Skipping download for 2024-08-28: file already exists.
+2025-08-14 15:03:07,771 - INFO - Skipping download for 2024-09-05: file already exists.
+2025-08-14 15:03:07,771 - INFO - Skipping download for 2024-09-13: file already exists.
+2025-08-14 15:03:07,771 - INFO - Skipping download for 2024-09-29: file already exists.
+2025-08-14 15:03:07,772 - INFO - Skipping download for 2024-10-07: file already exists.
+2025-08-14 15:03:07,772 - INFO - Skipping download for 2024-10-15: file already exists.
+2025-08-14 15:03:07,772 - INFO - Skipping download for 2024-10-31: file already exists.
+2025-08-14 15:03:07,772 - INFO - Skipping download for 2024-11-08: file already exists.
+2025-08-14 15:03:07,772 - INFO - Skipping download for 2024-11-16: file already exists.
+2025-08-14 15:03:07,772 - INFO - Skipping download for 2024-11-24: file already exists.
+2025-08-14 15:03:07,772 - INFO - Skipping download for 2024-12-02: file already exists.
+2025-08-14 15:03:07,773 - INFO - Skipping download for 2024-12-10: file already exists.
+2025-08-14 15:03:07,773 - INFO - Skipping download for 2024-12-18: file already exists.
+2025-08-14 15:03:07,773 - INFO - Skipping download for 2024-12-26: file already exists.
+2025-08-14 15:03:07,773 - INFO - Skipping download for 2025-01-03: file already exists.
+2025-08-14 15:03:07,774 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-48-56-A'.
+2025-08-14 15:03:07,774 - INFO - ==================================================
+2025-08-14 15:03:07,775 - INFO - Data retrieval orchestration finished. Total time: 0:01:48.313405
+2025-08-14 15:04:09,510 - INFO - ==================================================
+2025-08-14 15:04:09,510 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-14 15:04:09,511 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-14 15:04:09,511 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-14 15:04:09,511 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 15:04:09,511 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-14 15:04:09,590 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 15:04:09,590 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 15:04:09,591 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-14 15:04:09,591 - INFO - ==================================================
+2025-08-14 15:04:09,591 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-14 15:04:09,591 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 15:04:09,591 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 15:04:09,591 - INFO - Loaded openEO client config from sources: []
+2025-08-14 15:04:11,385 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 15:04:11,386 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 15:04:12,391 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 15:04:12,392 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 15:04:12,393 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:04:13,456 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:04:13,456 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:04:13,490 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-14 15:04:15,147 - INFO - ==================================================
+2025-08-14 15:04:15,147 - INFO - Starting ERA5 data retrieval for ROI 'C-49-1-D'...
+2025-08-14 15:04:15,148 - INFO - L8 date range: 2024-01-10 to 2025-01-28
+2025-08-14 15:04:15,148 - INFO - L9 date range: 2024-01-02 to 2025-01-20
+2025-08-14 15:04:15,149 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-14 15:04:15,149 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-14 15:04:15,228 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-14 15:04:15,229 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-14 15:04:15,229 - INFO - ERA5 data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 15:04:15,229 - INFO - ==================================================
+2025-08-14 15:04:15,230 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-49-1-D'...
+2025-08-14 15:04:15,230 - INFO - Generated 65 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-14 15:04:15,230 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-14 15:04:15,230 - INFO - Loaded openEO client config from sources: []
+2025-08-14 15:04:16,951 - INFO - Found OIDC providers: ['CDSE']
+2025-08-14 15:04:16,952 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-14 15:04:17,727 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-14 15:04:17,728 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-14 15:04:17,728 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:04:19,053 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:04:19,054 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:04:19,090 - INFO - Requesting SLSTR L2 LST for 65 dates (units=kelvin)
+2025-08-14 15:05:08,107 - WARNING - Failed to download 2024-01-10: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-2508140805064b19897940a0df59ab7e)
+2025-08-14 15:05:40,986 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:05:42,213 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:05:42,214 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 15:05:42,845 - WARNING - Failed to download 2024-08-27: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-2508140805424291a3f78b7a0df505ce)
+2025-08-14 15:06:21,526 - WARNING - Failed to download 2024-09-12: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408062041dc99ed19576371f348)
+2025-08-14 15:09:04,973 - WARNING - Failed to download 2024-02-12: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-250814080904457da25a48ec20df002f)
+2025-08-14 15:09:06,320 - WARNING - Failed to download 2024-02-19: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408090547ea9f6b9ef74fddd7b2)
+2025-08-14 15:09:44,842 - WARNING - Failed to download 2024-10-22: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-2508140809444f9a8edacbbf801bc94a)
+2025-08-14 15:09:47,210 - WARNING - Failed to download 2024-02-27: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-2508140809464fb9bbab32e4cc7a7bf8)
+2025-08-14 15:11:11,674 - WARNING - Failed to download 2024-03-13: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408111148819ae5668981a517c0)
+2025-08-14 15:11:12,990 - WARNING - Failed to download 2024-03-21: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-250814081112450c8ad0583c43dfb381)
+2025-08-14 15:11:13,574 - WARNING - Failed to download 2024-03-07: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408111247a9a7a58185f2342317)
+2025-08-14 15:11:14,367 - WARNING - Failed to download 2024-03-29: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408111345f8bf5ffc3a3c92ba8c)
+2025-08-14 15:11:14,788 - WARNING - Failed to download 2024-03-14: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-250814081114436e86aeeb017a8d142d)
+2025-08-14 15:12:31,143 - WARNING - Failed to download 2024-12-01: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-250814081230432e96015e9ab7aa1a05)
+2025-08-14 15:13:09,778 - INFO - S3 SLSTR LST data retrieval finished for ROI 'F-48-93-B'.
+2025-08-14 15:13:09,779 - INFO - ==================================================
+2025-08-14 15:13:09,779 - INFO - Data retrieval orchestration finished. Total time: 0:17:34.124916
+2025-08-14 15:14:36,514 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:14:39,902 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:14:39,902 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 15:14:52,592 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:14:53,926 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:14:53,926 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 15:24:51,378 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:24:53,076 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:24:53,076 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 15:25:25,793 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:25:27,048 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:25:27,048 - INFO - OIDC access token expired (403 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 15:26:36,389 - WARNING - Failed to download 2024-06-03: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-2508140826354bf2b8231325233347bb)
+2025-08-14 15:27:36,501 - WARNING - Failed to download 2024-06-18: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-2508140827354e0093c5d340b1aec126)
+2025-08-14 15:27:37,692 - WARNING - Failed to download 2024-06-26: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408273742f392060c5a92693094)
+2025-08-14 15:27:39,130 - WARNING - Failed to download 2024-07-04: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-2508140827384323a256cd563198f96e)
+2025-08-14 15:30:54,499 - WARNING - Failed to download 2024-08-05: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408305345bf953e3de9c458bfe2)
+2025-08-14 15:33:42,869 - WARNING - Failed to download 2024-12-18: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408334240708d5181edc9507c70)
+2025-08-14 15:33:44,223 - WARNING - Failed to download 2024-12-26: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-250814083343429f9a15a48ec5a9b9bd)
+2025-08-14 15:33:45,868 - WARNING - Failed to download 2025-01-03: [500] Internal: Synchronous processing failed on 'cdse' with OpenEoApiPlainError('[429] Too Many Requests') (ref: r-25081408334540258f70f99cac63e945)
+2025-08-14 15:33:45,870 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-48-56-A'.
+2025-08-14 15:33:45,870 - INFO - ==================================================
+2025-08-14 15:33:45,870 - INFO - Data retrieval orchestration finished. Total time: 0:29:37.299651
+2025-08-14 15:36:07,511 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:36:09,120 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:36:09,121 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 15:46:14,782 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-14 15:46:16,274 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-14 15:46:16,275 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-14 15:50:34,668 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-49-1-D'.
+2025-08-14 15:50:34,668 - INFO - ==================================================
+2025-08-14 15:50:34,668 - INFO - Data retrieval orchestration finished. Total time: 0:46:21.504124

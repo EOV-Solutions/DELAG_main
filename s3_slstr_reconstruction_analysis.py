@@ -33,6 +33,8 @@ from pathlib import Path
 import seaborn as sns
 from scipy import stats
 from sklearn.metrics import r2_score
+from rasterio.enums import Resampling
+from rasterio.warp import reproject
 
 # Set matplotlib style for better plots
 plt.style.use('default')
@@ -134,14 +136,75 @@ class S3SLSTRReconstructionAnalyzer:
         print(f"Found {len(filtered_dates)} GT images with >{min_percentage}% non-NaN pixels")
         return filtered_dates
     
-    def load_image_data(self, file_path: Path) -> np.ndarray:
-        """Load image data and handle nodata values."""
-        with rasterio.open(file_path) as src:
-            data = src.read(1)
-            nodata_val = src.nodata
-            if nodata_val is not None:
-                data[data == nodata_val] = np.nan
-            return data
+    def load_image_with_nans(self, file_path: Path) -> Optional[np.ndarray]:
+        """Load image data and convert nodata to NaN."""
+        try:
+            with rasterio.open(file_path) as src:
+                data = src.read(1).astype(float)
+                nodata_val = src.nodata
+                if nodata_val is not None:
+                    # Ensure we handle potential floating point inaccuracies for nodata check
+                    if np.isnan(nodata_val):
+                        data[np.isnan(data)] = np.nan
+                    else:
+                        data[data == nodata_val] = np.nan
+                return data
+        except Exception as e:
+            print(f"Error reading {file_path}: {e}")
+            return None
+
+    def align_and_load_images(self, gt_path: Path, recon_path: Path) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
+        """
+        Loads GT and reconstructed images, aligns GT to recon shape if necessary, and converts nodata to NaN.
+        The reconstructed image serves as the reference for shape and projection.
+        """
+        try:
+            with rasterio.open(gt_path) as gt_src, rasterio.open(recon_path) as recon_src:
+                gt_data, gt_meta = gt_src.read(1), gt_src.profile
+                recon_data, recon_meta = recon_src.read(1), recon_src.profile
+        except Exception as e:
+            print(f"Error reading image files: {e}")
+            return None, None
+
+        # Align GT to Recon if shapes or transforms mismatch
+        if gt_data.shape != recon_data.shape or gt_meta['transform'] != recon_meta['transform']:
+            # print(f"Aligning {gt_path.name} ({gt_data.shape}) to {recon_path.name} ({recon_data.shape})")
+            
+            aligned_gt_data = np.empty(recon_data.shape, dtype=gt_meta['dtype'])
+            
+            reproject(
+                source=gt_data,
+                destination=aligned_gt_data,
+                src_transform=gt_meta['transform'],
+                src_crs=gt_meta['crs'],
+                src_nodata=gt_meta.get('nodata'),
+                dst_transform=recon_meta['transform'],
+                dst_crs=recon_meta['crs'],
+                dst_nodata=recon_meta.get('nodata'),
+                resampling=Resampling.bilinear
+            )
+            gt_data = aligned_gt_data
+            gt_nodata_val = recon_meta.get('nodata')
+        else:
+            gt_nodata_val = gt_meta.get('nodata')
+
+        # Convert nodata to NaN for both arrays
+        gt_data = gt_data.astype(float)
+        if gt_nodata_val is not None:
+            if np.isnan(gt_nodata_val):
+                 gt_data[np.isnan(gt_data)] = np.nan
+            else:
+                 gt_data[gt_data == gt_nodata_val] = np.nan
+        
+        recon_nodata_val = recon_meta.get('nodata')
+        recon_data = recon_data.astype(float)
+        if recon_nodata_val is not None:
+            if np.isnan(recon_nodata_val):
+                recon_data[np.isnan(recon_data)] = np.nan
+            else:
+                recon_data[recon_data == recon_nodata_val] = np.nan
+            
+        return gt_data, recon_data
     
     def create_comparison_visualizations(self, images_per_plot: int = 10):
         """Create side-by-side comparison visualizations."""
@@ -168,8 +231,11 @@ class S3SLSTRReconstructionAnalyzer:
         all_valid_values = []
         for date_obj in date_batch:
             if date_obj in self.recon_files:
-                gt_data = self.load_image_data(self.gt_files[date_obj])
-                recon_data = self.load_image_data(self.recon_files[date_obj])
+                gt_data, recon_data = self.align_and_load_images(
+                    self.gt_files[date_obj], self.recon_files[date_obj]
+                )
+                if gt_data is None or recon_data is None:
+                    continue
                 
                 all_valid_values.extend(gt_data[~np.isnan(gt_data)].flatten())
                 all_valid_values.extend(recon_data[~np.isnan(recon_data)].flatten())
@@ -184,10 +250,18 @@ class S3SLSTRReconstructionAnalyzer:
             if date_obj not in self.recon_files:
                 continue
                 
-            # Load data
-            gt_data = self.load_image_data(self.gt_files[date_obj])
-            recon_data = self.load_image_data(self.recon_files[date_obj])
-            
+            # Load and align data
+            gt_data, recon_data = self.align_and_load_images(
+                self.gt_files[date_obj], self.recon_files[date_obj]
+            )
+            if gt_data is None or recon_data is None:
+                # Set blank plots if loading fails
+                axes[row_idx, 0].text(0.5, 0.5, 'Error loading GT', ha='center', va='center')
+                axes[row_idx, 1].text(0.5, 0.5, 'Error loading Recon', ha='center', va='center')
+                axes[row_idx, 0].set_title(f"GT: {date_obj.strftime('%Y-%m-%d')}", fontsize=10)
+                axes[row_idx, 1].set_title(f"Reconstructed: {date_obj.strftime('%Y-%m-%d')}", fontsize=10)
+                continue
+
             # Plot GT image
             im1 = axes[row_idx, 0].imshow(gt_data, cmap='YlOrRd', vmin=vmin, vmax=vmax)
             axes[row_idx, 0].set_title(f"GT: {date_obj.strftime('%Y-%m-%d')}", fontsize=10)
@@ -233,8 +307,11 @@ class S3SLSTRReconstructionAnalyzer:
             if date_obj not in self.recon_files:
                 continue
                 
-            gt_data = self.load_image_data(self.gt_files[date_obj])
-            recon_data = self.load_image_data(self.recon_files[date_obj])
+            gt_data, recon_data = self.align_and_load_images(
+                self.gt_files[date_obj], self.recon_files[date_obj]
+            )
+            if gt_data is None or recon_data is None:
+                continue
             
             for i, (row, col) in enumerate(pixel_indices):
                 gt_val = gt_data[row, col]
@@ -657,8 +734,11 @@ class S3SLSTRReconstructionAnalyzer:
             if date_obj not in self.recon_files:
                 continue
                 
-            gt_data = self.load_image_data(self.gt_files[date_obj])
-            recon_data = self.load_image_data(self.recon_files[date_obj])
+            gt_data, recon_data = self.align_and_load_images(
+                self.gt_files[date_obj], self.recon_files[date_obj]
+            )
+            if gt_data is None or recon_data is None:
+                continue
             
             # Find valid pixels (non-NaN in both images)
             valid_mask = ~(np.isnan(gt_data) | np.isnan(recon_data))

@@ -97,19 +97,20 @@ def main():
     roi_geometry_data = feature['geometry']
     roi_geometry_ee = ee.Geometry.Polygon(roi_geometry_data['coordinates'])
 
-    # --- 3. Run LST Data Retrieval ---
-    logging.info("="*50)
-    logging.info(f"Starting LST data retrieval for ROI '{roi_name}'...")
-    try:
-        start_date_lst = args.start_date
-        end_date_lst = args.end_date
-        logging.info(f"LST retrieval period: {start_date_lst} to {end_date_lst}")
+    # # --- 3. Run LST Data Retrieval ---
+    # logging.info("="*50)
+    # logging.info(f"Starting LST data retrieval for ROI '{roi_name}'...")
+    # try:
+    #     start_date_lst = args.start_date
+    #     end_date_lst = args.end_date
+    #     logging.info(f"LST retrieval period: {start_date_lst} to {end_date_lst}")
         
-        # Call the LST retrieval function
-        lst_retrive(start_date_lst, end_date_lst, roi_geometry_ee, roi_name, args.output_folder)
-        logging.info(f"LST data retrieval finished for ROI '{roi_name}'.")
-    except Exception as e:
-        logging.critical(f"An error occurred during LST retrieval for '{roi_name}': {e}", exc_info=True)
+    #     # Call 
+    #     # the LST retrieval function
+    #     lst_retrive(start_date_lst, end_date_lst, roi_geometry_ee, roi_name, args.output_folder)
+    #     logging.info(f"LST data retrieval finished for ROI '{roi_name}'.")
+    # except Exception as e:
+    #     logging.critical(f"An error occurred during LST retrieval for '{roi_name}': {e}", exc_info=True)
 
     # --- 4. Run ERA5 Data Retrieval ---
     logging.info("="*50)
@@ -285,33 +286,33 @@ def main():
                 logging.warning(f"Could not parse date from LST filename: {tif_file}")
 
     if target_dates_str:
-        # --- Sentinel-2 Data Retrieval (train and test modes) ---
-        logging.info("="*50)
-        logging.info(f"Starting Sentinel-2 data retrieval for ROI '{roi_name}'...")
-        try:
-            target_composite_dates_s2 = [ee.Date(d) for d in sorted(list(target_dates_str))]
-            logging.info(f"Requesting S2 composites for {len(target_composite_dates_s2)} dates based on LST files.")
-            main_s2_retrieval(target_composite_dates_s2, roi_geometry_ee, roi_name, args.output_folder)
-            logging.info(f"Sentinel-2 data retrieval finished for ROI '{roi_name}'.")
-        except Exception as e:
-            logging.critical(f"An error occurred during Sentinel-2 retrieval for '{roi_name}': {e}", exc_info=True)
+        # # --- Sentinel-2 Data Retrieval (train and test modes) ---
+        # logging.info("="*50)
+        # logging.info(f"Starting Sentinel-2 data retrieval for ROI '{roi_name}'...")
+        # try:
+        #     target_composite_dates_s2 = [ee.Date(d) for d in sorted(list(target_dates_str))]
+        #     logging.info(f"Requesting S2 composites for {len(target_composite_dates_s2)} dates based on LST files.")
+        #     main_s2_retrieval(target_composite_dates_s2, roi_geometry_ee, roi_name, args.output_folder)
+        #     logging.info(f"Sentinel-2 data retrieval finished for ROI '{roi_name}'.")
+        # except Exception as e:
+        #     logging.critical(f"An error occurred during Sentinel-2 retrieval for '{roi_name}': {e}", exc_info=True)
 
         # --- Test Mode Only Retrievals ---
         if args.mode == 'test':
             # --- MODIS Data Retrieval ---
-            logging.info("="*50)
-            logging.info(f"Starting MODIS data retrieval for ROI '{roi_name}'...")
-            try:
-                modis_output_folder = os.path.join(args.output_folder, roi_name, "modis")
-                logging.info(f"Generated {len(target_dates_str)} target dates for MODIS retrieval based on LST files.")
-                modis_main_retrieval(
-                    input_folder=lst_output_folder,
-                    output_folder=modis_output_folder,
-                    specific_dates=sorted(list(target_dates_str))
-                )
-                logging.info(f"MODIS data retrieval finished for ROI '{roi_name}'.")
-            except Exception as e:
-                logging.critical(f"An error occurred during MODIS retrieval for '{roi_name}': {e}", exc_info=True)
+            # logging.info("="*50)
+            # logging.info(f"Starting MODIS data retrieval for ROI '{roi_name}'...")
+            # try:
+            #     modis_output_folder = os.path.join(args.output_folder, roi_name, "modis")
+            #     logging.info(f"Generated {len(target_dates_str)} target dates for MODIS retrieval based on LST files.")
+            #     modis_main_retrieval(
+            #         input_folder=lst_output_folder,
+            #         output_folder=modis_output_folder,
+            #         specific_dates=sorted(list(target_dates_str))
+            #     )
+            #     logging.info(f"MODIS data retrieval finished for ROI '{roi_name}'.")
+            # except Exception as e:
+            #     logging.critical(f"An error occurred during MODIS retrieval for '{roi_name}': {e}", exc_info=True)
 
             # --- S3 SLSTR LST Data Retrieval ---
             logging.info("="*50)

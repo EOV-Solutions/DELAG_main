@@ -111,81 +111,6 @@ def build_spatial_extent_from_geojson_geometry(geometry: Dict) -> Dict:
     return geometry
 
 
-def resample_to_30m(source_path: str, target_path: str = None) -> None:
-    """
-    Resamples a GeoTIFF to 30m resolution using bilinear interpolation.
-    
-    Args:
-        source_path: Path to the source GeoTIFF file
-        target_path: Path for the resampled output (if None, overwrites source)
-    """
-    if target_path is None:
-        target_path = source_path
-    
-    try:
-        with rasterio.open(source_path) as src:
-            # Calculate new dimensions for 30m resolution
-            # Assuming source is in a projected CRS with meters as units
-            # If source is in degrees, we need to convert to approximate meters
-            src_crs = src.crs
-            
-            # For geographic coordinates, approximate 30m resolution
-            # 30m ≈ 0.00027 degrees at the equator
-            if src_crs.is_geographic:
-                target_resolution = 0.00027  # degrees
-            else:
-                target_resolution = 30  # meters
-            
-            # Calculate new dimensions
-            src_width = src.width
-            src_height = src.height
-            src_transform = src.transform
-            
-            # Calculate new transform for 30m resolution
-            new_transform = rasterio.transform.from_origin(
-                src_transform[2],  # x_min
-                src_transform[5],  # y_max
-                target_resolution,
-                target_resolution
-            )
-            
-            # Calculate new dimensions
-            new_width = int((src_transform[2] + src_width * src_transform[0] - new_transform[2]) / target_resolution)
-            new_height = int((new_transform[5] - (src_transform[5] + src_height * src_transform[4])) / target_resolution)
-            
-            # Ensure positive dimensions
-            new_width = max(1, new_width)
-            new_height = max(1, new_height)
-            
-            # Create output profile
-            profile = src.profile.copy()
-            profile.update({
-                'width': new_width,
-                'height': new_height,
-                'transform': new_transform,
-                'crs': src_crs
-            })
-            
-            # Resample the data
-            with rasterio.open(target_path, 'w', **profile) as dst:
-                for i in range(1, src.count + 1):
-                    reproject(
-                        source=rasterio.band(src, i),
-                        destination=rasterio.band(dst, i),
-                        src_transform=src.transform,
-                        src_crs=src.crs,
-                        dst_transform=new_transform,
-                        dst_crs=src.crs,
-                        resampling=Resampling.bilinear
-                    )
-        
-        logging.info(f"Resampled {os.path.basename(source_path)} to 30m resolution")
-        
-    except Exception as e:
-        logging.error(f"Failed to resample {source_path}: {e}")
-        raise
-
-
 def download_daily_slstr_lst(
     connection: openeo.Connection,
     collection_id: str,
@@ -203,8 +128,8 @@ def download_daily_slstr_lst(
     - Apply cloud mask using confidence_in band (mask pixels where confidence_in == 0)
     - Optionally convert from Kelvin to Celsius
     - Aggregate over the day (mean)
+    - Optionally resample to 30m resolution on the back-end
     - Save as GeoTIFF to destination_path
-    - Optionally resample to 30m resolution
     """
     t_start = date.strftime("%Y-%m-%d")
     t_end = (date + timedelta(days=1)).strftime("%Y-%m-%d")
@@ -224,6 +149,10 @@ def download_daily_slstr_lst(
     # Keep only the LST band after masking
     cube = cube.filter_bands(["LST"])
 
+    # --- IMPORTANT: Apply scale factor to convert from DN to Kelvin ---
+    # According to product spec, LST is scaled: LST(K) = DN * 0.003
+    cube = cube * 0.003
+
     # Optionally convert Kelvin to Celsius: x - 273.15
     if to_celsius:
         cube = cube - 273.15
@@ -231,12 +160,14 @@ def download_daily_slstr_lst(
     # Aggregate to a single slice within the day
     cube = cube.aggregate_temporal_period(period="day", reducer="mean")
 
+    # Resample to 30m resolution on the back-end if requested.
+    # We assume the collection's CRS is geographic (e.g., WGS84) and use an
+    # approximate resolution in degrees. 30m is approx. 0.00027 degrees.
+    if resample_to_30m_flag:
+        cube = cube.resample_spatial(resolution=0.00027, method="bilinear")
+
     # Save/download
     cube.download(destination_path, format="GTIFF")
-    
-    # Resample to 30m resolution if requested
-    if resample_to_30m_flag and os.path.exists(destination_path):
-        resample_to_30m(destination_path)
 
 
 def run(config: RetrievalConfig) -> None:
@@ -249,7 +180,6 @@ def run(config: RetrievalConfig) -> None:
     feature = find_grid_feature(config.roi_name, config.grid_file)
     if not feature:
         raise SystemExit(1)
-
     roi_name = feature.get('properties', {}).get('PhienHieu') or feature.get('properties', {}).get('Phien_Hieu') or config.roi_name
     geometry = feature['geometry']
     spatial_extent = build_spatial_extent_from_geojson_geometry(geometry)
