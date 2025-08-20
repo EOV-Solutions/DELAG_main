@@ -149,9 +149,9 @@ def download_daily_slstr_lst(
     # Keep only the LST band after masking
     cube = cube.filter_bands(["LST"])
 
-    # --- IMPORTANT: Apply scale factor to convert from DN to Kelvin ---
-    # According to product spec, LST is scaled: LST(K) = DN * 0.003
-    cube = cube * 0.003
+    # --- IMPORTANT: Apply scale factor and offset to convert from DN to Kelvin ---
+    # According to product spec, LST is scaled: LST(K) = DN * 0.0020000001 + 290
+    cube = cube * 0.0020000001 + 290
 
     # Optionally convert Kelvin to Celsius: x - 273.15
     if to_celsius:
