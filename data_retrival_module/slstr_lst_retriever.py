@@ -143,7 +143,7 @@ def download_daily_slstr_lst(
     )
 
     # Apply cloud mask: mask pixels where confidence_in == 0 (cloudy or invalid)
-    cloud_mask = cube.band("confidence_in") == 0
+    cloud_mask = cube.band("confidence_in") >= 16384
     cube = cube.mask(cloud_mask, replacement=None)
 
     # Keep only the LST band after masking
@@ -151,14 +151,14 @@ def download_daily_slstr_lst(
 
     # --- IMPORTANT: Apply scale factor and offset to convert from DN to Kelvin ---
     # According to product spec, LST is scaled: LST(K) = DN * 0.0020000001 + 290
-    cube = cube * 0.0020000001 + 290
+    # cube = cube * 0.0020000001 + 290
 
     # Optionally convert Kelvin to Celsius: x - 273.15
     if to_celsius:
         cube = cube - 273.15
 
     # Aggregate to a single slice within the day
-    cube = cube.aggregate_temporal_period(period="day", reducer="mean")
+    cube = cube.reduce_temporal("max")
 
     # Resample to 30m resolution on the back-end if requested.
     # We assume the collection's CRS is geographic (e.g., WGS84) and use an

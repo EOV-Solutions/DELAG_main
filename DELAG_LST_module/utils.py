@@ -1,15 +1,65 @@
 """
 Utility functions for the DELAG project.
 """
-import matplotlib
-matplotlib.use('Agg')
-
 import numpy as np
 import os
+import json
+import datetime
+import pandas as pd # Used for date handling and serialization
+
 from sklearn.preprocessing import MinMaxScaler
+
 import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from rasterio.enums import Resampling as RasterioResampling # Alias to avoid conflict
+
+import matplotlib.pyplot as plt # For visualization functions
+import contextily as cx # For basemaps in visualization (optional enhancement)
+
+import config # Assuming config needs to be imported here
+
+
+def get_current_timestamp():
+    """
+    Returns the current timestamp in ISO format.
+    """
+    return datetime.datetime.now().isoformat()
+
+def save_metadata(metadata: dict, output_dir: str, filename: str = "metadata.json"):
+    """
+    Saves a metadata dictionary to a specified output directory as a JSON file.
+
+    Args:
+        metadata (dict): The dictionary containing metadata to save.
+        output_dir (str): The full path to the directory to save the metadata into.
+        filename (str): The name of the metadata file. Defaults to "metadata.json".
+    """
+    import json
+    import pandas as pd # Import pandas for Timestamp serialization
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    def json_serializer(obj):
+        if isinstance(obj, pd.Timestamp):
+            return obj.isoformat()
+        if hasattr(obj, 'strftime'): # Handles datetime.datetime, etc.
+            return obj.strftime('%Y-%m-%dT%H:%M:%S')
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        # Fallback for other types, e.g. Path objects
+        return str(obj)
+
+    metadata_filepath = os.path.join(output_dir, filename)
+    try:
+        with open(metadata_filepath, 'w') as f:
+            json.dump(metadata, f, indent=4, default=json_serializer)
+        print(f"Saved metadata to {metadata_filepath}")
+    except Exception as e:
+        print(f"Could not save metadata to {metadata_filepath}: {e}")
 
 def normalize_coordinates(x_coords: np.ndarray, y_coords: np.ndarray) -> tuple[np.ndarray, np.ndarray, MinMaxScaler, MinMaxScaler]:
     """

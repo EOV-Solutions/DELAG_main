@@ -3779,3 +3779,827 @@ ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
 2025-08-14 15:50:34,668 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-49-1-D'.
 2025-08-14 15:50:34,668 - INFO - ==================================================
 2025-08-14 15:50:34,668 - INFO - Data retrieval orchestration finished. Total time: 0:46:21.504124
+2025-08-21 08:47:04,540 - INFO - ==================================================
+2025-08-21 08:47:04,540 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 08:47:04,541 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 08:47:04,541 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 08:47:04,541 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 08:47:04,541 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 08:47:05,461 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 08:47:05,462 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 08:47:05,462 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 08:47:05,463 - INFO - ==================================================
+2025-08-21 08:47:05,463 - INFO - Data retrieval orchestration finished. Total time: 0:00:03.936026
+2025-08-21 08:47:52,678 - INFO - ==================================================
+2025-08-21 08:47:52,679 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 08:47:52,680 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 08:47:52,680 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 08:47:52,680 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 08:47:52,680 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 08:47:52,756 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 08:47:52,756 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 08:47:52,756 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 08:47:52,757 - INFO - ==================================================
+2025-08-21 08:47:52,757 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-21 08:47:52,757 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-21 08:47:52,757 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-21 08:47:52,757 - INFO - Loaded openEO client config from sources: []
+2025-08-21 08:47:55,141 - INFO - Found OIDC providers: ['CDSE']
+2025-08-21 08:47:55,141 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-21 08:47:56,434 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-21 08:47:56,435 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-21 08:47:56,436 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 08:47:57,735 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 08:47:57,736 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 08:47:57,770 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-21 08:58:00,852 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 08:58:02,339 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 08:58:02,339 - INFO - OIDC access token expired (403 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-21 09:08:21,157 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:08:22,789 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 09:08:22,789 - INFO - OIDC access token expired (403 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-21 09:11:54,105 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 09:11:54,105 - INFO - ==================================================
+2025-08-21 09:11:54,105 - INFO - Data retrieval orchestration finished. Total time: 0:24:02.383457
+2025-08-21 09:33:08,596 - INFO - ==================================================
+2025-08-21 09:33:08,596 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:33:08,597 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 09:33:08,598 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 09:33:08,598 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 09:33:08,598 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 09:33:08,672 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 09:33:08,672 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 09:33:08,672 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 09:33:08,673 - INFO - ==================================================
+2025-08-21 09:33:08,673 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:33:08,673 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-21 09:33:08,673 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-21 09:33:08,673 - INFO - Loaded openEO client config from sources: []
+2025-08-21 09:33:12,284 - INFO - Found OIDC providers: ['CDSE']
+2025-08-21 09:33:12,284 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-21 09:33:14,145 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-21 09:33:14,146 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-21 09:33:14,146 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:33:15,536 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 09:33:15,536 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:33:15,570 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-21 09:36:11,620 - INFO - ==================================================
+2025-08-21 09:36:11,620 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:36:11,621 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 09:36:11,622 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 09:36:11,622 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 09:36:11,622 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 09:36:11,695 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 09:36:11,696 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 09:36:11,696 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 09:36:11,697 - INFO - ==================================================
+2025-08-21 09:36:11,697 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:36:11,697 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-21 09:36:11,697 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-21 09:36:11,697 - INFO - Loaded openEO client config from sources: []
+2025-08-21 09:36:13,838 - INFO - Found OIDC providers: ['CDSE']
+2025-08-21 09:36:13,839 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-21 09:36:14,870 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-21 09:36:14,871 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-21 09:36:14,871 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:36:16,080 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 09:36:16,080 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:36:16,114 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-21 09:39:38,744 - INFO - ==================================================
+2025-08-21 09:39:38,744 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:39:38,745 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 09:39:38,746 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 09:39:38,746 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 09:39:38,746 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 09:39:38,819 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 09:39:38,820 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 09:39:38,820 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 09:39:38,821 - INFO - ==================================================
+2025-08-21 09:39:38,821 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:39:38,821 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-21 09:39:38,821 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-21 09:39:38,821 - INFO - Loaded openEO client config from sources: []
+2025-08-21 09:39:41,730 - INFO - Found OIDC providers: ['CDSE']
+2025-08-21 09:39:41,730 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-21 09:39:43,653 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-21 09:39:43,654 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-21 09:39:43,654 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:39:45,017 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 09:39:45,018 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:39:45,051 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-21 09:48:37,799 - INFO - ==================================================
+2025-08-21 09:48:37,800 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:48:37,801 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 09:48:37,801 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 09:48:37,801 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 09:48:37,801 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 09:48:37,875 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 09:48:37,876 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 09:48:37,876 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 09:48:37,876 - INFO - ==================================================
+2025-08-21 09:48:37,876 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-21 09:48:37,876 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-21 09:48:37,877 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-21 09:48:37,877 - INFO - Loaded openEO client config from sources: []
+2025-08-21 09:48:43,289 - INFO - Found OIDC providers: ['CDSE']
+2025-08-21 09:48:43,289 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-21 09:48:44,627 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-21 09:48:44,628 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-21 09:48:44,629 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:48:47,025 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 09:48:47,026 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:48:47,059 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-21 09:50:50,350 - WARNING - Preflight process graph validation raised: [UpstreamValidationFailure] Validation failed on backend cdse: OpenEoApiPlainError('[502] Bad Gateway')
+2025-08-21 09:58:47,792 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 09:58:55,982 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 09:58:55,982 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-21 10:08:57,892 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 10:08:59,349 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 10:08:59,350 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-21 10:11:51,932 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 10:11:51,933 - INFO - ==================================================
+2025-08-21 10:11:51,933 - INFO - Data retrieval orchestration finished. Total time: 0:23:15.034978
+2025-08-21 13:13:14,340 - INFO - ==================================================
+2025-08-21 13:13:14,340 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 13:13:14,341 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 13:13:14,341 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 13:13:14,341 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 13:13:14,342 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 13:13:14,414 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 13:13:14,415 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 13:13:14,415 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 13:13:14,415 - INFO - ==================================================
+2025-08-21 13:13:14,416 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-21 13:13:14,416 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-21 13:13:14,416 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-21 13:13:14,416 - INFO - Loaded openEO client config from sources: []
+2025-08-21 13:13:17,389 - INFO - Found OIDC providers: ['CDSE']
+2025-08-21 13:13:17,389 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-21 13:13:19,287 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-21 13:13:19,288 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-21 13:13:19,288 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 13:13:20,779 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 13:13:20,780 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 13:13:20,814 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-21 13:13:20,821 - INFO - Skipping download for 2024-01-01: file already exists.
+2025-08-21 13:13:20,821 - INFO - Skipping download for 2024-01-09: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-01-17: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-01-25: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-02-02: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-02-10: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-02-18: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-02-26: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-03-05: file already exists.
+2025-08-21 13:13:20,822 - INFO - Skipping download for 2024-03-13: file already exists.
+2025-08-21 13:13:20,823 - INFO - Skipping download for 2024-03-21: file already exists.
+2025-08-21 13:13:20,823 - INFO - Skipping download for 2024-03-29: file already exists.
+2025-08-21 13:13:20,823 - INFO - Skipping download for 2024-04-06: file already exists.
+2025-08-21 13:13:20,823 - INFO - Skipping download for 2024-04-14: file already exists.
+2025-08-21 13:13:20,823 - INFO - Skipping download for 2024-04-22: file already exists.
+2025-08-21 13:13:20,823 - INFO - Skipping download for 2024-04-30: file already exists.
+2025-08-21 13:13:20,823 - INFO - Skipping download for 2024-05-08: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-05-16: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-05-24: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-06-01: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-06-17: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-06-25: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-07-03: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-08-04: file already exists.
+2025-08-21 13:13:20,824 - INFO - Skipping download for 2024-08-12: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-08-20: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-08-28: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-09-05: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-09-13: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-09-29: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-10-07: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-10-15: file already exists.
+2025-08-21 13:13:20,825 - INFO - Skipping download for 2024-10-31: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2024-11-08: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2024-11-16: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2024-11-24: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2024-12-02: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2024-12-10: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2024-12-18: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2024-12-26: file already exists.
+2025-08-21 13:13:20,826 - INFO - Skipping download for 2025-01-03: file already exists.
+2025-08-21 13:13:20,827 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 13:13:20,827 - INFO - ==================================================
+2025-08-21 13:13:20,827 - INFO - Data retrieval orchestration finished. Total time: 0:00:08.622840
+2025-08-21 13:13:56,252 - INFO - ==================================================
+2025-08-21 13:13:56,253 - INFO - Starting ERA5 data retrieval for ROI 'C-48-56-A'...
+2025-08-21 13:13:56,254 - INFO - L8 date range: 2024-01-01 to 2025-01-03
+2025-08-21 13:13:56,254 - INFO - L9 date range: 2024-01-09 to 2024-12-26
+2025-08-21 13:13:56,254 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-21 13:13:56,254 - INFO - Generated 46 target dates for ERA5 retrieval.
+2025-08-21 13:13:56,328 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-21 13:13:56,328 - INFO - Final check complete. No missing ERA5 files found.
+2025-08-21 13:13:56,328 - INFO - ERA5 data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 13:13:56,329 - INFO - ==================================================
+2025-08-21 13:13:56,329 - INFO - Starting S3 SLSTR LST data retrieval for ROI 'C-48-56-A'...
+2025-08-21 13:13:56,329 - INFO - Generated 41 target dates for S3 SLSTR retrieval based on LST files.
+2025-08-21 13:13:56,329 - INFO - Connecting to openEO provider: https://openeofed.dataspace.copernicus.eu
+2025-08-21 13:13:56,329 - INFO - Loaded openEO client config from sources: []
+2025-08-21 13:13:58,917 - INFO - Found OIDC providers: ['CDSE']
+2025-08-21 13:13:58,917 - INFO - No OIDC provider given, but only one available: 'CDSE'. Using that one.
+2025-08-21 13:14:00,014 - INFO - Using default client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a' from OIDC provider 'CDSE' info.
+2025-08-21 13:14:00,015 - INFO - Found refresh token: trying refresh token based authentication.
+2025-08-21 13:14:00,016 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 13:14:01,581 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 13:14:01,582 - INFO - Storing refresh token for issuer 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE' (client 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 13:14:01,615 - INFO - Requesting SLSTR L2 LST for 41 dates (units=kelvin)
+2025-08-21 13:24:41,044 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 13:24:43,049 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 13:24:43,050 - INFO - OIDC access token expired (403 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-21 13:34:46,465 - INFO - Doing 'refresh_token' token request 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token' with post data fields ['grant_type', 'client_id', 'refresh_token'] (client_id 'sh-a795b975-a105-40f8-80ff-1ca7220b7c3a')
+2025-08-21 13:34:59,439 - INFO - Obtained tokens: ['access_token', 'id_token', 'refresh_token']
+2025-08-21 13:34:59,439 - INFO - OIDC access token expired (401 TokenInvalid). Obtained new access token (grant 'refresh_token').
+2025-08-21 13:35:47,422 - INFO - S3 SLSTR LST data retrieval finished for ROI 'C-48-56-A'.
+2025-08-21 13:35:47,422 - INFO - ==================================================
+2025-08-21 13:35:47,422 - INFO - Data retrieval orchestration finished. Total time: 0:21:52.279793
+2025-08-22 16:18:04,398 - INFO - ==================================================
+2025-08-22 16:18:04,398 - INFO - Starting ERA5 data retrieval for ROI 'gialai'...
+2025-08-22 16:18:04,398 - WARNING - Skipping ERA5 retrieval: LST output folder for reference grid is empty or does not exist at '/mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/gialai/lst'.
+2025-08-22 16:18:04,398 - WARNING - LST output folder is empty or does not exist at '/mnt/hdd12tb/code/nhatvm/DELAG_main/data/retrieved_data/gialai/lst'. Skipping dependent retrievals.
+2025-08-22 16:18:04,398 - WARNING - No valid dates found from LST files. Skipping S2, MODIS, and S3_SLSTR retrieval.
+2025-08-22 16:18:04,398 - INFO - ==================================================
+2025-08-22 16:18:04,399 - INFO - Data retrieval orchestration finished. Total time: 0:00:00.966380
+2025-08-22 16:19:14,843 - INFO - ==================================================
+2025-08-22 16:19:14,843 - INFO - Starting LST data retrieval for ROI 'gialai'...
+2025-08-22 16:19:14,843 - INFO - LST retrieval period: 2017-01-01 to 2025-04-15
+2025-08-22 16:59:55,736 - INFO - ==================================================
+2025-08-22 16:59:55,736 - INFO - Starting LST data retrieval for ROI 'gialai'...
+2025-08-22 16:59:55,736 - INFO - LST retrieval period: 2017-01-01 to 2025-04-15
+2025-08-22 17:03:47,447 - INFO - ==================================================
+2025-08-22 17:03:47,448 - INFO - Starting LST data retrieval for ROI 'sonla'...
+2025-08-22 17:03:47,448 - INFO - LST retrieval period: 2017-01-01 to 2025-04-15
+2025-08-22 17:08:28,183 - INFO - ==================================================
+2025-08-22 17:08:28,184 - INFO - Starting LST data retrieval for ROI 'travinh'...
+2025-08-22 17:08:28,184 - INFO - LST retrieval period: 2017-01-01 to 2025-04-15
+2025-08-22 17:28:22,782 - INFO - LST data retrieval finished for ROI 'gialai'.
+2025-08-22 17:28:22,782 - INFO - ==================================================
+2025-08-22 17:28:22,782 - INFO - Starting ERA5 data retrieval for ROI 'gialai'...
+2025-08-22 17:28:22,790 - INFO - L8 date range: 2017-01-06 to 2025-04-02
+2025-08-22 17:28:22,790 - INFO - L9 date range: 2021-10-31 to 2025-04-10
+2025-08-22 17:28:22,790 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-22 17:28:22,793 - INFO - Generated 268 target dates for ERA5 retrieval.
+2025-08-22 17:38:08,773 - INFO - LST data retrieval finished for ROI 'sonla'.
+2025-08-22 17:38:08,774 - INFO - ==================================================
+2025-08-22 17:38:08,774 - INFO - Starting ERA5 data retrieval for ROI 'sonla'...
+2025-08-22 17:38:08,780 - INFO - L8 date range: 2017-01-18 to 2025-03-29
+2025-08-22 17:38:08,781 - INFO - L9 date range: 2021-11-08 to 2025-03-21
+2025-08-22 17:38:08,781 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-22 17:38:08,783 - INFO - Generated 265 target dates for ERA5 retrieval.
+2025-08-22 17:44:31,365 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-22 17:44:31,369 - WARNING - Found 66 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-08-22 17:48:23,679 - INFO - ERA5 data retrieval finished for ROI 'gialai'.
+2025-08-22 17:48:23,682 - INFO - ==================================================
+2025-08-22 17:48:23,682 - INFO - Starting Sentinel-2 data retrieval for ROI 'gialai'...
+2025-08-22 17:48:23,687 - INFO - Requesting S2 composites for 233 dates based on LST files.
+2025-08-22 17:51:02,249 - INFO - Successfully downloaded S2 image for 2018-01-09.
+2025-08-22 17:52:52,164 - INFO - Successfully downloaded S2 image for 2018-02-26.
+2025-08-22 17:54:13,003 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-22 17:54:13,007 - WARNING - Found 62 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-08-22 17:54:36,650 - INFO - Successfully downloaded S2 image for 2018-12-11.
+2025-08-22 17:56:16,961 - INFO - LST data retrieval finished for ROI 'travinh'.
+2025-08-22 17:56:16,961 - INFO - ==================================================
+2025-08-22 17:56:16,961 - INFO - Starting ERA5 data retrieval for ROI 'travinh'...
+2025-08-22 17:56:16,969 - INFO - L8 date range: 2017-01-13 to 2025-04-09
+2025-08-22 17:56:16,969 - INFO - L9 date range: 2021-10-31 to 2025-04-01
+2025-08-22 17:56:16,969 - INFO - Both L8 and L9 dates available. Creating merged time series.
+2025-08-22 17:56:16,972 - INFO - Generated 268 target dates for ERA5 retrieval.
+2025-08-22 17:56:28,810 - INFO - Successfully downloaded S2 image for 2019-01-12.
+2025-08-22 17:57:51,838 - INFO - ERA5 data retrieval finished for ROI 'sonla'.
+2025-08-22 17:57:51,841 - INFO - ==================================================
+2025-08-22 17:57:51,841 - INFO - Starting Sentinel-2 data retrieval for ROI 'sonla'...
+2025-08-22 17:57:51,847 - INFO - Requesting S2 composites for 202 dates based on LST files.
+2025-08-22 17:58:19,392 - INFO - Successfully downloaded S2 image for 2019-01-28.
+2025-08-22 17:59:59,151 - INFO - Successfully downloaded S2 image for 2018-12-23.
+2025-08-22 18:00:10,397 - INFO - Successfully downloaded S2 image for 2019-02-13.
+2025-08-22 18:01:45,650 - INFO - Successfully downloaded S2 image for 2019-02-09.
+2025-08-22 18:02:05,227 - INFO - Successfully downloaded S2 image for 2019-03-01.
+2025-08-22 18:03:55,924 - INFO - Successfully downloaded S2 image for 2019-02-25.
+2025-08-22 18:04:11,798 - INFO - Successfully downloaded S2 image for 2019-03-17.
+2025-08-22 18:05:47,017 - INFO - Successfully downloaded S2 image for 2019-03-13.
+2025-08-22 18:06:06,996 - INFO - Successfully downloaded S2 image for 2019-04-02.
+2025-08-22 18:07:06,839 - INFO - Successfully downloaded S2 image for 2019-03-29.
+2025-08-22 18:07:45,727 - INFO - Successfully downloaded S2 image for 2019-04-18.
+2025-08-22 18:08:54,137 - INFO - Successfully downloaded S2 image for 2019-04-14.
+2025-08-22 18:09:31,570 - INFO - Successfully downloaded S2 image for 2019-05-04.
+2025-08-22 18:10:25,858 - INFO - Successfully downloaded S2 image for 2019-04-30.
+2025-08-22 18:11:24,906 - INFO - Successfully downloaded S2 image for 2019-05-20.
+2025-08-22 18:11:56,528 - INFO - Successfully downloaded S2 image for 2019-05-16.
+2025-08-22 18:13:19,921 - INFO - Successfully downloaded S2 image for 2019-07-19.
+2025-08-22 18:13:23,440 - INFO - Successfully downloaded S2 image for 2019-06-05.
+2025-08-22 18:13:25,860 - INFO - Running final check for missing ERA5 files based on LST downloads...
+2025-08-22 18:13:25,866 - WARNING - Found 1 LST files with no corresponding ERA5 file. Retrieving missing data...
+2025-08-22 18:13:29,585 - INFO - ERA5 data retrieval finished for ROI 'travinh'.
+2025-08-22 18:13:29,588 - INFO - ==================================================
+2025-08-22 18:13:29,588 - INFO - Starting Sentinel-2 data retrieval for ROI 'travinh'...
+2025-08-22 18:13:29,595 - INFO - Requesting S2 composites for 248 dates based on LST files.
+2025-08-22 18:15:00,657 - INFO - Successfully downloaded S2 image for 2019-08-20.
+2025-08-22 18:15:13,901 - INFO - Successfully downloaded S2 image for 2018-12-18.
+2025-08-22 18:15:14,873 - INFO - Successfully downloaded S2 image for 2019-06-21.
+2025-08-22 18:16:38,682 - INFO - Successfully downloaded S2 image for 2019-09-05.
+2025-08-22 18:16:52,458 - INFO - Successfully downloaded S2 image for 2019-07-23.
+2025-08-22 18:17:04,212 - INFO - Successfully downloaded S2 image for 2019-01-03.
+2025-08-22 18:18:24,515 - INFO - Successfully downloaded S2 image for 2019-08-24.
+2025-08-22 18:18:29,785 - INFO - Successfully downloaded S2 image for 2019-10-23.
+2025-08-22 18:18:48,448 - INFO - Successfully downloaded S2 image for 2019-01-19.
+2025-08-22 18:20:20,747 - INFO - Successfully downloaded S2 image for 2019-11-24.
+2025-08-22 18:20:31,555 - INFO - Successfully downloaded S2 image for 2019-09-25.
+2025-08-22 18:21:09,044 - INFO - Successfully downloaded S2 image for 2019-02-04.
+2025-08-22 18:22:26,096 - INFO - Successfully downloaded S2 image for 2019-12-10.
+2025-08-22 18:22:31,657 - INFO - Successfully downloaded S2 image for 2019-10-11.
+2025-08-22 18:23:28,449 - INFO - Successfully downloaded S2 image for 2019-02-20.
+2025-08-22 18:24:37,286 - INFO - Successfully downloaded S2 image for 2019-10-27.
+2025-08-22 18:24:54,238 - INFO - Successfully downloaded S2 image for 2019-12-26.
+2025-08-22 18:25:27,721 - INFO - Successfully downloaded S2 image for 2019-03-08.
+2025-08-22 18:26:31,193 - INFO - Successfully downloaded S2 image for 2020-01-11.
+2025-08-22 18:26:35,838 - INFO - Successfully downloaded S2 image for 2019-11-12.
+2025-08-22 18:27:15,760 - INFO - Successfully downloaded S2 image for 2019-03-24.
+2025-08-22 18:28:13,933 - INFO - Successfully downloaded S2 image for 2020-02-12.
+2025-08-22 18:28:23,979 - INFO - Successfully downloaded S2 image for 2019-11-28.
+2025-08-22 18:29:35,584 - INFO - Successfully downloaded S2 image for 2019-04-09.
+2025-08-22 18:29:54,930 - INFO - Successfully downloaded S2 image for 2020-02-28.
+2025-08-22 18:30:27,039 - INFO - Successfully downloaded S2 image for 2019-12-14.
+2025-08-22 18:31:26,255 - INFO - Successfully downloaded S2 image for 2020-03-31.
+2025-08-22 18:31:32,941 - INFO - Successfully downloaded S2 image for 2019-04-25.
+2025-08-22 18:32:33,320 - INFO - Successfully downloaded S2 image for 2019-12-30.
+2025-08-22 18:32:56,144 - INFO - Successfully downloaded S2 image for 2020-04-16.
+2025-08-22 18:33:27,718 - INFO - Successfully downloaded S2 image for 2019-05-11.
+2025-08-22 18:34:33,927 - INFO - Successfully downloaded S2 image for 2020-01-15.
+2025-08-22 18:34:43,516 - INFO - Successfully downloaded S2 image for 2020-05-18.
+2025-08-22 18:35:16,292 - INFO - Successfully downloaded S2 image for 2019-05-27.
+2025-08-22 18:36:17,455 - INFO - Successfully downloaded S2 image for 2020-06-19.
+2025-08-22 18:36:30,371 - INFO - Successfully downloaded S2 image for 2020-01-31.
+2025-08-22 18:37:05,600 - INFO - Successfully downloaded S2 image for 2019-06-12.
+2025-08-22 18:37:47,789 - INFO - Successfully downloaded S2 image for 2020-07-05.
+2025-08-22 18:38:24,077 - INFO - Successfully downloaded S2 image for 2020-02-16.
+2025-08-22 18:38:56,084 - INFO - Successfully downloaded S2 image for 2019-07-14.
+2025-08-22 18:39:30,425 - INFO - Successfully downloaded S2 image for 2020-10-25.
+2025-08-22 18:40:18,438 - INFO - Successfully downloaded S2 image for 2020-03-03.
+2025-08-22 18:40:45,357 - INFO - Successfully downloaded S2 image for 2019-07-30.
+2025-08-22 18:41:36,660 - INFO - Successfully downloaded S2 image for 2020-11-10.
+2025-08-22 18:42:36,544 - INFO - Successfully downloaded S2 image for 2020-03-19.
+2025-08-22 18:42:43,389 - INFO - Successfully downloaded S2 image for 2019-08-15.
+2025-08-22 18:43:44,713 - INFO - Successfully downloaded S2 image for 2020-11-26.
+2025-08-22 18:44:13,260 - INFO - Successfully downloaded S2 image for 2019-08-31.
+2025-08-22 18:44:32,004 - INFO - Successfully downloaded S2 image for 2020-04-04.
+2025-08-22 18:45:19,692 - INFO - Successfully downloaded S2 image for 2020-12-12.
+2025-08-22 18:45:51,599 - INFO - Successfully downloaded S2 image for 2019-10-02.
+2025-08-22 18:46:23,454 - INFO - Successfully downloaded S2 image for 2020-04-20.
+2025-08-22 18:47:07,593 - INFO - Successfully downloaded S2 image for 2020-12-28.
+2025-08-22 18:47:37,807 - INFO - Successfully downloaded S2 image for 2019-10-18.
+2025-08-22 18:48:37,021 - INFO - Successfully downloaded S2 image for 2020-05-06.
+2025-08-22 18:48:46,049 - INFO - Successfully downloaded S2 image for 2021-01-13.
+2025-08-22 18:49:22,138 - INFO - Successfully downloaded S2 image for 2019-11-03.
+2025-08-22 18:50:16,229 - INFO - Successfully downloaded S2 image for 2020-06-07.
+2025-08-22 18:50:28,034 - INFO - Successfully downloaded S2 image for 2021-01-29.
+2025-08-22 18:51:19,921 - INFO - Successfully downloaded S2 image for 2019-11-19.
+2025-08-22 18:53:25,170 - INFO - Successfully downloaded S2 image for 2020-06-23.
+2025-08-22 18:53:30,330 - INFO - Successfully downloaded S2 image for 2021-02-14.
+2025-08-22 18:54:33,346 - INFO - Successfully downloaded S2 image for 2019-12-05.
+2025-08-22 18:56:16,169 - INFO - Successfully downloaded S2 image for 2021-03-02.
+2025-08-22 18:56:35,271 - INFO - Successfully downloaded S2 image for 2020-07-09.
+2025-08-22 18:56:48,064 - INFO - Successfully downloaded S2 image for 2020-01-06.
+2025-08-22 18:57:51,389 - INFO - Successfully downloaded S2 image for 2021-03-18.
+2025-08-22 18:58:11,323 - INFO - Successfully downloaded S2 image for 2020-07-25.
+2025-08-22 18:58:40,261 - INFO - Successfully downloaded S2 image for 2020-01-22.
+2025-08-22 18:59:14,331 - INFO - Successfully downloaded S2 image for 2021-04-03.
+2025-08-22 18:59:49,839 - INFO - Successfully downloaded S2 image for 2020-08-10.
+2025-08-22 19:00:38,044 - INFO - Successfully downloaded S2 image for 2020-02-07.
+2025-08-22 19:01:21,965 - INFO - Successfully downloaded S2 image for 2021-04-19.
+2025-08-22 19:01:52,411 - INFO - Successfully downloaded S2 image for 2020-08-26.
+2025-08-22 19:02:42,932 - INFO - Successfully downloaded S2 image for 2020-02-23.
+2025-08-22 19:02:48,657 - INFO - Successfully downloaded S2 image for 2021-05-05.
+2025-08-22 19:03:37,157 - INFO - Successfully downloaded S2 image for 2020-09-11.
+2025-08-22 19:04:17,422 - INFO - Successfully downloaded S2 image for 2021-05-21.
+2025-08-22 19:04:19,582 - INFO - Successfully downloaded S2 image for 2020-03-10.
+2025-08-22 19:05:40,694 - INFO - Successfully downloaded S2 image for 2020-12-16.
+2025-08-22 19:06:00,812 - INFO - Successfully downloaded S2 image for 2021-06-22.
+2025-08-22 19:06:10,247 - INFO - Successfully downloaded S2 image for 2020-03-26.
+2025-08-22 19:07:19,319 - INFO - Successfully downloaded S2 image for 2021-07-24.
+2025-08-22 19:07:25,677 - INFO - Successfully downloaded S2 image for 2021-01-17.
+2025-08-22 19:07:40,721 - INFO - Successfully downloaded S2 image for 2020-04-11.
+2025-08-22 19:08:58,215 - INFO - Successfully downloaded S2 image for 2021-09-10.
+2025-08-22 19:09:23,798 - INFO - Successfully downloaded S2 image for 2021-02-02.
+2025-08-22 19:09:36,904 - INFO - Successfully downloaded S2 image for 2020-04-27.
+2025-08-22 19:10:48,269 - INFO - Successfully downloaded S2 image for 2021-10-12.
+2025-08-22 19:11:16,883 - INFO - Successfully downloaded S2 image for 2021-02-18.
+2025-08-22 19:11:33,664 - INFO - Successfully downloaded S2 image for 2020-05-13.
+2025-08-22 19:12:19,961 - INFO - Successfully downloaded S2 image for 2021-11-08.
+2025-08-22 19:13:07,821 - INFO - Successfully downloaded S2 image for 2021-03-06.
+2025-08-22 19:13:13,909 - INFO - Successfully downloaded S2 image for 2020-05-29.
+2025-08-22 19:13:59,946 - INFO - Successfully downloaded S2 image for 2021-11-29.
+2025-08-22 19:14:55,423 - INFO - Successfully downloaded S2 image for 2021-03-22.
+2025-08-22 19:14:57,423 - INFO - Successfully downloaded S2 image for 2020-06-14.
+2025-08-22 19:16:01,713 - INFO - Successfully downloaded S2 image for 2021-12-07.
+2025-08-22 19:16:45,165 - INFO - Successfully downloaded S2 image for 2020-06-30.
+2025-08-22 19:17:01,143 - INFO - Successfully downloaded S2 image for 2021-04-07.
+2025-08-22 19:17:35,078 - INFO - Successfully downloaded S2 image for 2021-12-15.
+2025-08-22 19:18:26,416 - INFO - Successfully downloaded S2 image for 2020-07-16.
+2025-08-22 19:18:45,601 - INFO - Successfully downloaded S2 image for 2021-04-23.
+2025-08-22 19:19:08,401 - INFO - Successfully downloaded S2 image for 2021-12-23.
+2025-08-22 19:20:11,045 - INFO - Successfully downloaded S2 image for 2020-08-17.
+2025-08-22 19:20:29,491 - INFO - Successfully downloaded S2 image for 2021-05-25.
+2025-08-22 19:20:51,556 - INFO - Successfully downloaded S2 image for 2022-01-08.
+2025-08-22 19:21:48,078 - INFO - Successfully downloaded S2 image for 2020-09-02.
+2025-08-22 19:22:14,253 - INFO - Successfully downloaded S2 image for 2021-06-26.
+2025-08-22 19:22:59,138 - INFO - Successfully downloaded S2 image for 2022-01-24.
+2025-08-22 19:23:37,410 - INFO - Successfully downloaded S2 image for 2020-10-04.
+2025-08-22 19:24:23,063 - INFO - Successfully downloaded S2 image for 2021-07-12.
+2025-08-22 19:24:34,012 - INFO - Successfully downloaded S2 image for 2022-02-09.
+2025-08-22 19:25:11,412 - INFO - Successfully downloaded S2 image for 2020-10-20.
+2025-08-22 19:25:52,087 - INFO - Successfully downloaded S2 image for 2021-07-28.
+2025-08-22 19:25:59,602 - INFO - Successfully downloaded S2 image for 2022-03-21.
+2025-08-22 19:27:02,974 - INFO - Successfully downloaded S2 image for 2020-11-21.
+2025-08-22 19:27:49,674 - INFO - Successfully downloaded S2 image for 2021-08-13.
+2025-08-22 19:27:51,989 - INFO - Successfully downloaded S2 image for 2022-04-06.
+2025-08-22 19:28:55,427 - INFO - Successfully downloaded S2 image for 2020-12-07.
+2025-08-22 19:29:22,964 - INFO - Successfully downloaded S2 image for 2022-04-14.
+2025-08-22 19:29:43,191 - INFO - Successfully downloaded S2 image for 2021-08-29.
+2025-08-22 19:29:52,476 - WARNING - Request error for 2020-12-23 (attempt 1/3): 503 Server Error: Service Unavailable for url: https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails/fd18aae3eb042320bec9054f5d41b772-77236e5a3f85b8a0a894931aa7e535a3:getPixels.
+2025-08-22 19:30:44,510 - INFO - Successfully downloaded S2 image for 2020-12-23.
+2025-08-22 19:31:03,676 - INFO - Successfully downloaded S2 image for 2022-04-30.
+2025-08-22 19:31:17,707 - INFO - Successfully downloaded S2 image for 2021-09-14.
+2025-08-22 19:32:46,987 - INFO - Successfully downloaded S2 image for 2022-06-25.
+2025-08-22 19:32:49,608 - INFO - Successfully downloaded S2 image for 2021-01-08.
+2025-08-22 19:33:20,602 - INFO - Successfully downloaded S2 image for 2021-09-30.
+2025-08-22 19:34:28,755 - INFO - Successfully downloaded S2 image for 2022-07-11.
+2025-08-22 19:34:43,833 - INFO - Successfully downloaded S2 image for 2021-01-24.
+2025-08-22 19:35:23,597 - INFO - Successfully downloaded S2 image for 2021-10-31.
+2025-08-22 19:35:58,874 - INFO - Successfully downloaded S2 image for 2022-07-19.
+2025-08-22 19:36:37,888 - INFO - Successfully downloaded S2 image for 2021-02-09.
+2025-08-22 19:37:18,240 - INFO - Successfully downloaded S2 image for 2021-11-01.
+2025-08-22 19:37:45,122 - INFO - Successfully downloaded S2 image for 2022-07-27.
+2025-08-22 19:38:24,269 - INFO - Successfully downloaded S2 image for 2021-02-25.
+2025-08-22 19:39:10,533 - INFO - Successfully downloaded S2 image for 2021-12-03.
+2025-08-22 19:39:28,130 - INFO - Successfully downloaded S2 image for 2022-08-04.
+2025-08-22 19:40:25,647 - INFO - Successfully downloaded S2 image for 2021-03-13.
+2025-08-22 19:41:01,477 - INFO - Successfully downloaded S2 image for 2022-08-20.
+2025-08-22 19:41:09,047 - INFO - Successfully downloaded S2 image for 2021-12-11.
+2025-08-22 19:42:42,278 - INFO - Successfully downloaded S2 image for 2021-03-29.
+2025-08-22 19:42:54,797 - INFO - Successfully downloaded S2 image for 2022-08-28.
+2025-08-22 19:43:22,298 - INFO - Successfully downloaded S2 image for 2022-01-04.
+2025-08-22 19:44:33,713 - INFO - Successfully downloaded S2 image for 2022-09-05.
+2025-08-22 19:44:43,336 - INFO - Successfully downloaded S2 image for 2021-04-14.
+2025-08-22 19:45:05,814 - INFO - Successfully downloaded S2 image for 2022-01-12.
+2025-08-22 19:46:17,015 - INFO - Successfully downloaded S2 image for 2022-09-21.
+2025-08-22 19:46:42,134 - INFO - Successfully downloaded S2 image for 2021-04-30.
+2025-08-22 19:47:08,997 - INFO - Successfully downloaded S2 image for 2022-01-20.
+2025-08-22 19:47:48,858 - INFO - Successfully downloaded S2 image for 2022-10-07.
+2025-08-22 19:48:33,261 - INFO - Successfully downloaded S2 image for 2021-05-16.
+2025-08-22 19:49:00,170 - INFO - Successfully downloaded S2 image for 2022-01-28.
+2025-08-22 19:49:32,325 - INFO - Successfully downloaded S2 image for 2022-10-15.
+2025-08-22 19:50:43,021 - INFO - Successfully downloaded S2 image for 2021-06-01.
+2025-08-22 19:51:13,712 - INFO - Successfully downloaded S2 image for 2022-02-05.
+2025-08-22 19:51:24,505 - INFO - Successfully downloaded S2 image for 2022-10-23.
+2025-08-22 19:52:40,064 - INFO - Successfully downloaded S2 image for 2021-06-17.
+2025-08-22 19:52:53,478 - INFO - Successfully downloaded S2 image for 2022-02-13.
+2025-08-22 19:53:19,617 - INFO - Successfully downloaded S2 image for 2022-10-31.
+2025-08-22 19:54:45,988 - INFO - Successfully downloaded S2 image for 2021-07-03.
+2025-08-22 19:54:52,177 - INFO - Successfully downloaded S2 image for 2022-03-01.
+2025-08-22 19:55:01,419 - INFO - Successfully downloaded S2 image for 2022-11-08.
+2025-08-22 19:56:47,770 - INFO - Successfully downloaded S2 image for 2022-12-26.
+2025-08-22 19:56:53,206 - INFO - Successfully downloaded S2 image for 2022-03-09.
+2025-08-22 19:56:56,109 - INFO - Successfully downloaded S2 image for 2021-07-19.
+2025-08-22 19:58:32,483 - INFO - Successfully downloaded S2 image for 2023-01-19.
+2025-08-22 19:58:54,821 - INFO - Successfully downloaded S2 image for 2021-08-04.
+2025-08-22 19:58:58,911 - INFO - Successfully downloaded S2 image for 2022-03-25.
+2025-08-22 20:00:37,828 - INFO - Successfully downloaded S2 image for 2023-02-04.
+2025-08-22 20:00:40,109 - INFO - Successfully downloaded S2 image for 2022-04-02.
+2025-08-22 20:00:58,244 - INFO - Successfully downloaded S2 image for 2021-08-20.
+2025-08-22 20:02:20,678 - INFO - Successfully downloaded S2 image for 2022-04-10.
+2025-08-22 20:02:26,159 - INFO - Successfully downloaded S2 image for 2023-02-12.
+2025-08-22 20:02:55,404 - INFO - Successfully downloaded S2 image for 2021-09-05.
+2025-08-22 20:04:01,054 - INFO - Successfully downloaded S2 image for 2023-03-08.
+2025-08-22 20:04:06,408 - INFO - Successfully downloaded S2 image for 2022-04-18.
+2025-08-22 20:04:48,732 - INFO - Successfully downloaded S2 image for 2021-09-21.
+2025-08-22 20:05:36,564 - INFO - Successfully downloaded S2 image for 2023-03-16.
+2025-08-22 20:05:56,146 - INFO - Successfully downloaded S2 image for 2022-04-26.
+2025-08-22 20:06:34,460 - INFO - Successfully downloaded S2 image for 2021-10-23.
+2025-08-22 20:07:31,549 - INFO - Successfully downloaded S2 image for 2023-03-24.
+2025-08-22 20:08:05,525 - INFO - Successfully downloaded S2 image for 2022-05-04.
+2025-08-22 20:08:26,027 - INFO - Successfully downloaded S2 image for 2021-10-31.
+2025-08-22 20:09:05,628 - INFO - Successfully downloaded S2 image for 2023-04-01.
+2025-08-22 20:09:53,679 - INFO - Successfully downloaded S2 image for 2022-05-12.
+2025-08-22 20:10:08,141 - INFO - Successfully downloaded S2 image for 2021-11-05.
+2025-08-22 20:10:42,317 - INFO - Successfully downloaded S2 image for 2023-04-25.
+2025-08-22 20:11:41,994 - INFO - Successfully downloaded S2 image for 2022-05-28.
+2025-08-22 20:12:05,307 - INFO - Successfully downloaded S2 image for 2021-11-08.
+2025-08-22 20:12:21,822 - INFO - Successfully downloaded S2 image for 2023-05-03.
+2025-08-22 20:13:43,445 - INFO - Successfully downloaded S2 image for 2022-06-05.
+2025-08-22 20:13:48,674 - INFO - Successfully downloaded S2 image for 2021-11-24.
+2025-08-22 20:13:50,839 - INFO - Successfully downloaded S2 image for 2023-05-11.
+2025-08-22 20:15:41,821 - INFO - Successfully downloaded S2 image for 2023-05-19.
+2025-08-22 20:15:48,029 - INFO - Successfully downloaded S2 image for 2022-06-13.
+2025-08-22 20:15:56,727 - INFO - Successfully downloaded S2 image for 2021-12-10.
+2025-08-22 20:17:20,656 - INFO - Successfully downloaded S2 image for 2023-05-27.
+2025-08-22 20:17:27,882 - INFO - Successfully downloaded S2 image for 2022-06-21.
+2025-08-22 20:17:43,696 - INFO - Successfully downloaded S2 image for 2021-12-18.
+2025-08-22 20:19:08,911 - INFO - Successfully downloaded S2 image for 2022-06-29.
+2025-08-22 20:19:25,739 - INFO - Successfully downloaded S2 image for 2023-06-04.
+2025-08-22 20:19:43,324 - INFO - Successfully downloaded S2 image for 2021-12-26.
+2025-08-22 20:20:54,454 - INFO - Successfully downloaded S2 image for 2022-07-07.
+2025-08-22 20:21:02,599 - INFO - Successfully downloaded S2 image for 2023-07-06.
+2025-08-22 20:21:45,664 - INFO - Successfully downloaded S2 image for 2022-01-03.
+2025-08-22 20:22:31,093 - INFO - Successfully downloaded S2 image for 2022-07-15.
+2025-08-22 20:22:42,767 - INFO - Successfully downloaded S2 image for 2023-07-14.
+2025-08-22 20:23:39,443 - INFO - Successfully downloaded S2 image for 2022-01-11.
+2025-08-22 20:24:17,832 - INFO - Successfully downloaded S2 image for 2023-07-22.
+2025-08-22 20:24:21,388 - INFO - Successfully downloaded S2 image for 2022-07-23.
+2025-08-22 20:25:33,289 - INFO - Successfully downloaded S2 image for 2022-01-19.
+2025-08-22 20:25:58,482 - INFO - Successfully downloaded S2 image for 2022-07-31.
+2025-08-22 20:25:59,844 - INFO - Successfully downloaded S2 image for 2023-07-30.
+2025-08-22 20:27:19,540 - INFO - Successfully downloaded S2 image for 2022-01-27.
+2025-08-22 20:27:40,909 - INFO - Successfully downloaded S2 image for 2023-08-31.
+2025-08-22 20:28:09,756 - INFO - Successfully downloaded S2 image for 2022-09-01.
+2025-08-22 20:29:09,538 - INFO - Successfully downloaded S2 image for 2023-09-08.
+2025-08-22 20:29:19,072 - INFO - Successfully downloaded S2 image for 2022-02-04.
+2025-08-22 20:29:50,327 - INFO - Successfully downloaded S2 image for 2022-09-09.
+2025-08-22 20:30:41,270 - INFO - Successfully downloaded S2 image for 2023-09-16.
+2025-08-22 20:31:14,579 - INFO - Successfully downloaded S2 image for 2022-02-12.
+2025-08-22 20:31:27,742 - INFO - Successfully downloaded S2 image for 2022-09-17.
+2025-08-22 20:32:20,538 - INFO - Successfully downloaded S2 image for 2023-09-24.
+2025-08-22 20:33:00,492 - INFO - Successfully downloaded S2 image for 2022-10-03.
+2025-08-22 20:33:03,622 - INFO - Successfully downloaded S2 image for 2022-02-20.
+2025-08-22 20:33:57,906 - INFO - Successfully downloaded S2 image for 2023-10-02.
+2025-08-22 20:34:50,234 - INFO - Successfully downloaded S2 image for 2022-10-19.
+2025-08-22 20:35:06,780 - INFO - Successfully downloaded S2 image for 2022-02-28.
+2025-08-22 20:35:36,064 - INFO - Successfully downloaded S2 image for 2023-10-18.
+2025-08-22 20:36:55,070 - INFO - Successfully downloaded S2 image for 2022-11-04.
+2025-08-22 20:37:02,112 - INFO - Successfully downloaded S2 image for 2022-03-08.
+2025-08-22 20:37:11,211 - INFO - Successfully downloaded S2 image for 2023-10-26.
+2025-08-22 20:38:41,305 - INFO - Successfully downloaded S2 image for 2022-03-16.
+2025-08-22 20:38:43,983 - INFO - Successfully downloaded S2 image for 2022-11-28.
+2025-08-22 20:39:02,739 - INFO - Successfully downloaded S2 image for 2023-11-03.
+2025-08-22 20:40:34,906 - INFO - Successfully downloaded S2 image for 2022-12-06.
+2025-08-22 20:40:35,734 - INFO - Successfully downloaded S2 image for 2022-03-24.
+2025-08-22 20:40:42,198 - INFO - Successfully downloaded S2 image for 2023-11-11.
+2025-08-22 20:42:18,658 - INFO - Successfully downloaded S2 image for 2022-04-01.
+2025-08-22 20:42:22,196 - INFO - Successfully downloaded S2 image for 2022-12-22.
+2025-08-22 20:42:34,656 - INFO - Successfully downloaded S2 image for 2023-11-19.
+2025-08-22 20:44:03,441 - INFO - Successfully downloaded S2 image for 2022-04-09.
+2025-08-22 20:44:04,750 - INFO - Successfully downloaded S2 image for 2023-11-27.
+2025-08-22 20:44:06,090 - INFO - Successfully downloaded S2 image for 2022-12-30.
+2025-08-22 20:45:36,090 - INFO - Successfully downloaded S2 image for 2023-12-13.
+2025-08-22 20:45:43,912 - INFO - Successfully downloaded S2 image for 2023-01-15.
+2025-08-22 20:45:46,499 - INFO - Successfully downloaded S2 image for 2022-04-17.
+2025-08-22 20:47:18,480 - INFO - Successfully downloaded S2 image for 2023-12-29.
+2025-08-22 20:47:29,942 - INFO - Successfully downloaded S2 image for 2023-01-31.
+2025-08-22 20:47:42,335 - INFO - Successfully downloaded S2 image for 2022-04-25.
+2025-08-22 20:48:42,800 - INFO - Successfully downloaded S2 image for 2024-01-06.
+2025-08-22 20:49:17,669 - INFO - Successfully downloaded S2 image for 2023-02-08.
+2025-08-22 20:49:32,837 - INFO - Successfully downloaded S2 image for 2022-05-03.
+2025-08-22 20:50:14,061 - INFO - Successfully downloaded S2 image for 2024-01-14.
+2025-08-22 20:50:58,285 - INFO - Successfully downloaded S2 image for 2023-02-16.
+2025-08-22 20:51:17,986 - INFO - Successfully downloaded S2 image for 2022-05-11.
+2025-08-22 20:51:42,508 - INFO - Successfully downloaded S2 image for 2024-01-22.
+2025-08-22 20:52:57,619 - INFO - Successfully downloaded S2 image for 2023-02-24.
+2025-08-22 20:53:12,950 - INFO - Successfully downloaded S2 image for 2022-05-19.
+2025-08-22 20:53:16,519 - INFO - Successfully downloaded S2 image for 2024-01-30.
+2025-08-22 20:54:55,662 - INFO - Successfully downloaded S2 image for 2022-05-27.
+2025-08-22 20:55:02,163 - INFO - Successfully downloaded S2 image for 2024-02-07.
+2025-08-22 20:55:02,987 - INFO - Successfully downloaded S2 image for 2023-03-04.
+2025-08-22 20:57:24,461 - INFO - Successfully downloaded S2 image for 2022-06-04.
+2025-08-22 20:57:39,018 - INFO - Successfully downloaded S2 image for 2023-03-12.
+2025-08-22 20:57:45,068 - INFO - Successfully downloaded S2 image for 2024-02-15.
+2025-08-22 20:58:33,264 - WARNING - Sleeping 1.92 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json, after 503
+2025-08-22 20:59:27,149 - INFO - Successfully downloaded S2 image for 2024-02-23.
+2025-08-22 20:59:28,104 - INFO - Successfully downloaded S2 image for 2022-06-12.
+2025-08-22 20:59:32,721 - INFO - Successfully downloaded S2 image for 2023-03-20.
+2025-08-22 21:01:09,342 - INFO - Successfully downloaded S2 image for 2024-03-10.
+2025-08-22 21:01:14,227 - INFO - Successfully downloaded S2 image for 2022-06-20.
+2025-08-22 21:01:23,964 - INFO - Successfully downloaded S2 image for 2023-03-28.
+2025-08-22 21:02:42,212 - INFO - Successfully downloaded S2 image for 2024-03-18.
+2025-08-22 21:03:10,955 - INFO - Successfully downloaded S2 image for 2022-06-28.
+2025-08-22 21:03:24,727 - INFO - Successfully downloaded S2 image for 2023-04-05.
+2025-08-22 21:04:21,361 - INFO - Successfully downloaded S2 image for 2024-03-26.
+2025-08-22 21:04:52,965 - INFO - Successfully downloaded S2 image for 2022-07-06.
+2025-08-22 21:05:00,494 - INFO - Successfully downloaded S2 image for 2023-04-13.
+2025-08-22 21:05:58,603 - INFO - Successfully downloaded S2 image for 2024-04-03.
+2025-08-22 21:06:29,778 - INFO - Successfully downloaded S2 image for 2022-07-14.
+2025-08-22 21:06:43,175 - INFO - Successfully downloaded S2 image for 2023-04-21.
+2025-08-22 21:07:24,467 - INFO - Successfully downloaded S2 image for 2024-04-11.
+2025-08-22 21:08:10,138 - INFO - Successfully downloaded S2 image for 2022-07-22.
+2025-08-22 21:08:25,735 - INFO - Successfully downloaded S2 image for 2023-04-29.
+2025-08-22 21:09:07,447 - INFO - Successfully downloaded S2 image for 2024-04-19.
+2025-08-22 21:10:00,688 - INFO - Successfully downloaded S2 image for 2022-07-30.
+2025-08-22 21:10:09,226 - INFO - Successfully downloaded S2 image for 2023-05-07.
+2025-08-22 21:10:47,821 - INFO - Successfully downloaded S2 image for 2024-04-27.
+2025-08-22 21:11:40,193 - INFO - Successfully downloaded S2 image for 2023-05-15.
+2025-08-22 21:11:45,587 - INFO - Successfully downloaded S2 image for 2022-08-07.
+2025-08-22 21:12:11,466 - INFO - Successfully downloaded S2 image for 2024-05-05.
+2025-08-22 21:13:25,741 - INFO - Successfully downloaded S2 image for 2023-05-23.
+2025-08-22 21:13:33,618 - INFO - Successfully downloaded S2 image for 2024-05-13.
+2025-08-22 21:13:40,317 - INFO - Successfully downloaded S2 image for 2022-08-15.
+2025-08-22 21:15:09,283 - INFO - Successfully downloaded S2 image for 2024-05-21.
+2025-08-22 21:15:10,757 - INFO - Successfully downloaded S2 image for 2023-05-31.
+2025-08-22 21:15:29,291 - INFO - Successfully downloaded S2 image for 2022-08-23.
+2025-08-22 21:16:37,990 - INFO - Successfully downloaded S2 image for 2023-06-16.
+2025-08-22 21:16:41,863 - INFO - Successfully downloaded S2 image for 2024-06-22.
+2025-08-22 21:17:08,972 - INFO - Successfully downloaded S2 image for 2022-08-31.
+2025-08-22 21:18:11,302 - INFO - Successfully downloaded S2 image for 2024-07-08.
+2025-08-22 21:18:27,972 - INFO - Successfully downloaded S2 image for 2023-06-24.
+2025-08-22 21:18:51,103 - INFO - Successfully downloaded S2 image for 2022-09-08.
+2025-08-22 21:19:38,851 - INFO - Successfully downloaded S2 image for 2024-07-16.
+2025-08-22 21:19:55,016 - INFO - Successfully downloaded S2 image for 2023-07-02.
+2025-08-22 21:20:33,219 - INFO - Successfully downloaded S2 image for 2022-09-16.
+2025-08-22 21:21:04,087 - INFO - Successfully downloaded S2 image for 2024-08-09.
+2025-08-22 21:21:44,179 - INFO - Successfully downloaded S2 image for 2023-07-10.
+2025-08-22 21:22:26,260 - INFO - Successfully downloaded S2 image for 2022-09-24.
+2025-08-22 21:22:40,003 - INFO - Successfully downloaded S2 image for 2024-08-25.
+2025-08-22 21:23:27,343 - INFO - Successfully downloaded S2 image for 2023-08-03.
+2025-08-22 21:24:12,305 - INFO - Successfully downloaded S2 image for 2024-09-26.
+2025-08-22 21:24:23,590 - INFO - Successfully downloaded S2 image for 2022-10-10.
+2025-08-22 21:25:02,736 - INFO - Successfully downloaded S2 image for 2023-08-11.
+2025-08-22 21:26:00,399 - INFO - Successfully downloaded S2 image for 2024-10-04.
+2025-08-22 21:26:13,597 - INFO - Successfully downloaded S2 image for 2022-10-18.
+2025-08-22 21:26:51,970 - INFO - Successfully downloaded S2 image for 2023-08-19.
+2025-08-22 21:28:16,678 - INFO - Successfully downloaded S2 image for 2022-10-26.
+2025-08-22 21:28:33,411 - INFO - Successfully downloaded S2 image for 2023-08-27.
+2025-08-22 21:29:54,737 - WARNING - Sleeping 1.18 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 502
+2025-08-22 21:30:05,630 - INFO - Successfully downloaded S2 image for 2022-11-19.
+2025-08-22 21:30:09,595 - INFO - Successfully downloaded S2 image for 2023-09-04.
+2025-08-22 21:30:57,278 - INFO - Successfully downloaded S2 image for 2024-10-12.
+2025-08-22 21:31:47,310 - INFO - Successfully downloaded S2 image for 2022-11-27.
+2025-08-22 21:32:01,024 - INFO - Successfully downloaded S2 image for 2023-09-12.
+2025-08-22 21:32:35,496 - INFO - Successfully downloaded S2 image for 2024-10-20.
+2025-08-22 21:33:42,529 - INFO - Successfully downloaded S2 image for 2022-12-05.
+2025-08-22 21:33:51,181 - INFO - Successfully downloaded S2 image for 2023-09-20.
+2025-08-22 21:34:03,121 - INFO - Successfully downloaded S2 image for 2024-10-28.
+2025-08-22 21:35:24,959 - INFO - Successfully downloaded S2 image for 2022-12-13.
+2025-08-22 21:35:35,802 - INFO - Successfully downloaded S2 image for 2023-09-28.
+2025-08-22 21:35:46,754 - INFO - Successfully downloaded S2 image for 2024-11-05.
+2025-08-22 21:37:08,330 - INFO - Successfully downloaded S2 image for 2023-10-06.
+2025-08-22 21:37:10,222 - INFO - Successfully downloaded S2 image for 2022-12-21.
+2025-08-22 21:37:37,436 - INFO - Successfully downloaded S2 image for 2024-11-13.
+2025-08-22 21:38:15,256 - WARNING - Sleeping 1.04 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json, after 503
+2025-08-22 21:39:07,713 - INFO - Successfully downloaded S2 image for 2022-12-29.
+2025-08-22 21:39:11,676 - INFO - Successfully downloaded S2 image for 2024-11-21.
+2025-08-22 21:39:59,655 - INFO - Successfully downloaded S2 image for 2023-10-22.
+2025-08-22 21:40:46,914 - INFO - Successfully downloaded S2 image for 2024-11-29.
+2025-08-22 21:40:58,077 - INFO - Successfully downloaded S2 image for 2023-01-14.
+2025-08-22 21:41:42,473 - INFO - Successfully downloaded S2 image for 2023-11-23.
+2025-08-22 21:42:30,800 - INFO - Successfully downloaded S2 image for 2024-12-23.
+2025-08-22 21:42:37,378 - INFO - Successfully downloaded S2 image for 2023-01-22.
+2025-08-22 21:43:42,345 - INFO - Successfully downloaded S2 image for 2023-12-01.
+2025-08-22 21:44:05,614 - INFO - Successfully downloaded S2 image for 2025-01-08.
+2025-08-22 21:44:17,502 - INFO - Successfully downloaded S2 image for 2023-01-30.
+2025-08-22 21:45:43,209 - INFO - Successfully downloaded S2 image for 2023-12-17.
+2025-08-22 21:45:44,327 - INFO - Successfully downloaded S2 image for 2025-01-16.
+2025-08-22 21:46:21,282 - INFO - Successfully downloaded S2 image for 2023-02-07.
+2025-08-22 21:47:32,087 - INFO - Successfully downloaded S2 image for 2023-12-25.
+2025-08-22 21:47:34,818 - INFO - Successfully downloaded S2 image for 2025-01-24.
+2025-08-22 21:48:17,531 - INFO - Successfully downloaded S2 image for 2023-02-15.
+2025-08-22 21:50:02,806 - INFO - Successfully downloaded S2 image for 2024-01-02.
+2025-08-22 21:50:06,821 - INFO - Successfully downloaded S2 image for 2025-02-01.
+2025-08-22 21:51:00,499 - INFO - Successfully downloaded S2 image for 2023-02-23.
+2025-08-22 21:51:42,868 - INFO - Successfully downloaded S2 image for 2025-02-17.
+2025-08-22 21:51:52,354 - INFO - Successfully downloaded S2 image for 2024-01-10.
+2025-08-22 21:52:55,249 - INFO - Successfully downloaded S2 image for 2023-03-03.
+2025-08-22 21:53:26,270 - INFO - Successfully downloaded S2 image for 2025-03-05.
+2025-08-22 21:53:42,799 - INFO - Successfully downloaded S2 image for 2024-01-18.
+2025-08-22 21:54:59,223 - WARNING - Request error for 2025-03-13 (attempt 1/3): 503 Server Error: Service Unavailable for url: https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails/929a007efc9e42d18f24d504854504ed-ebcb030e4d68abc7e7b57675fe07706b:getPixels.
+2025-08-22 21:54:59,614 - INFO - Successfully downloaded S2 image for 2023-03-11.
+2025-08-22 21:55:31,988 - INFO - Successfully downloaded S2 image for 2024-01-26.
+2025-08-22 21:56:05,214 - INFO - Successfully downloaded S2 image for 2025-03-13.
+2025-08-22 21:56:55,537 - INFO - Successfully downloaded S2 image for 2023-03-19.
+2025-08-22 21:57:28,814 - INFO - Successfully downloaded S2 image for 2024-02-03.
+2025-08-22 21:57:34,353 - INFO - Successfully downloaded S2 image for 2025-03-21.
+2025-08-22 21:58:45,189 - INFO - Successfully downloaded S2 image for 2023-03-27.
+2025-08-22 21:59:05,315 - INFO - Successfully downloaded S2 image for 2025-03-29.
+2025-08-22 21:59:05,318 - INFO - Sentinel-2 data retrieval finished for ROI 'sonla'.
+2025-08-22 21:59:05,318 - INFO - ==================================================
+2025-08-22 21:59:05,319 - INFO - Data retrieval orchestration finished. Total time: 4:55:18.852589
+2025-08-22 21:59:16,066 - INFO - Successfully downloaded S2 image for 2024-02-11.
+2025-08-22 22:00:39,628 - INFO - Successfully downloaded S2 image for 2023-04-04.
+2025-08-22 22:01:11,231 - INFO - Successfully downloaded S2 image for 2024-02-19.
+2025-08-22 22:02:06,063 - INFO - Successfully downloaded S2 image for 2023-04-12.
+2025-08-22 22:02:53,782 - INFO - Successfully downloaded S2 image for 2024-02-27.
+2025-08-22 22:03:42,744 - INFO - Successfully downloaded S2 image for 2023-04-20.
+2025-08-22 22:04:00,428 - WARNING - Sleeping 1.48 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/thumbnails?fields=name&alt=json, after 503
+2025-08-22 22:04:52,983 - INFO - Successfully downloaded S2 image for 2024-03-06.
+2025-08-22 22:05:34,097 - INFO - Successfully downloaded S2 image for 2023-04-28.
+2025-08-22 22:06:51,588 - INFO - Successfully downloaded S2 image for 2024-03-14.
+2025-08-22 22:07:21,026 - INFO - Successfully downloaded S2 image for 2023-05-06.
+2025-08-22 22:08:36,105 - INFO - Successfully downloaded S2 image for 2024-03-22.
+2025-08-22 22:09:18,013 - INFO - Successfully downloaded S2 image for 2023-05-14.
+2025-08-22 22:10:48,087 - INFO - Successfully downloaded S2 image for 2024-03-30.
+2025-08-22 22:11:14,172 - INFO - Successfully downloaded S2 image for 2023-05-22.
+2025-08-22 22:11:29,145 - WARNING - Sleeping 0.85 seconds before retry 1 of 5 for request: POST https://earthengine.googleapis.com/v1/projects/ee-hadat-461702-p4/value:compute?prettyPrint=false&alt=json, after 503
+2025-08-22 22:12:47,384 - INFO - Successfully downloaded S2 image for 2024-04-07.
+2025-08-22 22:13:13,265 - INFO - Successfully downloaded S2 image for 2023-05-30.
+2025-08-22 22:14:49,916 - INFO - Successfully downloaded S2 image for 2023-06-15.
+2025-08-22 22:14:51,355 - INFO - Successfully downloaded S2 image for 2024-04-15.
+2025-08-22 22:16:39,726 - INFO - Successfully downloaded S2 image for 2023-06-23.
+2025-08-22 22:16:45,508 - INFO - Successfully downloaded S2 image for 2024-04-23.
+2025-08-22 22:18:27,184 - INFO - Successfully downloaded S2 image for 2023-07-01.
+2025-08-22 22:18:49,091 - INFO - Successfully downloaded S2 image for 2024-05-01.
+2025-08-22 22:20:19,284 - INFO - Successfully downloaded S2 image for 2023-07-09.
+2025-08-22 22:20:39,955 - INFO - Successfully downloaded S2 image for 2024-05-09.
+2025-08-22 22:22:07,024 - INFO - Successfully downloaded S2 image for 2024-05-25.
+2025-08-22 22:22:09,280 - INFO - Successfully downloaded S2 image for 2023-07-17.
+2025-08-22 22:23:53,725 - INFO - Successfully downloaded S2 image for 2024-06-02.
+2025-08-22 22:23:54,829 - INFO - Successfully downloaded S2 image for 2023-07-25.
+2025-08-22 22:25:37,746 - INFO - Successfully downloaded S2 image for 2023-08-02.
+2025-08-22 22:25:46,068 - INFO - Successfully downloaded S2 image for 2024-06-18.
+2025-08-22 22:27:28,502 - INFO - Successfully downloaded S2 image for 2024-06-26.
+2025-08-22 22:27:31,150 - INFO - Successfully downloaded S2 image for 2023-08-10.
+2025-08-22 22:29:15,762 - INFO - Successfully downloaded S2 image for 2024-07-04.
+2025-08-22 22:29:31,727 - INFO - Successfully downloaded S2 image for 2023-08-18.
+2025-08-22 22:30:56,710 - INFO - Successfully downloaded S2 image for 2024-07-12.
+2025-08-22 22:31:23,835 - INFO - Successfully downloaded S2 image for 2023-08-26.
+2025-08-22 22:32:37,840 - INFO - Successfully downloaded S2 image for 2024-08-05.
+2025-08-22 22:32:58,980 - INFO - Successfully downloaded S2 image for 2023-09-11.
+2025-08-22 22:34:19,824 - INFO - Successfully downloaded S2 image for 2024-08-13.
+2025-08-22 22:34:58,494 - INFO - Successfully downloaded S2 image for 2023-09-19.
+2025-08-22 22:36:07,248 - INFO - Successfully downloaded S2 image for 2024-08-21.
+2025-08-22 22:36:37,953 - INFO - Successfully downloaded S2 image for 2023-09-27.
+2025-08-22 22:37:37,975 - INFO - Successfully downloaded S2 image for 2024-08-29.
+2025-08-22 22:38:25,472 - INFO - Successfully downloaded S2 image for 2023-10-05.
+2025-08-22 22:39:33,329 - INFO - Successfully downloaded S2 image for 2024-09-30.
+2025-08-22 22:40:13,687 - INFO - Successfully downloaded S2 image for 2023-10-13.
+2025-08-22 22:41:24,663 - INFO - Successfully downloaded S2 image for 2024-10-16.
+2025-08-22 22:42:17,695 - INFO - Successfully downloaded S2 image for 2023-10-21.
+2025-08-22 22:43:07,955 - INFO - Successfully downloaded S2 image for 2024-11-09.
+2025-08-22 22:44:06,696 - INFO - Successfully downloaded S2 image for 2023-10-29.
+2025-08-22 22:44:45,465 - INFO - Successfully downloaded S2 image for 2024-11-17.
+2025-08-22 22:46:01,597 - INFO - Successfully downloaded S2 image for 2023-11-06.
+2025-08-22 22:46:36,912 - INFO - Successfully downloaded S2 image for 2024-11-25.
+2025-08-22 22:47:55,092 - INFO - Successfully downloaded S2 image for 2023-11-14.
+2025-08-22 22:48:38,780 - INFO - Successfully downloaded S2 image for 2024-12-03.
+2025-08-22 22:49:44,882 - INFO - Successfully downloaded S2 image for 2023-11-22.
+2025-08-22 22:50:25,964 - INFO - Successfully downloaded S2 image for 2024-12-19.
+2025-08-22 22:51:20,927 - INFO - Successfully downloaded S2 image for 2023-11-30.
+2025-08-22 22:52:30,044 - INFO - Successfully downloaded S2 image for 2025-01-04.
+2025-08-22 22:53:17,834 - INFO - Successfully downloaded S2 image for 2023-12-08.
+2025-08-22 22:54:26,467 - INFO - Successfully downloaded S2 image for 2025-01-12.
+2025-08-22 22:55:38,321 - INFO - Successfully downloaded S2 image for 2023-12-16.
+2025-08-22 22:56:28,436 - INFO - Successfully downloaded S2 image for 2025-01-20.
+2025-08-22 22:57:24,670 - INFO - Successfully downloaded S2 image for 2024-01-01.
+2025-08-22 22:58:34,457 - INFO - Successfully downloaded S2 image for 2025-01-28.
+2025-08-22 22:59:24,837 - INFO - Successfully downloaded S2 image for 2024-01-09.
+2025-08-22 23:00:42,687 - INFO - Successfully downloaded S2 image for 2025-02-05.
+2025-08-22 23:01:25,196 - INFO - Successfully downloaded S2 image for 2024-01-17.
+2025-08-22 23:02:58,054 - INFO - Successfully downloaded S2 image for 2025-02-13.
+2025-08-22 23:03:30,774 - INFO - Successfully downloaded S2 image for 2024-01-25.
+2025-08-22 23:04:55,306 - INFO - Successfully downloaded S2 image for 2025-02-21.
+2025-08-22 23:05:52,512 - INFO - Successfully downloaded S2 image for 2024-02-02.
+2025-08-22 23:06:56,224 - INFO - Successfully downloaded S2 image for 2025-03-01.
+2025-08-22 23:09:23,416 - INFO - Successfully downloaded S2 image for 2024-02-10.
+2025-08-22 23:10:54,056 - INFO - Successfully downloaded S2 image for 2025-03-09.
+2025-08-22 23:12:16,814 - INFO - Successfully downloaded S2 image for 2024-02-18.
+2025-08-22 23:13:39,174 - INFO - Successfully downloaded S2 image for 2025-03-17.
+2025-08-22 23:14:23,437 - INFO - Successfully downloaded S2 image for 2024-02-26.
+2025-08-22 23:15:28,155 - INFO - Successfully downloaded S2 image for 2025-03-25.
+2025-08-22 23:16:29,011 - INFO - Successfully downloaded S2 image for 2024-03-05.
+2025-08-22 23:17:25,983 - INFO - Successfully downloaded S2 image for 2025-04-02.
+2025-08-22 23:18:20,082 - INFO - Successfully downloaded S2 image for 2024-03-13.
+2025-08-22 23:19:26,159 - INFO - Successfully downloaded S2 image for 2025-04-10.
+2025-08-22 23:19:26,163 - INFO - Sentinel-2 data retrieval finished for ROI 'gialai'.
+2025-08-22 23:19:26,163 - INFO - ==================================================
+2025-08-22 23:19:26,163 - INFO - Data retrieval orchestration finished. Total time: 6:19:31.335526
+2025-08-22 23:20:23,556 - INFO - Successfully downloaded S2 image for 2024-03-21.
+2025-08-22 23:23:01,970 - INFO - Successfully downloaded S2 image for 2024-03-29.
+2025-08-22 23:25:49,418 - INFO - Successfully downloaded S2 image for 2024-04-06.
+2025-08-22 23:27:31,812 - INFO - Successfully downloaded S2 image for 2024-04-14.
+2025-08-22 23:29:24,932 - INFO - Successfully downloaded S2 image for 2024-04-22.
+2025-08-22 23:31:13,412 - INFO - Successfully downloaded S2 image for 2024-04-30.
+2025-08-22 23:33:01,646 - INFO - Successfully downloaded S2 image for 2024-05-08.
+2025-08-22 23:34:42,402 - INFO - Successfully downloaded S2 image for 2024-05-16.
+2025-08-22 23:36:37,469 - INFO - Successfully downloaded S2 image for 2024-05-24.
+2025-08-22 23:38:20,705 - INFO - Successfully downloaded S2 image for 2024-06-01.
+2025-08-22 23:40:23,417 - INFO - Successfully downloaded S2 image for 2024-06-17.
+2025-08-22 23:42:34,926 - INFO - Successfully downloaded S2 image for 2024-06-25.
+2025-08-22 23:44:36,567 - INFO - Successfully downloaded S2 image for 2024-07-03.
+2025-08-22 23:46:46,650 - INFO - Successfully downloaded S2 image for 2024-08-04.
+2025-08-22 23:48:58,350 - INFO - Successfully downloaded S2 image for 2024-08-12.
+2025-08-22 23:50:55,905 - INFO - Successfully downloaded S2 image for 2024-08-20.
+2025-08-22 23:53:20,225 - INFO - Successfully downloaded S2 image for 2024-08-28.
+2025-08-22 23:55:41,274 - INFO - Successfully downloaded S2 image for 2024-09-05.
+2025-08-22 23:57:36,057 - INFO - Successfully downloaded S2 image for 2024-09-13.
+2025-08-22 23:59:18,189 - INFO - Successfully downloaded S2 image for 2024-09-29.
+2025-08-23 00:00:55,335 - INFO - Successfully downloaded S2 image for 2024-10-07.
+2025-08-23 00:03:09,589 - INFO - Successfully downloaded S2 image for 2024-10-15.
+2025-08-23 00:05:02,580 - INFO - Successfully downloaded S2 image for 2024-10-31.
+2025-08-23 00:07:16,502 - INFO - Successfully downloaded S2 image for 2024-11-08.
+2025-08-23 00:09:00,389 - INFO - Successfully downloaded S2 image for 2024-11-16.
+2025-08-23 00:10:53,892 - INFO - Successfully downloaded S2 image for 2024-11-24.
+2025-08-23 00:12:24,455 - INFO - Successfully downloaded S2 image for 2024-12-18.
+2025-08-23 00:14:04,267 - INFO - Successfully downloaded S2 image for 2024-12-26.
+2025-08-23 00:15:51,184 - INFO - Successfully downloaded S2 image for 2025-01-03.
+2025-08-23 00:17:50,833 - INFO - Successfully downloaded S2 image for 2025-01-11.
+2025-08-23 00:19:46,697 - INFO - Successfully downloaded S2 image for 2025-01-19.
+2025-08-23 00:21:57,698 - INFO - Successfully downloaded S2 image for 2025-02-04.
+2025-08-23 00:23:49,745 - INFO - Successfully downloaded S2 image for 2025-02-12.
+2025-08-23 00:25:42,352 - INFO - Successfully downloaded S2 image for 2025-02-20.
+2025-08-23 00:27:47,824 - INFO - Successfully downloaded S2 image for 2025-02-28.
+2025-08-23 00:29:54,553 - INFO - Successfully downloaded S2 image for 2025-03-08.
+2025-08-23 00:31:34,175 - INFO - Successfully downloaded S2 image for 2025-03-16.
+2025-08-23 00:33:30,735 - INFO - Successfully downloaded S2 image for 2025-03-24.
+2025-08-23 00:35:37,892 - INFO - Successfully downloaded S2 image for 2025-04-01.
+2025-08-23 00:37:30,972 - INFO - Successfully downloaded S2 image for 2025-04-09.
+2025-08-23 00:37:30,976 - INFO - Sentinel-2 data retrieval finished for ROI 'travinh'.
+2025-08-23 00:37:30,976 - INFO - ==================================================
+2025-08-23 00:37:30,976 - INFO - Data retrieval orchestration finished. Total time: 7:29:04.465957
