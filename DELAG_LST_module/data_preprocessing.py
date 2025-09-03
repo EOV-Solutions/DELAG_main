@@ -963,34 +963,3 @@ def preprocess_all_data_era5_primary(app_config) -> dict:
     }
         
     return output_data
-
-    print(f"ERA5-primary preprocessing complete for ROI: {app_config.ROI_NAME}. Final number of dates in ERA5 timeline: {len(era5_primary_dates)}")
-    
-    # Create geo_profile from the reference grid
-    with rasterio.open(actual_reference_grid_path) as ref_src:
-        geo_profile = ref_src.profile.copy()
-        geo_profile.update({
-            'width': target_width,
-            'height': target_height,
-            'dtype': 'float32',
-            'nodata': app_config.LST_NODATA_VALUE
-        })
-    
-    output_data = {
-        "lst_stack": np.array(lst_stack_aligned, dtype=np.float32),
-        "era5_stack": np.array(era5_stack_primary, dtype=np.float32),
-        "s2_reflectance_stack": np.array(s2_final_stack, dtype=np.float32),
-        "doy_stack": np.array(doy_stack_1d, dtype=np.int16),
-        "lon_coords": np.array(lon_coords, dtype=np.float32),
-        "lat_coords": np.array(lat_coords, dtype=np.float32),
-        "geo_profile": geo_profile,
-        "common_dates": era5_primary_dates,  # This is now the ERA5 timeline
-        "lon_scaler": lon_scaler,
-        "lat_scaler": lat_scaler,
-        "reference_grid_path": actual_reference_grid_path,
-        "roi_name": app_config.ROI_NAME,
-        "training_pixel_mask": training_pixel_mask,
-        "timeline_source": "era5_primary"  # Add metadata about which timeline approach was used
-    }
-        
-    return output_data

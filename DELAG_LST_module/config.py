@@ -10,7 +10,7 @@ import datetime
 BASE_DATA_DIR = "/mnt/hdd12tb/code/nhatvm/DELAG_main/data/preprocessed_data" # USER TO VERIFY/SET THIS
 
 # Name of the specific ROI folder to process from BASE_DATA_DIR
-ROI_NAME = "sonla" # USER TO SET THIS to one of the subfolders
+ROI_NAME = "travinh" # USER TO SET THIS to one of the subfolders
 
 # Construct full paths for the selected ROI
 ROI_BASE_PATH = os.path.join(BASE_DATA_DIR, ROI_NAME)
@@ -46,8 +46,8 @@ EVALUATION_RESULTS_PATH = "evaluation_results.json" # This will be saved inside 
 
 # --- Data Parameters ---
 TARGET_RESOLUTION = 30  # meters
-START_DATE = "2015-01-01" # Example, user should define for the ROI
-END_DATE = "2025-01-01" # Example, user should define for the ROI
+START_DATE = "2000-01-01" # Example, user should define for the ROI
+END_DATE = "2060-01-01" # Example, user should define for the ROI
 DAYS_OF_YEAR = 366 # Covers both leap and non-leap years
 LST_NODATA_VALUE = np.nan # Value indicating no data or cloud in LST files
 S2_NODATA_VALUE = np.nan # NoData value in S2 files
