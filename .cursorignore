@@ -2,5 +2,6 @@ data/output/
 data/preprocessed_data/
 data/retrieved_data/
 data/split_data/
+data/ETL_crawl_data/
 .venv
 __pycache__
