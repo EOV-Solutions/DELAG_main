@@ -2,15 +2,15 @@ import glob
 import os
 import shutil
 import tempfile
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple
+from datetime import datetime
+from typing import Dict, List, Optional, Union
 
 import numpy as np
 import rasterio
 from rasterio.warp import reproject, calculate_default_transform, Resampling
 
 from .server_client import ServerClient
-from .utils import find_grid_feature, bbox_from_feature, group_files_by_date
+from .utils import extract_datetime_from_filename, group_files_by_date
 from .config import config
 
 
@@ -213,160 +213,141 @@ def _process_landsat_scene_to_lst(
 
 def retrieve_lst_from_server(
     roi_name: str,
-    grid_file: str,
-    start_date: str,
-    end_date: str,
+    task_ids: Dict[str, List[str]],
     output_base: str,
     api_base_url: str = "http://localhost:8000",
-    cloud_cover: float = 80.0,
     use_ndvi: bool = True,
 ) -> None:
     """
-    Download Landsat L1, L2, and ASTER GED data from server and compute LST following
-    the original GEE-based LST module workflow.
+    Download Landsat L1, L2, and ASTER GED data from server using predefined task IDs
+    and compute LST following the original GEE-based LST module workflow.
+    
+    Args:
+        roi_name: ROI identifier for output folder structure
+        task_ids: Dictionary with task IDs for different data types:
+                 {"L8_L1": [...], "L8_L2": [...], "L9_L1": [...], "L9_L2": [...], "aster": [...]}
+        output_base: Base output directory
+        api_base_url: Server API base URL
+        use_ndvi: Whether to use NDVI for dynamic emissivity calculation
     
     Outputs: L8_lst16days_YYYY-MM-DD.tif and L9_lst16days_YYYY-MM-DD.tif files
     """
-    feature = find_grid_feature(roi_name, grid_file)
-    if feature is None:
-        raise ValueError(f"ROI '{roi_name}' not found in grid {grid_file}")
-    
-    bbox = bbox_from_feature(feature)
     lst_dir = _ensure_dirs(output_base, roi_name)
     client = ServerClient(api_base_url=api_base_url, timeout=300)
     
-    # Generate 16-day intervals for Landsat retrieval
-    start_dt = datetime.strptime(start_date, '%Y-%m-%d')
-    end_dt = datetime.strptime(end_date, '%Y-%m-%d')
-    
-    target_dates = []
-    current_dt = start_dt
-    while current_dt <= end_dt:
-        target_dates.append(current_dt)
-        current_dt += timedelta(days=16)
-    
     # Download ASTER GED data once (it's static)
     print("Downloading ASTER GED data...")
-    aster_temp_dir = None
-    try:
-        aster_task_id = client.create_aster_task(
-            bbox=bbox,
-            datetime_range_iso=f"{start_date}T00:00:00Z/{end_date}T23:59:59Z",
-            bands=config.ASTER_CONFIG["default_bands"]
-        )
-        
-        aster_temp_dir = client.download_and_extract("aster", aster_task_id)
-        aster_files = {}
-        for f in glob.glob(os.path.join(aster_temp_dir, '**', '*.tif'), recursive=True):
-            fname = os.path.basename(f)
-            if 'emissivity_band10' in fname:
-                aster_files['emissivity_band10'] = f
-            elif 'emissivity_band11' in fname:
-                aster_files['emissivity_band11'] = f
-            elif 'ndvi' in fname:
-                aster_files['ndvi'] = f
-        
-        print(f"Downloaded ASTER GED: {list(aster_files.keys())}")
-        
-    except Exception as e:
-        print(f"Warning: Failed to download ASTER GED: {e}")
-        aster_files = {}
+    aster_files = {}
+    if "aster" in task_ids and task_ids["aster"]:
+        try:
+            aster_task_id = task_ids["aster"][0]  # Use first ASTER task ID
+            aster_temp_dir = client.download_and_extract("aster", aster_task_id)
+            
+            for f in glob.glob(os.path.join(aster_temp_dir, '**', '*.tif'), recursive=True):
+                fname = os.path.basename(f)
+                if 'emissivity_band10' in fname:
+                    aster_files['emissivity_band10'] = f
+                elif 'emissivity_band11' in fname:
+                    aster_files['emissivity_band11'] = f
+                elif 'ndvi' in fname:
+                    aster_files['ndvi'] = f
+            
+            print(f"Downloaded ASTER GED: {list(aster_files.keys())}")
+            
+        except Exception as e:
+            print(f"Warning: Failed to download ASTER GED: {e}")
     
-    # Process each target date for both L8 and L9
+    # Process each Landsat satellite
     for landsat_id in ["L8", "L9"]:
-        landsat_config = config.get_landsat_config(landsat_id)
-        if not landsat_config:
-            print(f"No configuration found for {landsat_id}")
+        l1_key = f"{landsat_id}_L1"
+        l2_key = f"{landsat_id}_L2"
+        
+        if l1_key not in task_ids or l2_key not in task_ids:
+            print(f"Missing task IDs for {landsat_id} (need {l1_key} and {l2_key})")
             continue
         
-        for target_dt in target_dates:
-            date_str = target_dt.strftime('%Y-%m-%d')
-            output_file = os.path.join(lst_dir, f"{landsat_id}_lst16days_{date_str}.tif")
-            
-            if os.path.exists(output_file):
-                print(f"{landsat_id} LST already exists: {output_file}")
-                continue
-            
-            # Create datetime range for this acquisition
-            datetime_range = f"{date_str}T00:00:00Z/{date_str}T23:59:59Z"
+        l1_task_ids = task_ids[l1_key]
+        l2_task_ids = task_ids[l2_key]
+        
+        # Process each L1 task (assuming 1:1 correspondence with L2 tasks)
+        for i, l1_task_id in enumerate(l1_task_ids):
+            print(f"Processing {landsat_id} LST from L1 task: {l1_task_id}")
             
             l1_temp_dir = None
             l2_temp_dir = None
             
             try:
                 # Download L1 (TOA) data
-                l1_task_id = client.create_landsat_task(
-                    satellite=landsat_id,
-                    level="l1",
-                    bbox=bbox,
-                    datetime_range_iso=datetime_range,
-                    bands=landsat_config["tir_bands_l1"],
-                    cloud_cover=cloud_cover,
-                    limit=config.LANDSAT_CONFIG["default_limit"]
-                )
+                l1_temp_dir = client.download_and_extract(f"landsat{landsat_id[1].lower()}_l1", l1_task_id)
                 
-                l1_temp_dir = client.download_and_extract(landsat_config["l1_endpoint_key"], l1_task_id)
-                
-                # Download L2 (SR) data
-                l2_bands = landsat_config["optical_bands_l2"] + landsat_config["tir_bands_l2"]
-                l2_task_id = client.create_landsat_task(
-                    satellite=landsat_id,
-                    level="l2", 
-                    bbox=bbox,
-                    datetime_range_iso=datetime_range,
-                    bands=l2_bands,
-                    cloud_cover=cloud_cover,
-                    limit=config.LANDSAT_CONFIG["default_limit"]
-                )
-                
-                l2_temp_dir = client.download_and_extract(landsat_config["l2_endpoint_key"], l2_task_id)
-                
-                # Organize downloaded files by band
-                l1_files = {}
-                l2_files = {}
-                
-                for f in glob.glob(os.path.join(l1_temp_dir, '**', '*.tif'), recursive=True):
-                    fname = os.path.basename(f)
-                    if 'B10' in fname:
-                        l1_files['B10'] = f
-                    elif 'B11' in fname:
-                        l1_files['B11'] = f
-                    elif 'B6' in fname:
-                        l1_files['B6'] = f
-                
-                for f in glob.glob(os.path.join(l2_temp_dir, '**', '*.tif'), recursive=True):
-                    fname = os.path.basename(f)
-                    if 'SR_B4' in fname:
-                        l2_files['B4'] = f
-                    elif 'SR_B5' in fname:
-                        l2_files['B5'] = f
-                    elif 'SR_B3' in fname:
-                        l2_files['B3'] = f
-                    elif 'ST_B10' in fname:
-                        l2_files['ST_B10'] = f
-                    elif 'ST_B6' in fname:
-                        l2_files['ST_B6'] = f
-                
-                # Process to LST
-                if l1_files or l2_files:
-                    success = _process_landsat_scene_to_lst(
-                        l1_files, l2_files, aster_files, output_file, landsat_id, use_ndvi
-                    )
-                    if success:
-                        print(f"✅ Created {landsat_id} LST: {output_file}")
-                    else:
-                        print(f"❌ Failed to create {landsat_id} LST for {date_str}")
+                # Download corresponding L2 (SR) data
+                if i < len(l2_task_ids):
+                    l2_task_id = l2_task_ids[i]
+                    l2_temp_dir = client.download_and_extract(f"landsat{landsat_id[1].lower()}_l2", l2_task_id)
                 else:
-                    print(f"❌ No {landsat_id} data found for {date_str}")
+                    print(f"No corresponding L2 task for {landsat_id} L1 task {i}")
+                    continue
+                
+                # Group files by date for both L1 and L2
+                l1_tif_files = glob.glob(os.path.join(l1_temp_dir, '**', '*.tif'), recursive=True)
+                l2_tif_files = glob.glob(os.path.join(l2_temp_dir, '**', '*.tif'), recursive=True) if l2_temp_dir else []
+                
+                l1_grouped = group_files_by_date(l1_tif_files)
+                l2_grouped = group_files_by_date(l2_tif_files)
+                
+                # Process each date where we have data
+                for date_str in l1_grouped.keys():
+                    output_file = os.path.join(lst_dir, f"{landsat_id}_lst16days_{date_str}.tif")
                     
+                    if os.path.exists(output_file):
+                        print(f"{landsat_id} LST already exists: {output_file}")
+                        continue
+                    
+                    # Organize files by band for this date
+                    l1_files = {}
+                    l2_files = {}
+                    
+                    # Parse L1 files
+                    for f in l1_grouped[date_str]:
+                        fname = os.path.basename(f)
+                        if 'B10' in fname:
+                            l1_files['B10'] = f
+                        elif 'B11' in fname:
+                            l1_files['B11'] = f
+                        elif 'B6' in fname:
+                            l1_files['B6'] = f
+                    
+                    # Parse L2 files for the same date
+                    if date_str in l2_grouped:
+                        for f in l2_grouped[date_str]:
+                            fname = os.path.basename(f)
+                            if 'SR_B4' in fname:
+                                l2_files['B4'] = f
+                            elif 'SR_B5' in fname:
+                                l2_files['B5'] = f
+                            elif 'SR_B3' in fname:
+                                l2_files['B3'] = f
+                            elif 'ST_B10' in fname:
+                                l2_files['ST_B10'] = f
+                            elif 'ST_B6' in fname:
+                                l2_files['ST_B6'] = f
+                    
+                    # Process to LST
+                    if l1_files or l2_files:
+                        success = _process_landsat_scene_to_lst(
+                            l1_files, l2_files, aster_files, output_file, landsat_id, use_ndvi
+                        )
+                        if success:
+                            print(f"✅ Created {landsat_id} LST: {output_file}")
+                        else:
+                            print(f"❌ Failed to create {landsat_id} LST for {date_str}")
+                    else:
+                        print(f"❌ No {landsat_id} data found for {date_str}")
+                        
             except Exception as e:
-                print(f"Failed to process {landsat_id} LST for {date_str}: {e}")
+                print(f"Failed to process {landsat_id} LST from task {l1_task_id}: {e}")
             finally:
                 # Cleanup temp directories
                 for temp_dir in [l1_temp_dir, l2_temp_dir]:
                     if temp_dir and os.path.exists(temp_dir):
                         shutil.rmtree(temp_dir, ignore_errors=True)
-    
-    # Cleanup ASTER temp directory
-    if aster_temp_dir and os.path.exists(aster_temp_dir):
-        shutil.rmtree(aster_temp_dir, ignore_errors=True)

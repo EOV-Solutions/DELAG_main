@@ -2,14 +2,14 @@ import glob
 import os
 import shutil
 import tempfile
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import List, Optional
 
 import numpy as np
 import rasterio
 
 from .server_client import ServerClient
-from .utils import find_grid_feature, bbox_from_feature, group_files_by_date
+from .utils import extract_datetime_from_filename, group_files_by_date
 from .config import config
 
 
@@ -59,123 +59,98 @@ def _merge_bands_to_multiband(band_files: List[str], dst_path: str) -> None:
         dst.update_tags(ACQUISITION_TYPE='S2_8days')
 
 
-def _apply_cloud_mask_and_composite(temp_dir: str, roi_name: str, target_date: datetime) -> Optional[List[str]]:
+def _find_best_scene_bands(tif_files: List[str], target_date_str: str = None) -> Optional[List[str]]:
     """
-    Apply cloud masking and create 8-day median composite from downloaded S2 scenes.
-    Returns list of band file paths for composite or None if no valid data.
+    Find the best set of 4 bands (B2, B3, B4, B8) from downloaded S2 scenes.
+    Returns list of band file paths or None if not all bands found.
     """
-    # Find all S2 TIF files in temp directory
-    tif_files = glob.glob(os.path.join(temp_dir, '**', '*.tif'), recursive=True)
     if not tif_files:
         return None
     
-    # Group by date and filter to ±4 days around target (8-day window)
-    grouped = group_files_by_date(tif_files)
-    valid_dates = []
-    target_str = target_date.strftime('%Y-%m-%d')
-    
-    for i in range(-4, 5):  # ±4 days
-        check_date = target_date + timedelta(days=i)
-        check_str = check_date.strftime('%Y-%m-%d')
-        if check_str in grouped:
-            valid_dates.extend(grouped[check_str])
-    
-    if not valid_dates:
-        return None
-    
-    # For simplicity, take the scene closest to target date
-    # In a full implementation, you'd apply cloud masking and create median composite
-    best_scene_files = []
     target_bands = ['B2', 'B3', 'B4', 'B8']
     
-    # Find files for each band from the best available scene
-    for band in target_bands:
-        band_files = [f for f in valid_dates if band in os.path.basename(f)]
-        if band_files:
-            best_scene_files.append(band_files[0])
+    # Group files by date to find complete scenes
+    grouped = group_files_by_date(tif_files)
     
-    if len(best_scene_files) == 4:
-        return best_scene_files
+    # If we have a target date preference, try that first
+    if target_date_str and target_date_str in grouped:
+        date_files = grouped[target_date_str]
+        scene_bands = []
+        for band in target_bands:
+            band_files = [f for f in date_files if f'_{band}_' in os.path.basename(f) or f'_{band}.' in os.path.basename(f)]
+            if band_files:
+                scene_bands.append(band_files[0])
+        
+        if len(scene_bands) == 4:
+            return scene_bands
+    
+    # Otherwise, find any complete scene
+    for date_str, date_files in grouped.items():
+        scene_bands = []
+        for band in target_bands:
+            band_files = [f for f in date_files if f'_{band}_' in os.path.basename(f) or f'_{band}.' in os.path.basename(f)]
+            if band_files:
+                scene_bands.append(band_files[0])
+        
+        if len(scene_bands) == 4:
+            return scene_bands
     
     return None
 
 
 def retrieve_s2_from_server(
     roi_name: str,
-    grid_file: str,
-    composite_dates: List[str],
+    task_ids: List[str],
     output_base: str,
     api_base_url: str = "http://localhost:8000",
-    cloud_cover: float = 85.0,
 ) -> None:
     """
-    Download S2 RGB-NIR composites from the server, creating 8-day composites and writing as
+    Download S2 RGB-NIR composites from server using predefined task IDs, writing as
     data/retrieved_data/<roi_name>/s2_images/S2_8days_YYYY-MM-DD.tif
     
     Args:
-        roi_name: Grid ROI identifier
-        grid_file: Path to grid GeoJSON
-        composite_dates: List of target composite dates (YYYY-MM-DD)
+        roi_name: ROI identifier for output folder structure
+        task_ids: List of task IDs to download
         output_base: Base output directory
         api_base_url: Server API base URL
-        cloud_cover: Maximum cloud cover percentage (0-100)
     """
-    feature = find_grid_feature(roi_name, grid_file)
-    if feature is None:
-        raise ValueError(f"ROI '{roi_name}' not found in grid {grid_file}")
-    
-    bbox = bbox_from_feature(feature)
     s2_dir = _ensure_dirs(output_base, roi_name)
     client = ServerClient(api_base_url=api_base_url, timeout=180)
     
-    for date_str in composite_dates:
-        target_date = datetime.strptime(date_str, '%Y-%m-%d')
-        out_name = os.path.join(s2_dir, f"S2_8days_{date_str}.tif")
+    for task_id in task_ids:
+        print(f"Processing S2 task: {task_id}")
         
-        if os.path.exists(out_name):
-            print(f"S2 composite already exists: {out_name}")
-            continue
-        
-        # Create 8-day window around target date
-        window_days = config.S2_CONFIG["composite_window_days"]
-        start_date = target_date - timedelta(days=window_days)
-        end_date = target_date + timedelta(days=window_days)
-        datetime_range = f"{start_date.strftime('%Y-%m-%d')}T00:00:00Z/{end_date.strftime('%Y-%m-%d')}T23:59:59Z"
-        
-        try:
-            # Create S2 search task
-            task_id = client.create_s2_task(
-                bbox=bbox,
-                datetime_range_iso=datetime_range,
-                extra={
-                    "cloud_cover": cloud_cover,
-                    "bands": config.S2_CONFIG["default_bands"],
-                    "limit": config.S2_CONFIG["default_limit"]
-                }
-            )
-            print(f"Created S2 task {task_id} for {date_str}")
-            
-        except Exception as e:
-            print(f"Failed to create S2 task for {date_str}: {e}")
-            continue
-        
-        # Download and extract
         temp_dir = None
         try:
+            # Download and extract task data
             temp_dir = client.download_and_extract("s2", task_id)
-            print(f"Downloaded S2 data for {date_str}")
             
-            # Process the downloaded scenes into a composite
-            composite_files = _apply_cloud_mask_and_composite(temp_dir, roi_name, target_date)
+            # Find all TIF files in extracted directory
+            tif_files = glob.glob(os.path.join(temp_dir, '**', '*.tif'), recursive=True)
+            if not tif_files:
+                print(f"No TIFFs found for S2 task {task_id}")
+                continue
             
-            if composite_files:
-                _merge_bands_to_multiband(composite_files, out_name)
-                print(f"✅ Created S2 composite: {out_name}")
-            else:
-                print(f"❌ No valid S2 data found for {date_str}")
+            # Group files by date to process each date separately
+            grouped = group_files_by_date(tif_files)
+            
+            for date_str, date_files in grouped.items():
+                out_name = os.path.join(s2_dir, f"S2_8days_{date_str}.tif")
+                if os.path.exists(out_name):
+                    print(f"S2 composite already exists: {out_name}")
+                    continue
                 
+                # Find complete set of bands for this date
+                composite_files = _find_best_scene_bands(date_files, date_str)
+                
+                if composite_files:
+                    _merge_bands_to_multiband(composite_files, out_name)
+                    print(f"✅ Created S2 composite: {out_name}")
+                else:
+                    print(f"❌ No complete band set found for S2 date {date_str}")
+                    
         except Exception as e:
-            print(f"Failed to process S2 data for {date_str}: {e}")
+            print(f"Failed to process S2 task {task_id}: {e}")
         finally:
             if temp_dir and os.path.exists(temp_dir):
                 shutil.rmtree(temp_dir, ignore_errors=True)

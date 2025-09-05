@@ -334,16 +334,16 @@ def main():
                 logging.warning(f"Could not parse date from LST filename: {tif_file}")
 
     if target_dates_str:
-        # # --- Sentinel-2 Data Retrieval (train and test modes) ---
-        # logging.info("="*50)
-        # logging.info(f"Starting Sentinel-2 data retrieval for ROI '{roi_name}'...")
-        # try:
-        #     target_composite_dates_s2 = [ee.Date(d) for d in sorted(list(target_dates_str))]
-        #     logging.info(f"Requesting S2 composites for {len(target_composite_dates_s2)} dates based on LST files.")
-        #     main_s2_retrieval(target_composite_dates_s2, roi_geometry_ee, roi_name, args.output_folder)
-        #     logging.info(f"Sentinel-2 data retrieval finished for ROI '{roi_name}'.")
-        # except Exception as e:
-        #     logging.critical(f"An error occurred during Sentinel-2 retrieval for '{roi_name}': {e}", exc_info=True)
+        # --- Sentinel-2 Data Retrieval (train and test modes) ---
+        logging.info("="*50)
+        logging.info(f"Starting Sentinel-2 data retrieval for ROI '{roi_name}'...")
+        try:
+            target_composite_dates_s2 = [ee.Date(d) for d in sorted(list(target_dates_str))]
+            logging.info(f"Requesting S2 composites for {len(target_composite_dates_s2)} dates based on LST files.")
+            main_s2_retrieval(target_composite_dates_s2, roi_geometry_ee, roi_name, args.output_folder)
+            logging.info(f"Sentinel-2 data retrieval finished for ROI '{roi_name}'.")
+        except Exception as e:
+            logging.critical(f"An error occurred during Sentinel-2 retrieval for '{roi_name}': {e}", exc_info=True)
 
         # --- Test Mode Only Retrievals ---
         if args.mode == 'test':

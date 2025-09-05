@@ -4603,3 +4603,219 @@ ee.ee_exception.EEException: Invalid JSON payload received. Unexpected token.
 2025-08-23 00:37:30,976 - INFO - Sentinel-2 data retrieval finished for ROI 'travinh'.
 2025-08-23 00:37:30,976 - INFO - ==================================================
 2025-08-23 00:37:30,976 - INFO - Data retrieval orchestration finished. Total time: 7:29:04.465957
+2025-09-05 13:32:43,039 - INFO - Earth Engine initialized successfully
+2025-09-05 13:32:43,045 - ERROR - Failed to get ROI geometry: ROI '49-49-A-c-2-1' not found in grid file
+2025-09-05 13:34:19,641 - INFO - Earth Engine initialized successfully
+2025-09-05 13:34:19,647 - INFO - 🚀 Starting mock data generation for ROI: D-49-49-A
+2025-09-05 13:34:19,648 - INFO - 📅 Date range: 2023-01-01 to 2023-01-15
+2025-09-05 13:34:19,648 - INFO - 🌍 Downloading ERA5 data from GEE...
+2025-09-05 13:34:19,648 - INFO - Created manifest for era5: 0 files
+2025-09-05 13:34:19,648 - INFO - 🛰️ Downloading Sentinel-2 data from GEE...
+2025-09-05 13:35:21,404 - INFO - Successfully downloaded S2 image for 2023-01-01.
+2025-09-05 13:35:44,717 - INFO - Successfully downloaded S2 image for 2023-01-09.
+2025-09-05 13:35:44,719 - INFO - Created manifest for s2: 2 files
+2025-09-05 13:35:44,720 - INFO - 🛰️ Downloading Landsat L8 L1 data from GEE...
+2025-09-05 13:35:45,160 - ERROR - Failed to download Landsat L8 l1 data: Unrecognized argument type to convert to an ImageCollection: {'type': 'ImageCollection', 'bands': [{'id': 'B1', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B2', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B3', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B4', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B5', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B6', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B7', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B8', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B9', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B10', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B11', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'QA_PIXEL', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': 0, 'max': 65535}}, {'id': 'QA_RADSAT', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': 0, 'max': 65535}}, {'id': 'SAA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}, {'id': 'SZA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}, {'id': 'VAA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}, {'id': 'VZA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}], 'version': 1757024153753935, 'id': 'LANDSAT/LC08/C02/T1_TOA'}
+2025-09-05 13:35:45,160 - ERROR - Error during data generation: Unrecognized argument type to convert to an ImageCollection: {'type': 'ImageCollection', 'bands': [{'id': 'B1', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B2', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B3', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B4', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B5', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B6', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B7', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B8', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B9', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B10', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'B11', 'data_type': {'type': 'PixelType', 'precision': 'float'}}, {'id': 'QA_PIXEL', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': 0, 'max': 65535}}, {'id': 'QA_RADSAT', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': 0, 'max': 65535}}, {'id': 'SAA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}, {'id': 'SZA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}, {'id': 'VAA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}, {'id': 'VZA', 'data_type': {'type': 'PixelType', 'precision': 'int', 'min': -32768, 'max': 32767}}], 'version': 1757024153753935, 'id': 'LANDSAT/LC08/C02/T1_TOA'}
+2025-09-05 13:39:57,815 - INFO - Earth Engine initialized successfully
+2025-09-05 13:39:57,821 - INFO - 🚀 Starting mock data generation for ROI: D-49-49-A
+2025-09-05 13:39:57,822 - INFO - 📅 Date range: 2023-01-01 to 2023-01-15
+2025-09-05 13:39:57,822 - INFO - 🛰️ Downloading Sentinel-2 data from GEE...
+2025-09-05 13:41:04,317 - INFO - Successfully downloaded S2 image for 2023-01-01.
+2025-09-05 13:41:29,383 - INFO - Successfully downloaded S2 image for 2023-01-09.
+2025-09-05 13:41:29,385 - INFO - Created manifest for s2: 2 files
+2025-09-05 13:41:29,385 - INFO - 🌍 Downloading ERA5 data from GEE...
+2025-09-05 13:41:34,168 - INFO - Created manifest for era5: 1 files
+2025-09-05 13:41:34,168 - INFO - ℹ️ Skipping Landsat and ASTER downloads for now to test basic workflow
+2025-09-05 13:41:34,168 - INFO - Created summary manifest: example_mock_data/summary_manifest.json
+2025-09-05 13:41:34,168 - INFO - ✅ Mock data generation completed successfully!
+2025-09-05 14:15:41,032 - INFO - Earth Engine initialized successfully
+2025-09-05 14:15:41,038 - INFO - 🚀 Starting mock data generation for ROI: D-49-49-A
+2025-09-05 14:15:41,038 - INFO - 📅 Date range: 2023-01-01 to 2023-01-15
+2025-09-05 14:15:41,038 - INFO - 🛰️ Downloading Sentinel-2 data from GEE...
+2025-09-05 14:16:43,033 - INFO - Successfully downloaded S2 image for 2023-01-01.
+2025-09-05 14:17:21,149 - INFO - Successfully downloaded S2 image for 2023-01-09.
+2025-09-05 14:17:21,152 - INFO - Created manifest for s2: 2 files
+2025-09-05 14:17:21,152 - INFO - 🌍 Downloading ERA5 data from GEE...
+2025-09-05 14:17:26,220 - INFO - Created manifest for era5: 1 files
+2025-09-05 14:17:26,220 - INFO - ℹ️ Skipping Landsat and ASTER downloads for now to test basic workflow
+2025-09-05 14:17:26,220 - INFO - 🛰️ Downloading Landsat L8 L1 data from GEE...
+2025-09-05 14:17:26,587 - INFO - Found 0 L8 L1 images
+2025-09-05 14:17:26,588 - INFO - Created manifest for landsatl8_l1: 0 files
+2025-09-05 14:17:26,588 - INFO - 🛰️ Downloading Landsat L8 L2 data from GEE...
+2025-09-05 14:17:26,975 - INFO - Found 0 L8 L2 images
+2025-09-05 14:17:26,976 - INFO - Created manifest for landsatl8_l2: 0 files
+2025-09-05 14:17:26,977 - INFO - 🛰️ Downloading Landsat L9 L1 data from GEE...
+2025-09-05 14:17:27,349 - INFO - Found 0 L9 L1 images
+2025-09-05 14:17:27,350 - INFO - Created manifest for landsatl9_l1: 0 files
+2025-09-05 14:17:27,350 - INFO - 🛰️ Downloading Landsat L9 L2 data from GEE...
+2025-09-05 14:17:27,690 - INFO - Found 0 L9 L2 images
+2025-09-05 14:17:27,691 - INFO - Created manifest for landsatl9_l2: 0 files
+2025-09-05 14:17:27,691 - INFO - 🏔️ Downloading ASTER GED data from GEE...
+2025-09-05 14:17:28,030 - ERROR - Failed to download ASTER_emissivity_band10.tif: ImageCollection.load: Expected asset 'NASA/ASTER_GED/AG100_003' to be an ImageCollection, found 'Image'.
+2025-09-05 14:17:28,379 - ERROR - Failed to download ASTER_emissivity_band11.tif: ImageCollection.load: Expected asset 'NASA/ASTER_GED/AG100_003' to be an ImageCollection, found 'Image'.
+2025-09-05 14:17:28,714 - ERROR - Failed to download ASTER_emissivity_band12.tif: ImageCollection.load: Expected asset 'NASA/ASTER_GED/AG100_003' to be an ImageCollection, found 'Image'.
+2025-09-05 14:17:29,003 - ERROR - Failed to download ASTER_emissivity_band13.tif: ImageCollection.load: Expected asset 'NASA/ASTER_GED/AG100_003' to be an ImageCollection, found 'Image'.
+2025-09-05 14:17:29,352 - ERROR - Failed to download ASTER_emissivity_band14.tif: ImageCollection.load: Expected asset 'NASA/ASTER_GED/AG100_003' to be an ImageCollection, found 'Image'.
+2025-09-05 14:17:29,674 - ERROR - Failed to download ASTER_ndvi.tif: ImageCollection.load: Expected asset 'NASA/ASTER_GED/AG100_003' to be an ImageCollection, found 'Image'.
+2025-09-05 14:17:29,675 - INFO - Created manifest for aster: 0 files
+2025-09-05 14:17:29,675 - INFO - 🌡️ Downloading LST data from GEE...
+2025-09-05 14:17:30,754 - INFO - Created manifest for lst: 0 files
+2025-09-05 14:17:30,756 - INFO - Created summary manifest: mock_server_data/summary_manifest.json
+2025-09-05 14:17:30,756 - INFO - ✅ Mock data generation completed successfully!
+2025-09-05 14:18:46,983 - INFO - Earth Engine initialized successfully
+2025-09-05 14:18:46,989 - INFO - 🚀 Starting mock data generation for ROI: D-49-49-A
+2025-09-05 14:18:46,989 - INFO - 📅 Date range: 2023-01-01 to 2023-01-15
+2025-09-05 14:18:46,989 - INFO - 🛰️ Downloading Sentinel-2 data from GEE...
+2025-09-05 14:19:46,507 - INFO - Successfully downloaded S2 image for 2023-01-01.
+2025-09-05 14:20:12,731 - INFO - Successfully downloaded S2 image for 2023-01-09.
+2025-09-05 14:20:12,733 - INFO - Created manifest for s2: 2 files
+2025-09-05 14:20:12,733 - INFO - 🌍 Downloading ERA5 data from GEE...
+2025-09-05 14:20:18,167 - INFO - Created manifest for era5: 1 files
+2025-09-05 14:20:18,167 - INFO - ℹ️ Skipping Landsat and ASTER downloads for now to test basic workflow
+2025-09-05 14:20:18,167 - INFO - 🛰️ Downloading Landsat L8 L1 data from GEE...
+2025-09-05 14:20:18,543 - INFO - Found 0 L8 L1 images
+2025-09-05 14:20:18,544 - INFO - Created manifest for landsatl8_l1: 0 files
+2025-09-05 14:20:18,544 - INFO - 🛰️ Downloading Landsat L8 L2 data from GEE...
+2025-09-05 14:20:18,895 - INFO - Found 0 L8 L2 images
+2025-09-05 14:20:18,895 - INFO - Created manifest for landsatl8_l2: 0 files
+2025-09-05 14:20:18,895 - INFO - 🛰️ Downloading Landsat L9 L1 data from GEE...
+2025-09-05 14:20:19,248 - INFO - Found 0 L9 L1 images
+2025-09-05 14:20:19,249 - INFO - Created manifest for landsatl9_l1: 0 files
+2025-09-05 14:20:19,249 - INFO - 🛰️ Downloading Landsat L9 L2 data from GEE...
+2025-09-05 14:20:19,716 - INFO - Found 0 L9 L2 images
+2025-09-05 14:20:19,717 - INFO - Created manifest for landsatl9_l2: 0 files
+2025-09-05 14:20:19,717 - INFO - 🏔️ Downloading ASTER GED data from GEE...
+2025-09-05 14:20:21,429 - INFO - Successfully downloaded: ASTER_emissivity_band10.tif
+2025-09-05 14:20:23,305 - INFO - Successfully downloaded: ASTER_emissivity_band11.tif
+2025-09-05 14:20:24,888 - INFO - Successfully downloaded: ASTER_emissivity_band12.tif
+2025-09-05 14:20:27,338 - INFO - Successfully downloaded: ASTER_emissivity_band13.tif
+2025-09-05 14:20:28,985 - INFO - Successfully downloaded: ASTER_emissivity_band14.tif
+2025-09-05 14:20:31,519 - INFO - Successfully downloaded: ASTER_ndvi.tif
+2025-09-05 14:20:31,520 - INFO - Created manifest for aster: 6 files
+2025-09-05 14:20:31,520 - INFO - 🌡️ Downloading LST data from GEE...
+2025-09-05 14:20:32,594 - INFO - Created manifest for lst: 0 files
+2025-09-05 14:20:32,595 - INFO - Created summary manifest: test_aster_data/summary_manifest.json
+2025-09-05 14:20:32,596 - INFO - ✅ Mock data generation completed successfully!
+2025-09-05 14:22:15,289 - INFO - Earth Engine initialized successfully
+2025-09-05 14:22:15,295 - INFO - 🚀 Starting mock data generation for ROI: D-49-49-A
+2025-09-05 14:22:15,295 - INFO - 📅 Date range: 2023-01-01 to 2023-03-15
+2025-09-05 14:22:15,296 - INFO - 🛰️ Downloading Sentinel-2 data from GEE...
+2025-09-05 14:23:24,456 - INFO - Successfully downloaded S2 image for 2023-01-01.
+2025-09-05 14:23:50,186 - INFO - Successfully downloaded S2 image for 2023-01-09.
+2025-09-05 14:24:33,399 - INFO - Successfully downloaded S2 image for 2023-01-25.
+2025-09-05 14:24:59,801 - INFO - Successfully downloaded S2 image for 2023-02-02.
+2025-09-05 14:26:14,636 - INFO - Successfully downloaded S2 image for 2023-02-10.
+2025-09-05 14:27:18,797 - INFO - Successfully downloaded S2 image for 2023-02-18.
+2025-09-05 14:27:38,979 - INFO - Successfully downloaded S2 image for 2023-02-26.
+2025-09-05 14:28:40,630 - INFO - Successfully downloaded S2 image for 2023-03-06.
+2025-09-05 14:29:09,239 - INFO - Successfully downloaded S2 image for 2023-03-14.
+2025-09-05 14:29:09,241 - INFO - Created manifest for s2: 9 files
+2025-09-05 14:29:09,241 - INFO - 🌍 Downloading ERA5 data from GEE...
+2025-09-05 14:29:27,359 - INFO - Created manifest for era5: 5 files
+2025-09-05 14:29:27,359 - INFO - ℹ️ Skipping Landsat and ASTER downloads for now to test basic workflow
+2025-09-05 14:29:27,359 - INFO - 🛰️ Downloading Landsat L8 L1 data from GEE...
+2025-09-05 14:29:27,728 - INFO - Found 8 L8 L1 images
+2025-09-05 14:29:32,895 - INFO - Successfully downloaded: L8_L1_2023-01-23.tif
+2025-09-05 14:29:38,041 - INFO - Successfully downloaded: L8_L1_2023-02-08.tif
+2025-09-05 14:29:43,574 - INFO - Successfully downloaded: L8_L1_2023-02-24.tif
+2025-09-05 14:29:48,884 - INFO - Successfully downloaded: L8_L1_2023-03-12.tif
+2025-09-05 14:29:57,369 - INFO - Successfully downloaded: L8_L1_2023-01-23.tif
+2025-09-05 14:29:57,370 - INFO - Created manifest for landsatl8_l1: 4 files
+2025-09-05 14:29:57,370 - INFO - 🛰️ Downloading Landsat L8 L2 data from GEE...
+2025-09-05 14:29:57,730 - INFO - Found 8 L8 L2 images
+2025-09-05 14:30:07,972 - INFO - Successfully downloaded: L8_L2_2023-01-23.tif
+2025-09-05 14:30:18,146 - INFO - Successfully downloaded: L8_L2_2023-02-08.tif
+2025-09-05 14:30:26,913 - INFO - Successfully downloaded: L8_L2_2023-02-24.tif
+2025-09-05 14:30:36,258 - INFO - Successfully downloaded: L8_L2_2023-03-12.tif
+2025-09-05 14:30:56,958 - INFO - Successfully downloaded: L8_L2_2023-01-23.tif
+2025-09-05 14:30:56,959 - INFO - Created manifest for landsatl8_l2: 4 files
+2025-09-05 14:30:56,959 - INFO - 🛰️ Downloading Landsat L9 L1 data from GEE...
+2025-09-05 14:30:57,287 - INFO - Found 7 L9 L1 images
+2025-09-05 14:31:03,381 - INFO - Successfully downloaded: L9_L1_2023-01-15.tif
+2025-09-05 14:31:08,660 - INFO - Successfully downloaded: L9_L1_2023-01-31.tif
+2025-09-05 14:31:14,113 - INFO - Successfully downloaded: L9_L1_2023-03-04.tif
+2025-09-05 14:31:21,353 - INFO - Successfully downloaded: L9_L1_2023-01-15.tif
+2025-09-05 14:31:29,383 - INFO - Successfully downloaded: L9_L1_2023-01-31.tif
+2025-09-05 14:31:29,385 - INFO - Created manifest for landsatl9_l1: 3 files
+2025-09-05 14:31:29,385 - INFO - 🛰️ Downloading Landsat L9 L2 data from GEE...
+2025-09-05 14:31:29,740 - INFO - Found 7 L9 L2 images
+2025-09-05 14:31:38,477 - INFO - Successfully downloaded: L9_L2_2023-01-15.tif
+2025-09-05 14:31:47,973 - INFO - Successfully downloaded: L9_L2_2023-01-31.tif
+2025-09-05 14:31:59,227 - INFO - Successfully downloaded: L9_L2_2023-03-04.tif
+2025-09-05 14:32:17,693 - INFO - Successfully downloaded: L9_L2_2023-01-15.tif
+2025-09-05 14:32:35,822 - INFO - Successfully downloaded: L9_L2_2023-01-31.tif
+2025-09-05 14:32:35,824 - INFO - Created manifest for landsatl9_l2: 3 files
+2025-09-05 14:32:35,824 - INFO - 🏔️ Downloading ASTER GED data from GEE...
+2025-09-05 14:32:37,550 - INFO - Successfully downloaded: ASTER_emissivity_band10.tif
+2025-09-05 14:32:40,789 - INFO - Successfully downloaded: ASTER_emissivity_band11.tif
+2025-09-05 14:32:42,612 - INFO - Successfully downloaded: ASTER_emissivity_band12.tif
+2025-09-05 14:32:44,241 - INFO - Successfully downloaded: ASTER_emissivity_band13.tif
+2025-09-05 14:32:46,313 - INFO - Successfully downloaded: ASTER_emissivity_band14.tif
+2025-09-05 14:32:47,847 - INFO - Successfully downloaded: ASTER_ndvi.tif
+2025-09-05 14:32:47,848 - INFO - Created manifest for aster: 6 files
+2025-09-05 14:32:47,849 - INFO - 🌡️ Downloading LST data from GEE...
+2025-09-05 14:33:59,994 - INFO - Created manifest for lst: 8 files
+2025-09-05 14:33:59,997 - INFO - Created summary manifest: test_aster_data/summary_manifest.json
+2025-09-05 14:33:59,997 - INFO - ✅ Mock data generation completed successfully!
+2025-09-05 14:35:42,039 - INFO - Earth Engine initialized successfully
+2025-09-05 14:35:42,046 - INFO - 🚀 Starting mock data generation for ROI: D-49-49-A
+2025-09-05 14:35:42,046 - INFO - 📅 Date range: 2023-01-01 to 2023-01-05
+2025-09-05 14:35:42,046 - INFO - 🛰️ Downloading Sentinel-2 data from GEE...
+2025-09-05 14:35:42,528 - WARNING - No valid S2 composites found for ROI 'D-49-49-A'. Skipping download.
+2025-09-05 14:35:42,529 - INFO - Created manifest for s2: 0 files
+2025-09-05 14:35:42,529 - INFO - 🏔️ Downloading ASTER GED data from GEE...
+2025-09-05 14:35:44,557 - INFO - Successfully downloaded: ASTER_emissivity_band10.tif
+2025-09-05 14:35:45,934 - INFO - Successfully downloaded: ASTER_emissivity_band11.tif
+2025-09-05 14:35:47,513 - INFO - Successfully downloaded: ASTER_emissivity_band12.tif
+2025-09-05 14:35:49,030 - INFO - Successfully downloaded: ASTER_emissivity_band13.tif
+2025-09-05 14:35:50,637 - INFO - Successfully downloaded: ASTER_emissivity_band14.tif
+2025-09-05 14:35:52,899 - INFO - Successfully downloaded: ASTER_ndvi.tif
+2025-09-05 14:35:52,903 - INFO - Created manifest for aster: 6 files
+2025-09-05 14:35:52,903 - INFO - 🛰️ Downloading Landsat L8 L1 data from GEE...
+2025-09-05 14:35:53,227 - INFO - Found 0 L8 L1 images
+2025-09-05 14:35:53,227 - INFO - Created manifest for landsatl8_l1: 0 files
+2025-09-05 14:35:53,228 - INFO - 🛰️ Downloading Landsat L8 L2 data from GEE...
+2025-09-05 14:35:53,558 - INFO - Found 0 L8 L2 images
+2025-09-05 14:35:53,558 - INFO - Created manifest for landsatl8_l2: 0 files
+2025-09-05 14:35:53,559 - INFO - 🛰️ Downloading Landsat L9 L1 data from GEE...
+2025-09-05 14:35:53,882 - INFO - Found 0 L9 L1 images
+2025-09-05 14:35:53,883 - INFO - Created manifest for landsatl9_l1: 0 files
+2025-09-05 14:35:53,883 - INFO - 🛰️ Downloading Landsat L9 L2 data from GEE...
+2025-09-05 14:35:54,231 - INFO - Found 0 L9 L2 images
+2025-09-05 14:35:54,231 - INFO - Created manifest for landsatl9_l2: 0 files
+2025-09-05 14:35:54,231 - INFO - 🌡️ Downloading LST data from GEE...
+2025-09-05 14:35:55,699 - INFO - Created manifest for lst: 0 files
+2025-09-05 14:35:55,699 - INFO - 🌍 Downloading ERA5 data from GEE...
+2025-09-05 14:35:55,700 - INFO - Using 0 LST files as reference for ERA5
+2025-09-05 14:35:55,701 - INFO - Created manifest for era5: 0 files
+2025-09-05 14:35:55,703 - INFO - Created summary manifest: test_skip_functionality/summary_manifest.json
+2025-09-05 14:35:55,703 - INFO - ✅ Mock data generation completed successfully!
+2025-09-05 14:36:42,163 - INFO - Earth Engine initialized successfully
+2025-09-05 14:36:42,170 - INFO - 🚀 Starting mock data generation for ROI: D-49-49-A
+2025-09-05 14:36:42,170 - INFO - 📅 Date range: 2023-01-01 to 2023-01-05
+2025-09-05 14:36:42,170 - INFO - 🛰️ Downloading Sentinel-2 data from GEE...
+2025-09-05 14:36:42,636 - WARNING - No valid S2 composites found for ROI 'D-49-49-A'. Skipping download.
+2025-09-05 14:36:42,637 - INFO - Created manifest for s2: 0 files
+2025-09-05 14:36:42,638 - INFO - 🏔️ Downloading ASTER GED data from GEE...
+2025-09-05 14:36:42,638 - INFO - 📁 Found existing aster data with 6 files in 2bc7b21c-ad96-4f4b-9999-e8960d1bf740
+2025-09-05 14:36:42,638 - INFO - ✅ Skipping ASTER download - data already exists
+2025-09-05 14:36:42,639 - INFO - 🛰️ Downloading Landsat L8 L1 data from GEE...
+2025-09-05 14:36:43,044 - INFO - Found 0 L8 L1 images
+2025-09-05 14:36:43,045 - INFO - Created manifest for landsatl8_l1: 0 files
+2025-09-05 14:36:43,045 - INFO - 🛰️ Downloading Landsat L8 L2 data from GEE...
+2025-09-05 14:36:43,421 - INFO - Found 0 L8 L2 images
+2025-09-05 14:36:43,421 - INFO - Created manifest for landsatl8_l2: 0 files
+2025-09-05 14:36:43,421 - INFO - 🛰️ Downloading Landsat L9 L1 data from GEE...
+2025-09-05 14:36:43,860 - INFO - Found 0 L9 L1 images
+2025-09-05 14:36:43,861 - INFO - Created manifest for landsatl9_l1: 0 files
+2025-09-05 14:36:43,861 - INFO - 🛰️ Downloading Landsat L9 L2 data from GEE...
+2025-09-05 14:36:45,003 - INFO - Found 0 L9 L2 images
+2025-09-05 14:36:45,004 - INFO - Created manifest for landsatl9_l2: 0 files
+2025-09-05 14:36:45,004 - INFO - 🌡️ Downloading LST data from GEE...
+2025-09-05 14:36:46,710 - INFO - Created manifest for lst: 0 files
+2025-09-05 14:36:46,710 - INFO - 🌍 Downloading ERA5 data from GEE...
+2025-09-05 14:36:46,710 - INFO - Using 0 LST files as reference for ERA5
+2025-09-05 14:36:46,711 - INFO - Created manifest for era5: 0 files
+2025-09-05 14:36:46,711 - INFO - Created summary manifest: test_skip_functionality/summary_manifest.json
+2025-09-05 14:36:46,711 - INFO - ✅ Mock data generation completed successfully!

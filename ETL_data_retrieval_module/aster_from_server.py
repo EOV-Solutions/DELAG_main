@@ -13,7 +13,7 @@ import rasterio
 import numpy as np
 
 from .server_client import ServerClient
-from .utils import find_grid_feature, bbox_from_feature
+from .utils import extract_datetime_from_filename
 from .config import config
 
 
@@ -70,110 +70,89 @@ def _write_aster_band(src_path: str, dst_path: str, band_name: str, acquisition_
 
 def retrieve_aster_from_server(
     roi_name: str,
-    grid_file: str,
-    start_date: str,
-    end_date: str,
+    task_ids: List[str],
     output_base: str,
     api_base_url: str,
-    bands: Optional[List[str]] = None,
 ) -> None:
     """
-    Retrieve ASTER GED data from server for a given ROI and date range.
+    Retrieve ASTER GED data from server using predefined task IDs.
     
     Args:
-        roi_name: Grid PhienHieu identifier
-        grid_file: Path to GeoJSON grid file
-        start_date: Start date in YYYY-MM-DD format
-        end_date: End date in YYYY-MM-DD format  
+        roi_name: ROI identifier for output folder structure
+        task_ids: List of task IDs to download
         output_base: Base output directory
         api_base_url: Server API base URL
-        bands: List of ASTER bands to retrieve (default from config)
     """
-    print(f"🌍 Retrieving ASTER GED data for {roi_name} ({start_date} to {end_date})")
-    
-    # Find ROI geometry
-    feature = find_grid_feature(roi_name, grid_file)
-    if not feature:
-        raise ValueError(f"ROI '{roi_name}' not found in grid file {grid_file}")
-    
-    bbox = bbox_from_feature(feature)
+    print(f"🌍 Retrieving ASTER GED data for {roi_name}")
     
     # Set up output directory
     aster_dir = _ensure_dirs(output_base, roi_name)
     
-    # Use default bands if not specified
-    if bands is None:
-        bands = config.ASTER_CONFIG["default_bands"]
-    
-    print(f"📡 Requesting ASTER bands: {bands}")
-    print(f"📍 Bounding box: {bbox}")
-    
     # Create client
     client = ServerClient(api_base_url=api_base_url)
     
-    # ASTER GED is static data, so we use the full date range for availability
-    datetime_range = f"{start_date}T00:00:00Z/{end_date}T23:59:59Z"
-    
-    try:
-        # Create ASTER search task
-        task_id = client.create_aster_task(
-            bbox=bbox,
-            datetime_range_iso=datetime_range,
-            bands=bands
-        )
-        print(f"✓ Created ASTER task: {task_id}")
+    for task_id in task_ids:
+        print(f"Processing ASTER task: {task_id}")
         
-        # Download and extract
-        temp_dir = client.download_and_extract("aster", task_id)
-        print(f"✓ Downloaded ASTER data to: {temp_dir}")
-        
-        # Find all TIF files
-        tif_files = glob.glob(os.path.join(temp_dir, '**', '*.tif'), recursive=True)
-        print(f"✓ Found {len(tif_files)} TIF files")
-        
-        if not tif_files:
-            print("❌ No ASTER TIF files found in downloaded data")
-            return
-        
-        # Organize files by band
-        aster_files = {}
-        for f in tif_files:
-            fname = os.path.basename(f).lower()
+        try:
+            # Download and extract
+            temp_dir = client.download_and_extract("aster", task_id)
             
-            # Match band patterns
-            for band in bands:
-                band_lower = band.lower()
-                if band_lower in fname:
-                    aster_files[band] = f
-                    break
-        
-        print(f"✓ Matched {len(aster_files)} bands: {list(aster_files.keys())}")
-        
-        # Process each band
-        acquisition_date = datetime.strptime(start_date, '%Y-%m-%d')
-        
-        for band_name, src_file in aster_files.items():
-            # Create output filename
-            safe_band_name = band_name.replace('_', '').replace(' ', '')
-            output_file = os.path.join(aster_dir, f"ASTER_{safe_band_name}_{start_date}.tif")
+            # Find all TIF files
+            tif_files = glob.glob(os.path.join(temp_dir, '**', '*.tif'), recursive=True)
+            print(f"✓ Found {len(tif_files)} TIF files")
             
-            if os.path.exists(output_file):
-                print(f"  ✓ ASTER {band_name} already exists: {output_file}")
+            if not tif_files:
+                print("❌ No ASTER TIF files found in downloaded data")
                 continue
             
-            try:
-                _write_aster_band(src_file, output_file, band_name, acquisition_date)
-                print(f"  ✅ Created ASTER {band_name}: {output_file}")
+            # Process each TIF file
+            for src_file in tif_files:
+                fname = os.path.basename(src_file).lower()
                 
-            except Exception as e:
-                print(f"  ❌ Failed to process ASTER {band_name}: {e}")
-                continue
-        
-        print(f"🎉 ASTER GED retrieval completed for {roi_name}")
-        
-    except Exception as e:
-        print(f"❌ ASTER retrieval failed: {e}")
-        raise
+                # Determine band type from filename
+                band_name = None
+                if 'emissivity_band10' in fname:
+                    band_name = 'emissivity_band10'
+                elif 'emissivity_band11' in fname:
+                    band_name = 'emissivity_band11'
+                elif 'emissivity_band12' in fname:
+                    band_name = 'emissivity_band12'
+                elif 'emissivity_band13' in fname:
+                    band_name = 'emissivity_band13'
+                elif 'emissivity_band14' in fname:
+                    band_name = 'emissivity_band14'
+                elif 'ndvi' in fname:
+                    band_name = 'ndvi'
+                
+                if not band_name:
+                    print(f"  ? Skipping unknown ASTER file: {fname}")
+                    continue
+                
+                # Create output filename
+                output_file = os.path.join(aster_dir, f"ASTER_{band_name}.tif")
+                
+                if os.path.exists(output_file):
+                    print(f"  ✓ ASTER {band_name} already exists: {output_file}")
+                    continue
+                
+                try:
+                    # Extract date from filename if possible, fallback to current date
+                    extracted_datetime = extract_datetime_from_filename(fname)
+                    acquisition_date = extracted_datetime if extracted_datetime else datetime.now()
+                    
+                    _write_aster_band(src_file, output_file, band_name, acquisition_date)
+                    print(f"  ✅ Created ASTER {band_name}: {output_file}")
+                    
+                except Exception as e:
+                    print(f"  ❌ Failed to process ASTER {band_name}: {e}")
+                    continue
+            
+            print(f"✓ ASTER task {task_id} completed")
+            
+        except Exception as e:
+            print(f"❌ ASTER task {task_id} failed: {e}")
+            continue
 
 
 if __name__ == "__main__":

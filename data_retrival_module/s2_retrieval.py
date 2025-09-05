@@ -94,8 +94,8 @@ def get_sentinel_collection(start_date, end_date, roi):
     
     # Create a 9-day window (+/- 4 days) around the target date to find the best image.
     # This increases the chance of finding a cloud-free image for the composite.
-    s_date = start_date.advance(-4, 'day')
-    e_date = end_date.advance(4, 'day')
+    s_date = start_date.advance(-2, 'day')
+    e_date = end_date.advance(2, 'day')
     
     cs_plus = ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED')
     qa_band = 'cs'
