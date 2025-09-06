@@ -10,3 +10,4 @@ pathlib
 seaborn
 scipy
 scikit-learn 
+pyshp

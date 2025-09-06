@@ -107,6 +107,16 @@ GP_MINI_BATCH_SIZE = 1024
 GP_NUM_INDUCING_POINTS = 512
 GP_LOSS_LOGGING_INTERVAL = 10 # Log GP loss every N epochs for plot
 
+# Prediction performance/memory controls
+# Number of feature rows evaluated per forward pass during prediction
+GP_PREDICTION_BATCH_SIZE = 4096
+# Number of spatial pixels processed together per prediction chunk
+GP_PREDICTION_CHUNK_PIXELS = 10000
+# Number of timesteps processed together per prediction chunk
+GP_PREDICTION_CHUNK_TIMESTEPS = 8
+# Whether to extract predictive variance during prediction (mean is always computed)
+GP_PREDICT_VARIANCE = True
+
 # --- Evaluation Parameters ---
 EVAL_HOLDOUT_PERCENTAGE = 0.20 # For heavily cloudy scenario
 # EVAL_SIMULATED_CLOUD_COVER_PERCENTAGE = [0.1, 0.3, 0.5, 0.7, 0.9] # Retained if needed

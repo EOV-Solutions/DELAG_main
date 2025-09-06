@@ -1,0 +1,84 @@
+{
+  "summary": {
+    "total_tasks": 7,
+    "datasets": {
+      "era5": 1,
+      "aster": 1,
+      "sentinel2": 1,
+      "landsat8_l1": 1,
+      "landsat8_l2": 1,
+      "landsat9_l1": 1,
+      "landsat9_l2": 1
+    },
+    "date_range": {
+      "start": "2023-01-01",
+      "end": "2023-01-31"
+    },
+    "generated_at": "2025-09-06T14:53:54.102481"
+  },
+  "task_mapping": {
+    "89edab2b-8b3e-42c2-9df1-2e5e06e30a3b": {
+      "dataset_type": "era5",
+      "date_range": {
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "zip_path": "89edab2b-8b3e-42c2-9df1-2e5e06e30a3b.zip",
+      "file_count": 1488
+    },
+    "dfe70380-1ae2-4346-ab87-339827e83cdb": {
+      "dataset_type": "aster",
+      "date_range": {
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "zip_path": "dfe70380-1ae2-4346-ab87-339827e83cdb.zip",
+      "file_count": 6
+    },
+    "2f12e419-5ba0-4351-af7b-7d2729fa0265": {
+      "dataset_type": "sentinel2",
+      "date_range": {
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "zip_path": "2f12e419-5ba0-4351-af7b-7d2729fa0265.zip",
+      "file_count": 6
+    },
+    "dca3fa82-0daa-47a2-8568-837ee701a641": {
+      "dataset_type": "landsat8_l1",
+      "date_range": {
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "zip_path": "dca3fa82-0daa-47a2-8568-837ee701a641.zip",
+      "file_count": 4
+    },
+    "6b5703eb-a5c2-4693-9b97-6cda3cd3b203": {
+      "dataset_type": "landsat8_l2",
+      "date_range": {
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "zip_path": "6b5703eb-a5c2-4693-9b97-6cda3cd3b203.zip",
+      "file_count": 16
+    },
+    "f859aaba-fbea-4787-8fe4-91e194721dd9": {
+      "dataset_type": "landsat9_l1",
+      "date_range": {
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "zip_path": "f859aaba-fbea-4787-8fe4-91e194721dd9.zip",
+      "file_count": 4
+    },
+    "79f34929-e263-460a-bdb5-9b63a4b5b728": {
+      "dataset_type": "landsat9_l2",
+      "date_range": {
+        "start": "2023-01-01",
+        "end": "2023-01-31"
+      },
+      "zip_path": "79f34929-e263-460a-bdb5-9b63a4b5b728.zip",
+      "file_count": 16
+    }
+  }
+}

@@ -277,21 +277,140 @@ def predict_gp_residuals(
     features_tensor = features_tensor.to(device)
     
     # Batch prediction
-    predictions = []
+    # Streaming over batches without accumulating distribution objects
+    prediction_bs = getattr(app_config, 'GP_PREDICTION_BATCH_SIZE', app_config.GP_MINI_BATCH_SIZE)
+    num_rows = features_tensor.size(0)
+    mean_out = np.empty((num_rows,), dtype=np.float32)
+    var_out = np.empty((num_rows,), dtype=np.float32)
+
     with torch.no_grad(), gpytorch.settings.fast_pred_var():
-        # Create DataLoader for batching
-        dataset = TensorDataset(features_tensor)
-        dataloader = DataLoader(dataset, batch_size=app_config.GP_MINI_BATCH_SIZE, shuffle=False)
-        
-        for (batch_features,) in tqdm(dataloader, desc="Predicting GP Batches"):
+        for start in tqdm(range(0, num_rows, prediction_bs), desc="Predicting GP Batches"):
+            end = min(start + prediction_bs, num_rows)
+            batch_features = features_tensor[start:end]
             preds = likelihood(model(batch_features))
-            predictions.append(preds)
+            mean_out[start:end] = preds.mean.detach().cpu().float().numpy()
+            var_out[start:end] = preds.variance.detach().cpu().float().numpy()
 
-    # Concatenate results from all batches
-    mean_preds = torch.cat([p.mean for p in predictions]).cpu().numpy()
-    variance_preds = torch.cat([p.variance for p in predictions]).cpu().numpy()
+    return mean_out, var_out
 
-    return mean_preds, variance_preds
+
+def predict_gp_residuals_streaming(
+    model: ApproximateGPModelResiduals,
+    likelihood: gpytorch.likelihoods.GaussianLikelihood,
+    preprocessed_data: dict,
+    app_config: 'config',
+    prediction_mask: Optional[np.ndarray] = None
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Predict residuals by streaming features in time and spatial chunks to bound memory.
+
+    Args:
+        model: Trained GP model
+        likelihood: Trained likelihood
+        preprocessed_data: Dict with keys 's2_reflectance_stack', 'doy_stack', 'lon_coords', 'lat_coords'
+        app_config: Configuration
+        prediction_mask: Optional HxW boolean array of pixels to predict; if None, predict all
+
+    Returns:
+        (mean, variance) residual maps of shape (T, H, W)
+    """
+    device = torch.device(app_config.GP_DEVICE if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    likelihood.to(device)
+    model.eval()
+    likelihood.eval()
+
+    # Unpack arrays
+    s2_reflectance_stack = preprocessed_data['s2_reflectance_stack']  # (T, B, H, W)
+    doy_stack_numpy = preprocessed_data['doy_stack']                   # (T,)
+    lon_coords = preprocessed_data['lon_coords']                       # (H, W)
+    lat_coords = preprocessed_data['lat_coords']                       # (H, W)
+
+    T, num_bands, H, W = s2_reflectance_stack.shape
+
+    # Prepare output arrays
+    gp_mean_residuals_full = np.full((T, H, W), np.nan, dtype=np.float32)
+    gp_variance_residuals_full = np.full((T, H, W), np.nan, dtype=np.float32)
+
+    # Mask handling
+    if prediction_mask is not None:
+        pixel_indices_y, pixel_indices_x = np.where(prediction_mask)
+    else:
+        yy, xx = np.meshgrid(np.arange(H), np.arange(W), indexing='ij')
+        pixel_indices_y = yy.flatten()
+        pixel_indices_x = xx.flatten()
+
+    num_masked_pixels = len(pixel_indices_y)
+    if num_masked_pixels == 0:
+        return gp_mean_residuals_full, gp_variance_residuals_full
+
+    # Chunking parameters
+    chunk_pixels = getattr(app_config, 'GP_PREDICTION_CHUNK_PIXELS', 10000)
+    chunk_timesteps = getattr(app_config, 'GP_PREDICTION_CHUNK_TIMESTEPS', 8)
+    prediction_bs = getattr(app_config, 'GP_PREDICTION_BATCH_SIZE', getattr(app_config, 'GP_MINI_BATCH_SIZE', 1024))
+    compute_variance = getattr(app_config, 'GP_PREDICT_VARIANCE', True)
+
+    # Iterate over time and spatial chunks
+    for t_start in range(0, T, chunk_timesteps):
+        t_end = min(T, t_start + chunk_timesteps)
+        ct = t_end - t_start
+        doy_slice = doy_stack_numpy[t_start:t_end]  # (ct,)
+
+        for p_start in range(0, num_masked_pixels, chunk_pixels):
+            p_end = min(num_masked_pixels, p_start + chunk_pixels)
+            py = pixel_indices_y[p_start:p_end]
+            px = pixel_indices_x[p_start:p_end]
+            cp = len(py)
+            if cp == 0:
+                continue
+
+            # Build features for (ct, cp)
+            # Coordinates (cp,)
+            lon_vals = lon_coords[py, px]
+            lat_vals = lat_coords[py, px]
+            # Expanded to (ct, cp) then flatten to (ct*cp,)
+            lon_exp = np.tile(lon_vals, (ct, 1)).flatten()
+            lat_exp = np.tile(lat_vals, (ct, 1)).flatten()
+            doy_exp = np.tile(doy_slice[:, np.newaxis], (1, cp)).flatten()
+
+            # S2 bands: (ct, B, cp) -> (ct, cp, B) -> (ct*cp, B)
+            s2_chunk = s2_reflectance_stack[t_start:t_end, :, py, px]
+            s2_flat = s2_chunk.transpose(0, 2, 1).reshape(-1, num_bands)
+
+            # Stack features: [doy, lon, lat, s2_bands...]
+            features_chunk = np.concatenate([
+                doy_exp[:, None].astype(np.float32),
+                lon_exp[:, None].astype(np.float32),
+                lat_exp[:, None].astype(np.float32),
+                s2_flat.astype(np.float32)
+            ], axis=1)
+
+            # Predict in batches and write directly to output slices
+            num_rows = features_chunk.shape[0]
+            mean_chunk = np.empty((num_rows,), dtype=np.float32)
+            var_chunk = np.empty((num_rows,), dtype=np.float32) if compute_variance else None
+
+            with torch.no_grad(), gpytorch.settings.fast_pred_var():
+                for r_start in range(0, num_rows, prediction_bs):
+                    r_end = min(num_rows, r_start + prediction_bs)
+                    batch_features = torch.from_numpy(features_chunk[r_start:r_end]).to(device)
+                    preds = likelihood(model(batch_features))
+                    mean_chunk[r_start:r_end] = preds.mean.detach().cpu().float().numpy()
+                    if compute_variance:
+                        var_chunk[r_start:r_end] = preds.variance.detach().cpu().float().numpy()
+
+            # Reshape back to (ct, cp)
+            mean_reshaped = mean_chunk.reshape(ct, cp)
+            if compute_variance:
+                var_reshaped = var_chunk.reshape(ct, cp)
+            else:
+                var_reshaped = np.zeros_like(mean_reshaped, dtype=np.float32)
+
+            # Write into full arrays
+            gp_mean_residuals_full[t_start:t_end, py, px] = mean_reshaped
+            gp_variance_residuals_full[t_start:t_end, py, px] = var_reshaped
+
+    return gp_mean_residuals_full, gp_variance_residuals_full
 
 
 def prepare_gp_training_data(
@@ -438,42 +557,14 @@ def load_and_predict_gp_residuals(
     model_load_path = os.path.join(app_config.MODEL_WEIGHTS_PATH, app_config.GP_MODEL_WEIGHT_FILENAME)
     model, likelihood = load_gp_model(model_load_path, app_config)
 
-    # Prepare features for the prediction set using the provided mask
-    pred_x_flat, _, _, original_dims, _ = prepare_gp_training_data(
-        preprocessed_data, 
-        atc_predictions, 
-        app_config,
-        is_prediction=True,
+    # Streamed prediction to bound memory and CPU spikes
+    gp_mean_residuals_full, gp_variance_residuals_full = predict_gp_residuals_streaming(
+        model=model,
+        likelihood=likelihood,
+        preprocessed_data=preprocessed_data,
+        app_config=app_config,
         prediction_mask=prediction_mask
     )
-
-    if pred_x_flat.shape[0] == 0:
-        print("No data points to predict after masking. Returning empty residuals.")
-        return np.full(original_dims, np.nan), np.full(original_dims, np.nan)
-
-    print(f"Predicting residuals for {pred_x_flat.shape[0]} observations...")
-    gp_mean_flat, gp_var_flat = predict_gp_residuals(model, likelihood, pred_x_flat, app_config)
-
-    # Reshape the flattened predictions back to the full image shape (T, H, W)
-    T, H, W = original_dims
-    gp_mean_residuals_full = np.full((T, H, W), np.nan, dtype=np.float32)
-    gp_variance_residuals_full = np.full((T, H, W), np.nan, dtype=np.float32)
-
-    if prediction_mask is not None:
-        masked_indices = np.where(prediction_mask)
-        num_masked_pixels = len(masked_indices[0])
-        
-        # The prediction output is (T * num_masked_pixels)
-        # Reshape to (T, num_masked_pixels) to place it correctly
-        gp_mean_reshaped = gp_mean_flat.reshape(T, num_masked_pixels)
-        gp_var_reshaped = gp_var_flat.reshape(T, num_masked_pixels)
-
-        gp_mean_residuals_full[:, masked_indices[0], masked_indices[1]] = gp_mean_reshaped
-        gp_variance_residuals_full[:, masked_indices[0], masked_indices[1]] = gp_var_reshaped
-    else:
-        # If no mask, the output is already for all pixels, just reshape
-        gp_mean_residuals_full = gp_mean_flat.reshape(T, H, W)
-        gp_variance_residuals_full = gp_var_flat.reshape(T, H, W)
 
     return gp_mean_residuals_full, gp_variance_residuals_full
 

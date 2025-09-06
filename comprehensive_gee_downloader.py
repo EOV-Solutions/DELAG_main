@@ -41,7 +41,8 @@ DATASET_SCALES = {
     'era5': 11000,      # ERA5 Land: ~11km native resolution (0.1° grid)
     'aster': 100,       # ASTER GED: 100m native resolution
     'landsat_l1': 100,  # Landsat L1 thermal bands: 100m native resolution (B10, B11)
-    'landsat_l2': 30    # Landsat L2 surface reflectance: 30m native resolution (SR_B*)
+    'landsat_l2': 30,   # Landsat L2 surface reflectance: 30m native resolution (SR_B*)
+    'sentinel2': 10     # Sentinel-2: 10m native resolution (B2, B3, B4, B8)
 }
 
 # Initialize Google Earth Engine
@@ -97,6 +98,7 @@ def create_output_directories(base_path: str) -> Dict[str, str]:
         'temp': os.path.join(base_path, 'temp_downloads'),
         'era5': os.path.join(base_path, 'temp_downloads', 'era5'),
         'aster': os.path.join(base_path, 'temp_downloads', 'aster'),
+        'sentinel2': os.path.join(base_path, 'temp_downloads', 'sentinel2'),
         'landsat8_l1': os.path.join(base_path, 'temp_downloads', 'landsat8_l1'),
         'landsat8_l2': os.path.join(base_path, 'temp_downloads', 'landsat8_l2'),
         'landsat9_l1': os.path.join(base_path, 'temp_downloads', 'landsat9_l1'),
@@ -116,67 +118,159 @@ def get_roi_geometry_from_geojson(geometry_data: dict) -> ee.Geometry:
     """Convert GeoJSON geometry to Earth Engine Geometry"""
     return ee.Geometry.Polygon(geometry_data['coordinates'], proj=TARGET_CRS, evenOdd=False)
 
-def download_ee_image(image: ee.Image, bands: List[str], region, 
-                     scale: int, output_dir: str, filename_prefix: str) -> Optional[str]:
+def merge_tifs(tif_files: List[str], output_path: str, bands_order: List[str]) -> bool:
     """
-    Download an Earth Engine image and save individual bands as GeoTIFFs
-    Returns the path to the output directory containing the band files
+    Merges a list of single-band GeoTIFFs into a single multi-band GeoTIFF.
     
     Args:
-        region: Can be either List[List[float]] for coordinates or ee.Geometry object
+        tif_files: List of paths to single-band GeoTIFF files.
+        output_path: Path to save the merged multi-band GeoTIFF.
+        bands_order: A list of band names specifying the desired order in the output file.
+    
+    Returns:
+        True if merging was successful, False otherwise.
     """
     try:
-        # Handle different region types
+        # Create a mapping from band name to file path to ensure correct order
+        band_file_map = {}
+        for f_path in tif_files:
+            basename = os.path.basename(f_path)
+            for band_name in bands_order:
+                if band_name in basename:
+                    band_file_map[band_name] = f_path
+                    break
+        
+        # Sort the file paths according to the desired band order
+        sorted_files = [band_file_map[b] for b in bands_order if b in band_file_map]
+        
+        if len(sorted_files) < len(bands_order):
+            print(f"  > Warning: Not all requested bands were found for merging. Proceeding with {len(sorted_files)} bands.")
+
+        if not sorted_files:
+            print("  ✗ Error: No valid band files found to merge.")
+            return False
+
+        # Read metadata from the first file to use as a template
+        with rasterio.open(sorted_files[0]) as src0:
+            profile = src0.profile.copy()
+
+        # Update metadata for the multi-band output
+        profile.update(
+            count=len(sorted_files),
+            driver='GTiff',
+            compress='lzw'
+        )
+
+        # Write the multi-band raster
+        with rasterio.open(output_path, 'w', **profile) as dst:
+            for i, file_path in enumerate(sorted_files):
+                with rasterio.open(file_path) as src:
+                    dst.write(src.read(1), i + 1)
+        
+        print(f"  > Successfully merged {len(sorted_files)} bands into {os.path.basename(output_path)}")
+        return True
+    except Exception as e:
+        print(f"  ✗ Error merging TIF files: {e}")
+        return False
+
+def download_ee_image(image: ee.Image, bands: List[str], region,
+                     scale: int, output_dir: str, filename_prefix: str) -> List[Tuple[str, str]]:
+    """
+    Download an Earth Engine image. Tries multi-band first, falls back to single-band downloads.
+    Returns a list of (source_file_path, generic_band_filename) tuples.
+    """
+    files_downloaded = []
+    temp_extract_base_dir = os.path.join(output_dir, filename_prefix)
+    os.makedirs(temp_extract_base_dir, exist_ok=True)
+
+    try:
         if isinstance(region, ee.Geometry):
             region_geometry = region
-            region_coords = region.coordinates().getInfo()[0]  # For download URL
+            region_coords = region.coordinates().getInfo()[0]
         else:
             region_geometry = get_roi_geometry(region)
             region_coords = region
         
-        # Clip image to region and select bands
         clipped_image = image.clip(region_geometry).select(bands)
         
-        # Check if image has data
         band_info = clipped_image.bandNames().getInfo()
         if not band_info:
-            print(f"Warning: No bands available for {filename_prefix}")
-            return None
-        
-        # Get download URL
-        url = clipped_image.getDownloadURL({
-            'scale': scale,
-            'region': region_coords,
-            'fileFormat': 'GeoTIFF',
-            'crs': TARGET_CRS
-        })
-        
-        # Download the zip file
-        print(f"Downloading {filename_prefix}...")
-        response = requests.get(url, stream=True, timeout=DOWNLOAD_TIMEOUT)
-        response.raise_for_status()
-        
-        # Save to temporary zip file
-        temp_zip_path = os.path.join(output_dir, f"{filename_prefix}.zip")
-        with open(temp_zip_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=1024*1024):
-                f.write(chunk)
-        
-        # Extract the zip file
-        extract_dir = os.path.join(output_dir, filename_prefix)
-        os.makedirs(extract_dir, exist_ok=True)
-        
-        with zipfile.ZipFile(temp_zip_path, 'r') as zip_ref:
-            zip_ref.extractall(extract_dir)
-        
-        # Clean up temporary zip
-        os.remove(temp_zip_path)
-        
-        return extract_dir
-        
+            print(f"Warning: No bands available for {filename_prefix} after clipping.")
+            return []
+
+        # --- Attempt multi-band download first ---
+        try:
+            print(f"  > Attempting multi-band download for {filename_prefix}...")
+            url = clipped_image.getDownloadURL({
+                'scale': scale, 'region': region_coords, 'fileFormat': 'GeoTIFF', 'crs': TARGET_CRS
+            })
+            
+            temp_zip_path = os.path.join(output_dir, f"{filename_prefix}_multi.zip")
+            response = requests.get(url, stream=True, timeout=DOWNLOAD_TIMEOUT)
+            response.raise_for_status()
+
+            with open(temp_zip_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=1024*1024):
+                    f.write(chunk)
+            
+            with zipfile.ZipFile(temp_zip_path, 'r') as zip_ref:
+                zip_ref.extractall(temp_extract_base_dir)
+            os.remove(temp_zip_path)
+
+            for file in os.listdir(temp_extract_base_dir):
+                if file.endswith('.tif'):
+                    source_path = os.path.join(temp_extract_base_dir, file)
+                    files_downloaded.append((source_path, file))
+            
+            if files_downloaded:
+                print(f"  > Successfully downloaded multi-band image for {filename_prefix}.")
+                return files_downloaded
+            else:
+                raise Exception("Multi-band download successful but no TIFF files were extracted.")
+
+        except Exception as e:
+            if "Total request size" in str(e):
+                print(f"  > Multi-band download failed for {filename_prefix} due to size limit. Falling back to single-band downloads.")
+            else:
+                print(f"  ✗ Critical error during multi-band download for {filename_prefix}: {e}")
+                print("  > Attempting single-band download fallback...")
+
+            # --- Fallback to single-band downloads ---
+            shutil.rmtree(temp_extract_base_dir)
+            os.makedirs(temp_extract_base_dir, exist_ok=True)
+            files_downloaded.clear()
+            
+            for band_name in bands:
+                print(f"    > Downloading band '{band_name}'...")
+                try:
+                    single_band_image = clipped_image.select([band_name])
+                    url = single_band_image.getDownloadURL({
+                        'scale': scale, 'region': region_coords, 'fileFormat': 'GeoTIFF', 'crs': TARGET_CRS
+                    })
+                    
+                    temp_zip_path_band = os.path.join(output_dir, f"{filename_prefix}_{band_name}.zip")
+                    response = requests.get(url, stream=True, timeout=DOWNLOAD_TIMEOUT)
+                    response.raise_for_status()
+
+                    with open(temp_zip_path_band, 'wb') as f:
+                        for chunk in response.iter_content(chunk_size=1024*1024):
+                            f.write(chunk)
+                    
+                    with zipfile.ZipFile(temp_zip_path_band, 'r') as zip_ref:
+                        extracted_files = [f for f in zip_ref.namelist() if f.endswith('.tif')]
+                        if extracted_files:
+                            zip_ref.extract(extracted_files[0], temp_extract_base_dir)
+                            source_path = os.path.join(temp_extract_base_dir, extracted_files[0])
+                            files_downloaded.append((source_path, extracted_files[0]))
+                            print(f"    ✓ Successfully downloaded band '{band_name}'.")
+                    os.remove(temp_zip_path_band)
+
+                except Exception as band_e:
+                    print(f"    ✗ Failed to download band '{band_name}' for {filename_prefix}: {band_e}")
     except Exception as e:
-        print(f"Failed to download {filename_prefix}: {e}")
-        return None
+        print(f"  ✗ Critical error during download setup for {filename_prefix}: {e}")
+
+    return files_downloaded
 
 # ========================================
 # DATASET-SPECIFIC DOWNLOAD FUNCTIONS
@@ -188,239 +282,173 @@ class DatasetDownloader:
     def __init__(self, output_dirs: Dict[str, str], region_geometry: ee.Geometry):
         self.output_dirs = output_dirs
         self.region_geometry = region_geometry
-        self.task_mapping = {}
-    
-    def add_to_mapping(self, task_id: str, dataset_type: str, date: str, 
-                      bands: List[str], metadata: Dict = None):
-        """Add entry to task mapping"""
-        self.task_mapping[task_id] = {
-            'dataset_type': dataset_type,
-            'date': date,
-            'bands': bands,
-            'metadata': metadata or {}
-        }
 
 class ERA5Downloader(DatasetDownloader):
     """Download ERA5 reanalysis data"""
     
-    def download_era5_for_date(self, target_date: datetime, task_id: str) -> bool:
-        """Download ERA5 data for a specific date"""
+    def download_era5_for_date(self, target_date: datetime) -> List[Tuple[str, str]]:
+        """Download all hourly ERA5 images for a specific date and return their file paths."""
         try:
             date_str = target_date.strftime('%Y-%m-%d')
-            print(f"Processing ERA5 for {date_str}...")
+            print(f"  - Processing ERA5 for {date_str}...")
             
-            # Define date range (ERA5 daily data)
             start_date = ee.Date(target_date.strftime('%Y-%m-%d'))
             end_date = start_date.advance(1, 'day')
             
-            # Get ERA5 Land daily collection
-            era5_collection = ee.ImageCollection('ECMWF/ERA5_LAND/DAILY') \
+            era5_hourly_collection = ee.ImageCollection('ECMWF/ERA5_LAND/HOURLY') \
                 .filterDate(start_date, end_date) \
                 .filterBounds(self.region_geometry)
             
-            if era5_collection.size().getInfo() == 0:
-                print(f"No ERA5 data found for {date_str}")
-                return False
+            image_list = era5_hourly_collection.toList(era5_hourly_collection.size())
+            collection_size = image_list.size().getInfo()
+
+            if collection_size == 0:
+                print(f"    ✗ No ERA5 hourly data found for {date_str}")
+                return []
             
-            # Get the first (and likely only) image
-            era5_image = ee.Image(era5_collection.first())
+            print(f"    - Found {collection_size} hourly images for {date_str}")
             
-            # Define bands to download
-            bands = ['skin_temperature', 'temperature_2m']
-            
-            # Download the image
-            extract_dir = download_ee_image(
-                era5_image, 
-                bands, 
-                self.region_geometry, 
-                DATASET_SCALES['era5'],
-                self.output_dirs['era5'],
-                f"era5_{date_str}"
-            )
-            
-            if extract_dir:
-                # Create organized zip file
-                zip_path = self._create_era5_zip(extract_dir, task_id, date_str)
+            files_to_return = []
+            for i in range(collection_size):
+                hourly_image = ee.Image(image_list.get(i))
+                timestamp = hourly_image.get('system:time_start').getInfo()
+                dt_object = datetime.fromtimestamp(timestamp / 1000)
+                datetime_str = dt_object.strftime('%Y%m%d_%H%M%S')
                 
-                # Add to mapping
-                self.add_to_mapping(
-                    task_id, 'ERA5', date_str, bands,
-                    {'source': 'ECMWF/ERA5_LAND/DAILY', 'zip_path': zip_path}
+                bands = ['skin_temperature', 'temperature_2m']
+                
+                downloaded_files = download_ee_image(
+                    hourly_image,
+                    bands,
+                    self.region_geometry,
+                    DATASET_SCALES['era5'],
+                    self.output_dirs['era5'],
+                    f"era5_{datetime_str}"
                 )
                 
-                return True
+                if downloaded_files:
+                    for file_path, generic_filename in downloaded_files:
+                        new_name = ""
+                        if 'skin_temperature' in generic_filename:
+                            new_name = f"skin_temperature_era5_{datetime_str}Z.tif"
+                        elif 'temperature_2m' in generic_filename:
+                            new_name = f"temperature_2m_era5_{datetime_str}Z.tif"
+                        
+                        if new_name:
+                            files_to_return.append((file_path, new_name))
             
-            return False
+            return files_to_return
             
         except Exception as e:
-            print(f"ERA5 download failed for {target_date}: {e}")
-            return False
-    
-    def _create_era5_zip(self, extract_dir: str, task_id: str, date_str: str) -> str:
-        """Create organized ZIP file for ERA5 data"""
-        zip_filename = f"downloaded_era5_{task_id}.zip"
-        zip_path = os.path.join(self.output_dirs['zips'], zip_filename)
-        
-        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            for file in os.listdir(extract_dir):
-                if file.endswith('.tif'):
-                    file_path = os.path.join(extract_dir, file)
-                    
-                    # Rename files according to specification
-                    if 'skin_temperature' in file:
-                        new_name = f"skin_temperature_era5_{date_str.replace('-', '')}_100000Z.tif"
-                    elif 'temperature_2m' in file:
-                        new_name = f"temperature_2m_era5_{date_str.replace('-', '')}_100000Z.tif"
-                    else:
-                        new_name = file
-                    
-                    zipf.write(file_path, new_name)
-        
-        return zip_path
+            print(f"    ✗ ERA5 hourly download failed for {target_date.strftime('%Y-%m-%d')}: {e}")
+            return []
 
 class ASTERDownloader(DatasetDownloader):
     """Download ASTER Global Emissivity Dataset"""
     
-    def download_aster_for_date(self, target_date: datetime, task_id: str) -> bool:
-        """Download ASTER emissivity data (static dataset)"""
+    def download_aster_data(self) -> List[Tuple[str, str]]:
+        """Download ASTER emissivity data (static dataset) and return file paths."""
         try:
-            date_str = target_date.strftime('%Y-%m-%d')
-            print(f"Processing ASTER GED for {date_str}...")
+            print(f"Processing ASTER GED (static dataset)...")
             
             # ASTER Global Emissivity Dataset (static)
             aster_ged = ee.Image('NASA/ASTER_GED/AG100_003')
             
-            # Define bands to download
+            # Define bands to download, including band14
             bands = [
                 'emissivity_band10', 'emissivity_band11', 
-                'emissivity_band12', 'emissivity_band13', 'ndvi'
+                'emissivity_band12', 'emissivity_band13', 
+                'emissivity_band14', 'ndvi'
             ]
             
             # Download the image
-            extract_dir = download_ee_image(
+            downloaded_files = download_ee_image(
                 aster_ged,
                 bands,
                 self.region_geometry,
                 DATASET_SCALES['aster'],
                 self.output_dirs['aster'],
-                f"aster_{date_str}"
+                f"aster_static_data"
             )
             
-            if extract_dir:
-                # Create organized zip file
-                zip_path = self._create_aster_zip(extract_dir, task_id)
-                
-                # Add to mapping
-                self.add_to_mapping(
-                    task_id, 'ASTER', date_str, bands,
-                    {'source': 'NASA/ASTER_GED/AG100_003', 'zip_path': zip_path}
-                )
-                
-                return True
-            
-            return False
+            if downloaded_files:
+                files_to_return = []
+                for file_path, generic_filename in downloaded_files:
+                    # Rename files according to specification
+                    new_name = ""
+                    if 'emissivity_band10' in generic_filename: new_name = "ASTER_emissivity_band10.tif"
+                    elif 'emissivity_band11' in generic_filename: new_name = "ASTER_emissivity_band11.tif"
+                    elif 'emissivity_band12' in generic_filename: new_name = "ASTER_emissivity_band12.tif"
+                    elif 'emissivity_band13' in generic_filename: new_name = "ASTER_emissivity_band13.tif"
+                    elif 'emissivity_band14' in generic_filename: new_name = "ASTER_emissivity_band14.tif"
+                    elif 'ndvi' in generic_filename: new_name = "ASTER_ndvi.tif"
+                    else: new_name = generic_filename
+                    
+                    if new_name:
+                        files_to_return.append((file_path, new_name))
+                return files_to_return
+            return []
             
         except Exception as e:
-            print(f"ASTER download failed for {target_date}: {e}")
-            return False
-    
-    def _create_aster_zip(self, extract_dir: str, task_id: str) -> str:
-        """Create organized ZIP file for ASTER data"""
-        zip_filename = f"downloaded_aster_{task_id}.zip"
-        zip_path = os.path.join(self.output_dirs['zips'], zip_filename)
-        
-        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            for file in os.listdir(extract_dir):
-                if file.endswith('.tif'):
-                    file_path = os.path.join(extract_dir, file)
-                    
-                    # Rename files according to specification
-                    if 'emissivity_band10' in file:
-                        new_name = "ASTER_emissivity_band10.tif"
-                    elif 'emissivity_band11' in file:
-                        new_name = "ASTER_emissivity_band11.tif"
-                    elif 'emissivity_band12' in file:
-                        new_name = "ASTER_emissivity_band12.tif"
-                    elif 'emissivity_band13' in file:
-                        new_name = "ASTER_emissivity_band13.tif"
-                    elif 'ndvi' in file:
-                        new_name = "ASTER_ndvi.tif"
-                    else:
-                        new_name = file
-                    
-                    zipf.write(file_path, new_name)
-        
-        return zip_path
+            print(f"ASTER download failed: {e}")
+            return []
 
 class LandsatDownloader(DatasetDownloader):
     """Download Landsat 8/9 data (both L1 and L2)"""
     
-    def download_landsat_for_date(self, target_date: datetime, satellite: str, 
-                                 processing_level: str, task_id: str) -> bool:
-        """Download Landsat data for a specific date"""
+    def download_landsat_for_interval(self, start_date: datetime, end_date: datetime, satellite: str, 
+                                     processing_level: str) -> List[Tuple[str, str]]:
+        """Download all available Landsat images for a specific date range."""
         try:
-            date_str = target_date.strftime('%Y-%m-%d')
-            print(f"Processing Landsat {satellite} {processing_level} for {date_str}...")
-            
-            # Define collection based on satellite and processing level
             collection_name = self._get_collection_name(satellite, processing_level)
-            if not collection_name:
-                return False
-            
-            # Define date range (Landsat 16-day cycle)
-            start_date = ee.Date(target_date.strftime('%Y-%m-%d')).advance(-8, 'day')
-            end_date = ee.Date(target_date.strftime('%Y-%m-%d')).advance(8, 'day')
-            
-            # Get Landsat collection
+            if not collection_name: return []
+
             landsat_collection = ee.ImageCollection(collection_name) \
                 .filterDate(start_date, end_date) \
                 .filterBounds(self.region_geometry) \
                 .filter(ee.Filter.lt('CLOUD_COVER', 80))
             
-            if landsat_collection.size().getInfo() == 0:
-                print(f"No Landsat {satellite} {processing_level} data found for {date_str}")
-                return False
+            collection_size = landsat_collection.size().getInfo()
+            if collection_size == 0:
+                print(f"  - No Landsat {satellite} L{processing_level} images found in date range.")
+                return []
+
+            print(f"  - Found {collection_size} Landsat {satellite} L{processing_level} images. Downloading...")
+            image_list = landsat_collection.toList(collection_size)
             
-            # Get the best image (least cloudy, closest to target date)
-            landsat_image = landsat_collection.sort('CLOUD_COVER').first()
-            
-            # Define bands based on processing level
-            bands = self._get_bands(processing_level)
-            
-            # Get appropriate scale for processing level
-            scale_key = f"landsat_{processing_level.lower()}"
-            scale = DATASET_SCALES[scale_key]
-            
-            # Download the image
-            dataset_key = f"landsat{satellite.lower()}_{processing_level.lower()}"
-            extract_dir = download_ee_image(
-                landsat_image,
-                bands,
-                self.region_geometry,
-                scale,
-                self.output_dirs[dataset_key],
-                f"landsat{satellite.lower()}_{processing_level.lower()}_{date_str}"
-            )
-            
-            if extract_dir:
-                # Create organized zip file
-                zip_path = self._create_landsat_zip(
-                    extract_dir, task_id, satellite, processing_level, date_str
+            files_to_return = []
+            for i in range(collection_size):
+                landsat_image = ee.Image(image_list.get(i))
+                image_date = ee.Date(landsat_image.get('system:time_start'))
+                date_str = image_date.format('YYYY-MM-dd').getInfo()
+
+                bands = self._get_bands(processing_level)
+                scale_key = f"landsat_{processing_level.lower()}"
+                scale = DATASET_SCALES[scale_key]
+                
+                dataset_key = f"landsat{satellite.lower()}_{processing_level.lower()}"
+                downloaded_files = download_ee_image(
+                    landsat_image,
+                    bands,
+                    self.region_geometry,
+                    scale,
+                    self.output_dirs[dataset_key],
+                    f"landsat{satellite}_{processing_level}_{date_str}"
                 )
                 
-                # Add to mapping
-                self.add_to_mapping(
-                    task_id, f'Landsat{satellite}_{processing_level}', date_str, bands,
-                    {'source': collection_name, 'zip_path': zip_path}
-                )
-                
-                return True
-            
-            return False
+                if downloaded_files:
+                    image_date_str_fmt = image_date.format('YYYYMMdd').getInfo()
+                    scene_id = landsat_image.get('LANDSAT_PRODUCT_ID').getInfo() or f"scene_{i}"
+                    for file_path, generic_filename in downloaded_files:
+                        band_name = self._extract_band_name(generic_filename)
+                        if band_name:
+                            new_name = f"L{satellite}_{processing_level}_{band_name}_{image_date_str_fmt}_{scene_id}.tif"
+                            files_to_return.append((file_path, new_name))
+            return files_to_return
             
         except Exception as e:
-            print(f"Landsat {satellite} {processing_level} download failed for {target_date}: {e}")
-            return False
+            print(f"  ✗ Landsat {satellite} {processing_level} download failed: {e}")
+            return []
     
     def _get_collection_name(self, satellite: str, processing_level: str) -> Optional[str]:
         """Get GEE collection name for Landsat satellite and processing level"""
@@ -435,36 +463,95 @@ class LandsatDownloader(DatasetDownloader):
     def _get_bands(self, processing_level: str) -> List[str]:
         """Get band list based on processing level"""
         if processing_level == 'L1':
-            return ['B10', 'B11']  # Thermal bands
+            return ['B10', 'B11']
         elif processing_level == 'L2':
             return ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7', 'QA_PIXEL']
         else:
             return []
     
-    def _create_landsat_zip(self, extract_dir: str, task_id: str, satellite: str, 
-                           processing_level: str, date_str: str) -> str:
-        """Create organized ZIP file for Landsat data"""
-        zip_filename = f"landsat{satellite.lower()}_{processing_level.lower()}_{task_id}.zip"
-        zip_path = os.path.join(self.output_dirs['zips'], zip_filename)
-        
-        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            for file in os.listdir(extract_dir):
-                if file.endswith('.tif'):
-                    file_path = os.path.join(extract_dir, file)
+    def _extract_band_name(self, filename: str) -> Optional[str]:
+        """Extract band name from GEE downloaded filename"""
+        for band in ['B10', 'B11', 'SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7', 'QA_PIXEL']:
+            if band in filename:
+                return band
+        return None
+
+class Sentinel2Downloader(DatasetDownloader):
+    """Download Sentinel-2 Surface Reflectance data"""
+    
+    def download_sentinel2_for_interval(self, start_date: datetime, end_date: datetime) -> List[Tuple[str, str]]:
+        """Download all available Sentinel-2 images for a specific date range."""
+        try:
+            ee_start_date = ee.Date(start_date.strftime('%Y-%m-%d'))
+            ee_end_date = ee.Date(end_date.strftime('%Y-%m-%d'))
+            
+            cs_plus = ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED')
+            qa_band = 'cs'
+            clear_threshold = 0.5
+            
+            sentinel2_collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
+                .filterDate(ee_start_date, ee_end_date) \
+                .filterBounds(self.region_geometry) \
+                .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 85)) \
+                .linkCollection(cs_plus, [qa_band])
+            
+            collection_size = sentinel2_collection.size().getInfo()
+            if collection_size == 0:
+                print(f"  - No Sentinel-2 images found in date range.")
+                return []
+
+            print(f"  - Found {collection_size} Sentinel-2 images. Applying cloud mask and downloading...")
+            
+            sentinel_masked = sentinel2_collection.map(
+                lambda img: img.updateMask(img.select(qa_band).gte(clear_threshold)).clip(self.region_geometry)
+            )
+            
+            image_list = sentinel_masked.toList(collection_size)
+            files_to_return = []
+
+            for i in range(collection_size):
+                sentinel2_image = ee.Image(image_list.get(i))
+                image_date = ee.Date(sentinel2_image.get('system:time_start'))
+                date_str = image_date.format('YYYY-MM-dd').getInfo()
+
+                bands = ['B4', 'B3', 'B2', 'B8']
+                
+                downloaded_files = download_ee_image(
+                    sentinel2_image,
+                    bands,
+                    self.region_geometry,
+                    DATASET_SCALES['sentinel2'],
+                    self.output_dirs['sentinel2'],
+                    f"sentinel2_{date_str}"
+                )
+                
+                if downloaded_files:
+                    source_tif_paths = [fp for fp, fn in downloaded_files]
+
+                    # Define paths and names for merging
+                    image_date_str_fmt = image_date.format('YYYYMMdd').getInfo()
+                    tile_id = sentinel2_image.get('MGRS_TILE').getInfo() or f"tile_{i}"
                     
-                    # Extract band name from filename
-                    band_name = self._extract_band_name(file)
-                    if band_name:
-                        # Create new filename according to specification
-                        new_name = f"L{satellite}_{processing_level}_{band_name}_{date_str.replace('-', '')}_00.tif"
-                        zipf.write(file_path, new_name)
-        
-        return zip_path
+                    merged_filename = f"S2_SR_merged_{image_date_str_fmt}_{tile_id}.tif"
+                    merged_output_path = os.path.join(self.output_dirs['sentinel2'], merged_filename)
+
+                    # Merge the downloaded single-band files into one multi-band file
+                    if merge_tifs(source_tif_paths, merged_output_path, bands_order=bands):
+                        # If merge successful, this is the file we add to the zip list
+                        final_archive_name = f"S2_SR_{image_date_str_fmt}_{tile_id}.tif"
+                        files_to_return.append((merged_output_path, final_archive_name))
+                    else:
+                        print(f"  ✗ Failed to merge bands for {date_str}, scene {tile_id}. Skipping this scene.")
+
+            return files_to_return
+            
+        except Exception as e:
+            print(f"  ✗ Sentinel-2 download failed: {e}")
+            return []
     
     def _extract_band_name(self, filename: str) -> Optional[str]:
         """Extract band name from GEE downloaded filename"""
-        # This is a simplified extraction - in practice, you might need more robust parsing
-        for band in ['B10', 'B11', 'SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7', 'QA_PIXEL']:
+        for band in ['B4', 'B3', 'B2', 'B8']:
             if band in filename:
                 return band
         return None
@@ -480,107 +567,129 @@ class GEEDataDownloader:
         self.output_base_path = output_base_path
         self.region_geometry = region_geometry
         self.output_dirs = create_output_directories(output_base_path)
-        self.global_task_mapping = {}
         
         # Initialize downloaders
         self.era5_downloader = ERA5Downloader(self.output_dirs, region_geometry)
         self.aster_downloader = ASTERDownloader(self.output_dirs, region_geometry)
+        self.sentinel2_downloader = Sentinel2Downloader(self.output_dirs, region_geometry)
         self.landsat_downloader = LandsatDownloader(self.output_dirs, region_geometry)
+
+    def _create_dataset_zip(self, files_to_zip: List[Tuple[str, str]], task_id: str) -> Optional[str]:
+        """Create a single zip file for a dataset from a list of files."""
+        if not files_to_zip:
+            return None
+            
+        zip_filename = f"{task_id}.zip"
+        zip_path = os.path.join(self.output_dirs['zips'], zip_filename)
+        
+        print(f"  > Creating zip file: {zip_path}")
+        try:
+            with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                for source_path, archive_name in files_to_zip:
+                    if os.path.exists(source_path):
+                        zipf.write(source_path, archive_name)
+                    else:
+                        print(f"  > Warning: Source file not found, skipping: {source_path}")
+            return zip_path
+        except Exception as e:
+            print(f"  > Error creating zip file {zip_path}: {e}")
+            return None
     
     def download_all_for_date_range(self, start_date: datetime, end_date: datetime,
                                    datasets: List[str] = None) -> Dict:
-        """Download all datasets for a date range"""
+        """Download all datasets for a date range, creating one zip per dataset."""
         if datasets is None:
-            datasets = ['era5', 'aster', 'landsat8_l1', 'landsat8_l2', 'landsat9_l1', 'landsat9_l2']
+            datasets = ['era5', 'aster', 'sentinel2', 'landsat8_l1', 'landsat8_l2', 'landsat9_l1', 'landsat9_l2']
         
         print(f"Starting downloads for date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
         
-        # Generate date list
-        current_date = start_date
         dates_to_process = []
+        current_date = start_date
         while current_date <= end_date:
             dates_to_process.append(current_date)
             current_date += timedelta(days=1)
         
         print(f"Processing {len(dates_to_process)} dates for {len(datasets)} datasets")
-        
-        # Download each dataset for each date
-        for date in dates_to_process:
-            date_str = date.strftime('%Y-%m-%d')
-            print(f"\n=== Processing date: {date_str} ===")
+
+        self.global_task_mapping = {}
+
+        for dataset in datasets:
+            task_id = generate_task_id()
+            print(f"\n=== Processing dataset: {dataset} | Task ID: {task_id} ===")
             
-            for dataset in datasets:
-                task_id = generate_task_id()
-                success = False
-                
-                if dataset == 'era5':
-                    success = self.era5_downloader.download_era5_for_date(date, task_id)
-                    if success:
-                        self.global_task_mapping.update(self.era5_downloader.task_mapping)
-                
-                elif dataset == 'aster':
-                    success = self.aster_downloader.download_aster_for_date(date, task_id)
-                    if success:
-                        self.global_task_mapping.update(self.aster_downloader.task_mapping)
-                
-                elif dataset.startswith('landsat'):
-                    # Parse dataset string: landsat8_l1, landsat8_l2, landsat9_l1, landsat9_l2
-                    parts = dataset.split('_')
-                    satellite = parts[0][-1]  # '8' or '9'
-                    level = parts[1].upper()  # 'L1' or 'L2'
-                    
-                    success = self.landsat_downloader.download_landsat_for_date(
-                        date, satellite, level, task_id
-                    )
-                    if success:
-                        self.global_task_mapping.update(self.landsat_downloader.task_mapping)
-                
-                if success:
-                    print(f"  ✓ {dataset} completed for {date_str}")
+            files_to_zip = []
+            archive_names = set() # To track for duplicates
+            
+            if dataset == 'aster':
+                aster_files = self.aster_downloader.download_aster_data()
+                if aster_files:
+                    files_to_zip.extend(aster_files)
+            elif dataset == 'sentinel2':
+                s2_files = self.sentinel2_downloader.download_sentinel2_for_interval(start_date, end_date)
+                if s2_files:
+                    files_to_zip.extend(s2_files)
+            elif dataset.startswith('landsat'):
+                parts = dataset.split('_')
+                satellite = parts[0][-1]
+                level = parts[1].upper()
+                landsat_files = self.landsat_downloader.download_landsat_for_interval(start_date, end_date, satellite, level)
+                if landsat_files:
+                    files_to_zip.extend(landsat_files)
+            elif dataset == 'era5':
+                for date in dates_to_process:
+                    daily_files = self.era5_downloader.download_era5_for_date(date)
+                    if daily_files:
+                        files_to_zip.extend(daily_files)
+            
+            # Filter for unique archive names to prevent duplicates in zip
+            unique_files_to_zip = []
+            for file_path, archive_name in files_to_zip:
+                if archive_name not in archive_names:
+                    unique_files_to_zip.append((file_path, archive_name))
+                    archive_names.add(archive_name)
                 else:
-                    print(f"  ✗ {dataset} failed for {date_str}")
+                    print(f"  > Skipping duplicate file for archive: {archive_name}")
+
+            if unique_files_to_zip:
+                zip_path = self._create_dataset_zip(unique_files_to_zip, task_id)
+                if zip_path:
+                    self.global_task_mapping[task_id] = {
+                        'dataset_type': dataset,
+                        'date_range': {
+                            'start': start_date.strftime('%Y-%m-%d'),
+                            'end': end_date.strftime('%Y-%m-%d')
+                        },
+                        'zip_path': os.path.basename(zip_path),
+                        'file_count': len(unique_files_to_zip)
+                    }
+                    print(f"  ✓ Dataset {dataset} completed.")
+            else:
+                print(f"  ✗ No data found for dataset {dataset} in the entire date range.")
                 
-                # Small delay between downloads
-                time.sleep(1)
-        
-        # Save task mapping to JSON
-        self._save_task_mapping()
-        
-        # Cleanup temporary directories
+        self._save_task_mapping(start_date, end_date)
         self._cleanup_temp_dirs()
-        
         return self.global_task_mapping
     
-    def _save_task_mapping(self):
+    def _save_task_mapping(self, start_date: datetime, end_date: datetime):
         """Save task mapping to JSON file"""
         mapping_file = os.path.join(self.output_base_path, 'task_mapping.json')
         
-        # Add summary statistics
         summary = {
             'total_tasks': len(self.global_task_mapping),
             'datasets': {},
             'date_range': {
-                'start': None,
-                'end': None
+                'start': start_date.strftime('%Y-%m-%d'),
+                'end': end_date.strftime('%Y-%m-%d')
             },
             'generated_at': datetime.now().isoformat()
         }
         
-        # Calculate dataset statistics
         for task_id, info in self.global_task_mapping.items():
             dataset_type = info['dataset_type']
             if dataset_type not in summary['datasets']:
                 summary['datasets'][dataset_type] = 0
             summary['datasets'][dataset_type] += 1
-            
-            # Track date range
-            date = info['date']
-            if summary['date_range']['start'] is None or date < summary['date_range']['start']:
-                summary['date_range']['start'] = date
-            if summary['date_range']['end'] is None or date > summary['date_range']['end']:
-                summary['date_range']['end'] = date
         
-        # Create full mapping structure
         full_mapping = {
             'summary': summary,
             'task_mapping': self.global_task_mapping
@@ -715,8 +824,8 @@ Examples:
     parser.add_argument(
         '--datasets',
         nargs='+',
-        choices=['era5', 'aster', 'landsat8_l1', 'landsat8_l2', 'landsat9_l1', 'landsat9_l2'],
-        default=['era5', 'aster', 'landsat8_l1', 'landsat8_l2', 'landsat9_l1', 'landsat9_l2'],
+        choices=['era5', 'aster', 'sentinel2', 'landsat8_l1', 'landsat8_l2', 'landsat9_l1', 'landsat9_l2'],
+        default=['era5', 'aster', 'sentinel2', 'landsat8_l1', 'landsat8_l2', 'landsat9_l1', 'landsat9_l2'],
         help='Datasets to download (default: all)'
     )
     

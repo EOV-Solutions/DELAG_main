@@ -11,3 +11,5 @@ results_s3
 data_nhat
 test_merged_output
 venv
+*_remove
+temp_processed_data
